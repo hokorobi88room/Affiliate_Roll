@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://tedori-checker.pages.dev/sitemap.xml
+Sitemap: https://tedori-checker.hokorobi88room.workers.dev/sitemap.xml

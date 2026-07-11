@@ -14,9 +14,9 @@
 
 ## ページ
 
-- [手取り計算ツール](https://tedori-checker.pages.dev/): メインツール。月収・賞与・都道府県・年齢・扶養から手取りを即時計算
-- [運営者情報](https://tedori-checker.pages.dev/about.html)
-- [プライバシーポリシー](https://tedori-checker.pages.dev/privacy.html)
+- [手取り計算ツール](https://tedori-checker.hokorobi88room.workers.dev/): メインツール。月収・賞与・都道府県・年齢・扶養から手取りを即時計算
+- [運営者情報](https://tedori-checker.hokorobi88room.workers.dev/about.html)
+- [プライバシーポリシー](https://tedori-checker.hokorobi88room.workers.dev/privacy.html)
 
 ## 出典
 
