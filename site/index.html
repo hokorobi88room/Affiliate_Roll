@@ -3,22 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>手取り計算ツール(2026年・令和8年対応)|月収から社会保険料・税金を引いた手取り額を即計算 - 手取りチェッカー</title>
-<meta name="description" content="月収(額面)を入れるだけで2026年(令和8年度)の手取り額を即計算。協会けんぽ47都道府県の最新料率・子ども・子育て支援金(0.23%)・基礎控除104万円改正に対応。入力データは端末内で計算され、どこにも送信されません。">
+<title>あなたの経理マン@綻流夢|月収を入れるだけ、手取りがすぐわかる無料計算ツール(2026年・令和8年度対応)</title>
+<meta name="description" content="月収を入れるだけで2026年(令和8年度)の手取り額がすぐわかる無料ツール。むずかしい設定は質問に答えるだけでOK。協会けんぽ47都道府県・最新税制対応、登録不要・入力データはどこにも送信されません。">
 <!-- デプロイ後に実URLへ書き換え -->
 <link rel="canonical" href="https://tedori-checker.hokorobi88room.workers.dev/">
 <meta property="og:type" content="website">
-<meta property="og:title" content="手取り計算ツール(2026年・令和8年対応)- 手取りチェッカー">
-<meta property="og:description" content="月収を入れるだけで手取りを即計算。2026年の最新料率・税制改正対応、登録不要・データ送信なし。">
+<meta property="og:title" content="あなたの経理マン@綻流夢|月収を入れるだけ、手取りがすぐわかる(2026年対応)">
+<meta property="og:description" content="その月収、手取りでいくら?質問に答えるだけで、あなた専用の手取り額を30秒で計算。登録不要・データ送信なし。">
 <meta property="og:url" content="https://tedori-checker.hokorobi88room.workers.dev/">
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="css/style.css">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%92%B4%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='52' r='45' fill='%23FFF3DE'/%3E%3Cpath d='M12 40 Q50 26 88 40 L88 58 Q50 46 12 58 Z' fill='%2317734C'/%3E%3Ccircle cx='33' cy='47' r='6.5' fill='%23fff'/%3E%3Ccircle cx='33' cy='47' r='3' fill='%233A2E2A'/%3E%3Ccircle cx='67' cy='47' r='6.5' fill='%23fff'/%3E%3Ccircle cx='67' cy='47' r='3' fill='%233A2E2A'/%3E%3Cpath d='M36 74 Q50 84 64 74' stroke='%233A2E2A' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "手取りチェッカー",
+  "name": "あなたの経理マン@綻流夢",
+  "alternateName": "手取りチェッカー",
   "url": "https://tedori-checker.hokorobi88room.workers.dev/",
   "applicationCategory": "FinanceApplication",
   "operatingSystem": "Any",
@@ -62,26 +63,66 @@
 </script>
 </head>
 <body>
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="keiriman" viewBox="0 0 200 210">
+    <!-- マント -->
+    <path d="M62 108 Q38 155 54 192 Q100 176 146 192 Q162 155 138 108 Z" fill="#0E5C3B"/>
+    <!-- 腕(右手を上げたヒーローポーズ) -->
+    <circle cx="150" cy="86" r="12" fill="#2E8B61"/>
+    <path d="M132 122 Q146 104 150 90" stroke="#2E8B61" stroke-width="14" fill="none" stroke-linecap="round"/>
+    <!-- 体 -->
+    <ellipse cx="100" cy="148" rx="40" ry="36" fill="#2E8B61"/>
+    <!-- ベルト+¥バックル -->
+    <rect x="64" y="152" width="72" height="13" rx="6.5" fill="#0E5C3B"/>
+    <circle cx="100" cy="158" r="11" fill="#FFD766"/>
+    <path d="M95 153l5 6 5-6M100 159v6M96 161h8" stroke="#8A6800" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+    <!-- 左手の電卓 -->
+    <rect x="38" y="128" width="26" height="34" rx="5" fill="#FFF3DE" stroke="#0E5C3B" stroke-width="3"/>
+    <rect x="43" y="134" width="16" height="7" rx="2" fill="#2E8B61"/>
+    <circle cx="46" cy="149" r="2.2" fill="#0E5C3B"/><circle cx="56" cy="149" r="2.2" fill="#0E5C3B"/>
+    <circle cx="46" cy="156" r="2.2" fill="#0E5C3B"/><circle cx="56" cy="156" r="2.2" fill="#0E5C3B"/>
+    <!-- 頭 -->
+    <circle cx="100" cy="76" r="48" fill="#FFF3DE"/>
+    <!-- アホ毛 -->
+    <path d="M98 28 Q104 14 118 20" stroke="#3A2E2A" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+    <!-- ヒーローマスク -->
+    <path d="M55 62 Q100 46 145 62 L145 84 Q100 70 55 84 Z" fill="#17734C"/>
+    <circle cx="79" cy="70" r="8" fill="#fff"/><circle cx="79" cy="70" r="3.8" fill="#3A2E2A"/>
+    <circle cx="121" cy="70" r="8" fill="#fff"/><circle cx="121" cy="70" r="3.8" fill="#3A2E2A"/>
+    <!-- ほっぺ -->
+    <circle cx="64" cy="94" r="7" fill="#FFB4A2" opacity=".75"/>
+    <circle cx="136" cy="94" r="7" fill="#FFB4A2" opacity=".75"/>
+    <!-- 笑顔 -->
+    <path d="M86 98 Q100 110 114 98" stroke="#3A2E2A" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+  </symbol>
+</svg>
 <main>
   <header class="site-header">
-    <p class="site-name">手取りチェッカー</p>
-    <h1>手取り計算ツール<span style="font-size:.72em">(2026年・令和8年度対応)</span></h1>
-    <p class="lede">月収を入れるだけ。あなたの手取りが、その場でパッとわかります。</p>
+    <div class="hero-top">
+      <div class="mascot" aria-hidden="true"><svg><use href="#keiriman"/></svg></div>
+      <div>
+        <p class="site-name">あなたの経理マン<span class="at">@綻流夢</span></p>
+        <h1>その月収、<br>手取りで<em>いくら?</em></h1>
+        <p class="lede">保険料と税金を引いた「実際に使えるお金」を30秒で計算します(2026年・令和8年度対応)。</p>
+      </div>
+    </div>
     <ul class="badges">
       <li>🆓 無料・登録なし</li>
-      <li>⏱ 30秒でわかる</li>
-      <li>🔒 入力データはどこにも送られません</li>
-      <li>✅ 2026年の最新版</li>
+      <li>🔒 データ送信なし</li>
+      <li>✅ 2026年最新</li>
     </ul>
+    <div class="hero-cta">
+      <button class="btn big" type="button" id="cta-guide">🦸 質問に答えるだけ(おすすめ)</button>
+      <a class="btn ghost big" href="#calc-card">⚡ 自分でサッと入力</a>
+    </div>
   </header>
 
   <!-- ======== ツール本体 ======== -->
-  <section class="card" aria-label="手取り計算フォーム">
-    <p class="form-lede">👛 用意するのは給与明細1枚。なければ、だいたいの月収だけでもOK!</p>
+  <section class="card" id="calc-card" aria-label="手取り計算フォーム">
     <form id="calc-form" onsubmit="return false">
       <div class="field">
-        <label for="in-salary">月収<span class="hint">引かれる前の金額。給与明細の「総支給額」の欄</span></label>
-        <div class="yen-input"><input type="text" id="in-salary" inputmode="numeric" placeholder="300000" autocomplete="off"></div>
+        <label for="in-salary">💰 月収を入れてください<span class="hint">引かれる前の金額。だいたいでOK</span></label>
+        <div class="yen-input big-input"><input type="text" id="in-salary" inputmode="numeric" placeholder="300000" autocomplete="off"></div>
       </div>
       <div class="field">
         <label for="in-bonus">ボーナス(1年分の合計)<span class="hint">わからなければ空欄でOK</span></label>
@@ -101,7 +142,7 @@
           </select>
           <details class="mini-guide">
             <summary>扶養ってなんだっけ?</summary>
-            <p>あなたの収入で生活している家族のことです。たとえば、収入がない・少ない(年収123万円以下)配偶者や、16歳以上のお子さん。<strong>独身の方や共働きのご夫婦は「0人」のままでOK</strong>です。16歳未満のお子さんは、税金の計算では対象外なので数えません。</p>
+            <p>あなたの収入で暮らしている家族のこと。<strong>独身・共働きなら0人でOK!</strong><br>迷ったら → <button type="button" class="linklike" data-guide-start="dep1">質問に答えて決める</button></p>
           </details>
         </div>
       </div>
@@ -121,24 +162,15 @@
         </div>
       </div>
     </form>
-
-    <details class="input-guide">
-      <summary>💡 どの数字を入れればいいか、もう少しくわしく</summary>
-      <dl>
-        <dt>月収</dt>
-        <dd>給与明細の<strong>「総支給額」</strong>の欄です(振り込まれた額ではありません)。転職前なら内定通知の「月給」でOK。交通費は入れたままで大丈夫です。</dd>
-        <dt>ボーナス</dt>
-        <dd>1年分の合計です。「基本給×◯か月分」でざっくりでもOK。空欄でも月々の手取りは正しく出ます。</dd>
-        <dt>年齢</dt>
-        <dd>40歳から介護保険料(月2千円くらい)が加わり、65歳からは給料からは引かれなくなります。<strong>70歳以上の方</strong>は年金保険料もかからなくなるため、実際の手取りはこの結果より少し多めになります。</dd>
-        <dt>去年の収入</dt>
-        <dd>住民税は「去年の収入」にかかる後払いの税金です。だから新社会人の1年目は住民税ゼロ。<strong>2年目の6月から</strong>天引きが始まります(「いいえ」を選ぶとその状態で計算します)。</dd>
-      </dl>
-    </details>
+    <p class="note" style="margin-top:16px">😵‍💫 むずかしい? → <button type="button" class="linklike mini-guide-btn" data-guide-start="salary" style="background:none;border:none;padding:0;font-family:inherit;font-size:12.5px;font-weight:800;color:var(--accent);text-decoration:underline;cursor:pointer">経理マンにおまかせ(質問に答えるだけ)</button></p>
   </section>
 
   <!-- ======== 結果 ======== -->
   <section class="card" id="result" hidden aria-live="polite">
+    <div class="guide-banner" id="guide-banner" hidden>
+      <span class="m"><svg viewBox="0 0 200 210" style="width:34px;height:36px"><use href="#keiriman"/></svg></span>
+      <span id="guide-banner-text"></span>
+    </div>
     <p class="hero-num-label">あなたの手取り(月あたり・概算)</p>
     <p class="hero-num" id="r-monthly">—</p>
     <p class="hero-sub" id="r-sub"></p>
@@ -177,7 +209,8 @@
   <!-- ======== 解説(SEO/AI引用の受け皿) ======== -->
   <article class="prose">
     <h2 id="quick">📋 手取り早見表(2026年・月収別)</h2>
-    <p>月収ごとの手取りのめやすです(東京都・独身・ボーナスなしの場合)。</p>
+    <p class="quiz">Q. 月収が上がるにつれて、手取り「率」が下がっていくこと、ご存知でしたか?👇</p>
+    <p class="note" style="margin-top:0">東京都・独身・ボーナスなしのめやすです。いちばん右の列に注目。</p>
     <table>
       <thead><tr><th>月収(額面)</th><th>手取り(月)</th><th>手取り(年)</th><th>手取り率</th></tr></thead>
       <tbody>
@@ -264,14 +297,46 @@
       <a href="about.html">運営者情報</a>
       <a href="privacy.html">プライバシーポリシー</a>
     </nav>
-    <p>© 2026 手取りチェッカー</p>
+    <p>© 2026 あなたの経理マン@綻流夢</p>
   </footer>
 </main>
+
+<!-- ご挨拶ポップアップ -->
+<div class="overlay" id="welcome" hidden>
+  <div class="dialog" role="dialog" aria-modal="true" aria-label="ご挨拶">
+    <div class="m"><svg viewBox="0 0 200 210" style="width:96px;height:101px"><use href="#keiriman"/></svg></div>
+    <h2>ご訪問ありがとうございます😊<br>あなたの経理マンです!</h2>
+    <p class="g-note">あなたの手取り、正確に出します。<br>入力する項目(扶養・住民税など)、ぜんぶわかりそうですか?</p>
+    <div class="choice2">
+      <button class="choice" type="button" id="w-guide">🦸 不安…おまかせする(質問に答えるだけ)</button>
+      <button class="choice alt" type="button" id="w-self">✍️ わかる!自分で入力する</button>
+    </div>
+  </div>
+</div>
+
+<!-- おまかせモード(2択で進む) -->
+<div class="overlay" id="guide" hidden>
+  <div class="dialog" role="dialog" aria-modal="true" aria-label="おまかせモード">
+    <div class="m"><svg viewBox="0 0 200 210" style="width:72px;height:76px"><use href="#keiriman"/></svg></div>
+    <p class="g-progress" id="g-progress"></p>
+    <h2 id="g-q"></h2>
+    <p class="g-note" id="g-note"></p>
+    <div class="g-inputrow" id="g-inputrow" hidden>
+      <div class="yen-input big-input"><input type="text" id="g-input" inputmode="numeric" autocomplete="off"></div>
+    </div>
+    <div class="g-inputrow" id="g-selectrow" hidden>
+      <select id="g-select"></select>
+    </div>
+    <div class="choice2" id="g-choices"></div>
+    <button class="g-back" type="button" id="g-back">← ひとつ前にもどる</button>
+  </div>
+</div>
 
 <script src="data/rates2026.js"></script>
 <script src="data/affiliates.js"></script>
 <script src="js/calc.js"></script>
 <script src="js/ui.js"></script>
+<script src="js/guide.js"></script>
 <script>
 /* 都道府県料率表(解説セクション)をデータから生成 — 表とツールの数値が絶対にズレない */
 (function () {
