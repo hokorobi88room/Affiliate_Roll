@@ -1,16 +1,18 @@
 /* あなたの経理マン — ご挨拶ポップアップ & おまかせモード(2択ツリー)
-   原則: 1画面1質問・選択肢は常に2つまで(ジャムの法則)。すべて端末内で完結。 */
+   原則: 1画面1質問・選択肢は常に2つまで(ジャムの法則)・選択肢に色の優劣をつけない。
+   すべて端末内で完結し、入力内容はどこにも送信・保存されない。 */
 (function () {
   "use strict";
   const $ = (id) => document.getElementById(id);
   const R = window.RATES2026;
+  const comma = (v) => Number(v).toLocaleString("ja-JP");
 
   /* ---------- ステップ定義(選択肢は必ず2つ以下) ---------- */
   const STEPS = {
     salary: {
       no: 1, q: "月収を教えてください",
       note: "税金や保険料が引かれる前の金額です。給与明細なら「総支給額」の欄。だいたいでOK!",
-      input: "salary", placeholder: "300000", next: "bonusAsk",
+      input: "salary", placeholder: "300,000", next: "bonusAsk",
     },
     bonusAsk: {
       no: 2, q: "ボーナスはありますか?",
@@ -21,8 +23,8 @@
     },
     bonusInput: {
       no: 2, q: "ボーナスは1年分の合計でいくら?",
-      note: "「基本給×◯か月分」のざっくりでOK(例: 25万円×2か月分=500000)",
-      input: "bonus", placeholder: "500000", next: "lastyear",
+      note: "「基本給×◯か月分」のざっくりでOK(例: 25万円×2か月分=500,000)",
+      input: "bonus", placeholder: "500,000", next: "lastyear",
     },
     lastyear: {
       no: 3, q: "去年(2025年)も働いて収入がありましたか?",
@@ -33,55 +35,41 @@
       ],
     },
     age1: {
-      no: 4, q: "40歳以上ですか?",
-      note: "40歳から介護保険料が少しだけ加わります",
+      no: 4, q: "年齢を教えてください",
+      note: "40歳から介護保険料が少しだけ加わるので、確認させてください",
       choices: [
-        ["いいえ(〜39歳)", "dep1", { age: "under40" }],
-        ["はい", "age2", {}],
+        ["〜39歳", "dep1", { age: "under40" }],
+        ["40歳〜", "age2", {}],
       ],
     },
     age2: {
-      no: 4, q: "65歳以上ですか?",
+      no: 4, q: "40歳からのなかでは、どちらですか?",
+      note: "65歳からは介護保険料が給料から引かれなくなります",
       choices: [
-        ["いいえ(40〜64歳)", "dep1", { age: "40to64" }],
-        ["はい(65歳〜)", "dep1", { age: "over65" }],
+        ["40〜64歳", "dep1", { age: "40to64" }],
+        ["65歳〜", "dep1", { age: "over65" }],
       ],
     },
     dep1: {
       no: 5, q: "あなたの収入で暮らしている家族はいますか?",
-      note: "例: 年収123万円以下の配偶者、16歳以上のお子さん。16歳未満のお子さんは数えません",
+      note: "例: 年収123万円以下の配偶者、16歳以上のお子さん、仕送りしている親御さん。16歳未満のお子さんは数えません",
       choices: [
         ["いない(独身・共働きなど)", "pref", { dependents: 0 }],
         ["いる", "dep2", {}],
       ],
     },
     dep2: {
-      no: 5, q: "その家族は何人ですか?",
+      no: 5, q: "あなたの収入で暮らしている家族は、何人ですか?",
+      note: "年収123万円以下の配偶者、16歳以上のお子さん、仕送りしている親御さんの合計。16歳未満のお子さんは数に入れません",
       choices: [
         ["1人", "pref", { dependents: 1 }],
-        ["2人以上", "dep3", {}],
+        ["2人以上", "depN", {}],
       ],
     },
-    dep3: {
-      no: 5, q: "2人ですか?",
-      choices: [
-        ["2人", "pref", { dependents: 2 }],
-        ["3人以上", "dep4", {}],
-      ],
-    },
-    dep4: {
-      no: 5, q: "3人ですか?",
-      choices: [
-        ["3人", "pref", { dependents: 3 }],
-        ["4人以上", "dep5", {}],
-      ],
-    },
-    dep5: {
-      no: 5, q: "何人ですか?",
-      choices: [
-        ["4人", "pref", { dependents: 4 }],
-        ["5人以上", "pref", { dependents: 5 }],
-      ],
+    depN: {
+      no: 5, q: "何人ですか?(数字で入力)",
+      note: "16歳未満のお子さんは数に入れません",
+      input: "dependents", unit: "人", placeholder: "2", next: "pref",
     },
     pref: {
       no: 6, q: "会社がある都道府県は?",
@@ -96,6 +84,13 @@
   let history = [];
   let current = null;
   let partialStart = null; // 途中の項目だけ決めたいとき(例: 扶養だけ)
+
+  /* ---------- 金額入力はカンマ区切りで表示 ---------- */
+  $("g-input").addEventListener("input", () => {
+    const el = $("g-input");
+    const digits = String(el.value).replace(/[^\d]/g, "");
+    el.value = digits ? comma(digits) : "";
+  });
 
   /* ---------- 画面描画 ---------- */
   function show(stepKey) {
@@ -112,19 +107,30 @@
 
     if (s.input) {
       inputRow.hidden = false;
+      $("g-input-wrap").classList.toggle("unit-nin", s.unit === "人");
       const inp = $("g-input");
       inp.placeholder = s.placeholder || "";
-      inp.value = answers[s.input] ? String(answers[s.input]) : "";
-      const btn = mkChoice("これでOK!", false);
+      inp.value = answers[s.input] ? comma(answers[s.input]) : "";
+      const btn = mkChoice("これでOK!", true);
       btn.addEventListener("click", () => {
-        const v = parseInt(String(inp.value).replace(/[^\d]/g, ""), 10);
+        let v = parseInt(String(inp.value).replace(/[^\d]/g, ""), 10);
         if (s.input === "salary" && (isNaN(v) || v < 10000)) {
           $("g-note").hidden = false;
           $("g-note").textContent = "1万円以上の数字を入れてください(だいたいでOK!)";
           inp.focus();
           return;
         }
+        if (s.input === "dependents") {
+          if (isNaN(v) || v < 2) {
+            $("g-note").hidden = false;
+            $("g-note").textContent = "2以上の数字を入れてください(1人なら、ひとつ前にもどって「1人」を選んでください)";
+            inp.focus();
+            return;
+          }
+          v = Math.min(v, 7); // フォームの選択肢は7人まで
+        }
         answers[s.input] = isNaN(v) ? 0 : v;
+        if (s.next === "pref" && partialStart) { finish(); return; }
         go(s.next);
       });
       choices.appendChild(btn);
@@ -141,30 +147,31 @@
         }
         sel.value = "tokyo";
       }
-      const btn = mkChoice("これで完了!🎉", false);
+      const btn = mkChoice("これで完了!🎉", true);
       btn.addEventListener("click", () => {
         answers.pref = sel.value;
         finish();
       });
       choices.appendChild(btn);
     } else {
-      s.choices.forEach(([label, next, patch], i) => {
-        const btn = mkChoice(label, i === 1);
+      for (const [label, next, patch] of s.choices) {
+        const btn = mkChoice(label, false);
         btn.addEventListener("click", () => {
           Object.assign(answers, patch);
           if (next === "pref" && partialStart) { finish(); return; } // 部分モードは都道府県まで聞かない
           go(next);
         });
         choices.appendChild(btn);
-      });
+      }
     }
     $("g-back").hidden = history.length === 0;
   }
 
-  function mkChoice(label, alt) {
+  /* 選択肢は色分けしない。塗るのは決定ボタン(primary)だけ */
+  function mkChoice(label, primary) {
     const b = document.createElement("button");
     b.type = "button";
-    b.className = "choice" + (alt ? " alt" : "");
+    b.className = "choice" + (primary ? " primary" : "");
     b.textContent = label;
     return b;
   }
@@ -177,8 +184,8 @@
   /* ---------- 完了: フォームに反映して結果へ ---------- */
   function finish() {
     const fire = (el, type) => el.dispatchEvent(new Event(type, { bubbles: true }));
-    if ("salary" in answers) { $("in-salary").value = answers.salary; fire($("in-salary"), "input"); }
-    if ("bonus" in answers) { $("in-bonus").value = answers.bonus || ""; fire($("in-bonus"), "input"); }
+    if ("salary" in answers) { $("in-salary").value = comma(answers.salary); fire($("in-salary"), "input"); }
+    if ("bonus" in answers) { $("in-bonus").value = answers.bonus ? comma(answers.bonus) : ""; fire($("in-bonus"), "input"); }
     if ("pref" in answers) { $("in-pref").value = answers.pref; fire($("in-pref"), "change"); }
     if ("dependents" in answers) { $("in-dependents").value = String(answers.dependents); fire($("in-dependents"), "change"); }
     if ("age" in answers) {

@@ -66,34 +66,39 @@
 <svg style="display:none" xmlns="http://www.w3.org/2000/svg">
   <symbol id="keiriman" viewBox="0 0 200 210">
     <!-- マント -->
-    <path d="M62 108 Q38 155 54 192 Q100 176 146 192 Q162 155 138 108 Z" fill="#0E5C3B"/>
-    <!-- 腕(右手を上げたヒーローポーズ) -->
-    <circle cx="150" cy="86" r="12" fill="#2E8B61"/>
-    <path d="M132 122 Q146 104 150 90" stroke="#2E8B61" stroke-width="14" fill="none" stroke-linecap="round"/>
-    <!-- 体 -->
-    <ellipse cx="100" cy="148" rx="40" ry="36" fill="#2E8B61"/>
-    <!-- ベルト+¥バックル -->
-    <rect x="64" y="152" width="72" height="13" rx="6.5" fill="#0E5C3B"/>
-    <circle cx="100" cy="158" r="11" fill="#FFD766"/>
-    <path d="M95 153l5 6 5-6M100 159v6M96 161h8" stroke="#8A6800" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-    <!-- 左手の電卓 -->
-    <rect x="38" y="128" width="26" height="34" rx="5" fill="#FFF3DE" stroke="#0E5C3B" stroke-width="3"/>
-    <rect x="43" y="134" width="16" height="7" rx="2" fill="#2E8B61"/>
-    <circle cx="46" cy="149" r="2.2" fill="#0E5C3B"/><circle cx="56" cy="149" r="2.2" fill="#0E5C3B"/>
-    <circle cx="46" cy="156" r="2.2" fill="#0E5C3B"/><circle cx="56" cy="156" r="2.2" fill="#0E5C3B"/>
-    <!-- 頭 -->
-    <circle cx="100" cy="76" r="48" fill="#FFF3DE"/>
+    <path d="M68 132 Q52 170 62 196 Q100 184 138 196 Q148 170 132 132 Z" fill="#2E8B61"/>
+    <!-- あんよ -->
+    <ellipse cx="86" cy="194" rx="10" ry="7" fill="#2E8B61"/>
+    <ellipse cx="114" cy="194" rx="10" ry="7" fill="#2E8B61"/>
+    <!-- 体(ちいさめ) -->
+    <ellipse cx="100" cy="164" rx="34" ry="30" fill="#4CAF82"/>
+    <!-- おなかのコイン(だいじに抱っこ) -->
+    <circle cx="100" cy="163" r="15" fill="#FFD766" stroke="#E8B830" stroke-width="2"/>
+    <path d="M93 156l7 8 7-8M100 164v8M95 167h10M95 171h10" stroke="#8A6800" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <!-- おてて -->
+    <circle cx="80" cy="169" r="9" fill="#4CAF82"/>
+    <circle cx="120" cy="169" r="9" fill="#4CAF82"/>
+    <!-- 頭(でっかち) -->
+    <circle cx="100" cy="82" r="56" fill="#FFF6E9"/>
     <!-- アホ毛 -->
-    <path d="M98 28 Q104 14 118 20" stroke="#3A2E2A" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+    <path d="M97 26 Q102 12 116 16" stroke="#3A2E2A" stroke-width="4.5" fill="none" stroke-linecap="round"/>
     <!-- ヒーローマスク -->
-    <path d="M55 62 Q100 46 145 62 L145 84 Q100 70 55 84 Z" fill="#17734C"/>
-    <circle cx="79" cy="70" r="8" fill="#fff"/><circle cx="79" cy="70" r="3.8" fill="#3A2E2A"/>
-    <circle cx="121" cy="70" r="8" fill="#fff"/><circle cx="121" cy="70" r="3.8" fill="#3A2E2A"/>
+    <path d="M46 66 Q100 50 154 66 L154 92 Q100 78 46 92 Z" fill="#4CAF82"/>
+    <!-- おめめ(大きく・キラキラ) -->
+    <circle cx="78" cy="76" r="11" fill="#fff"/>
+    <circle cx="78" cy="77" r="6" fill="#3A2E2A"/>
+    <circle cx="80.5" cy="74.5" r="2.4" fill="#fff"/>
+    <circle cx="122" cy="76" r="11" fill="#fff"/>
+    <circle cx="122" cy="77" r="6" fill="#3A2E2A"/>
+    <circle cx="124.5" cy="74.5" r="2.4" fill="#fff"/>
     <!-- ほっぺ -->
-    <circle cx="64" cy="94" r="7" fill="#FFB4A2" opacity=".75"/>
-    <circle cx="136" cy="94" r="7" fill="#FFB4A2" opacity=".75"/>
-    <!-- 笑顔 -->
-    <path d="M86 98 Q100 110 114 98" stroke="#3A2E2A" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+    <circle cx="57" cy="102" r="9" fill="#FFB4A2" opacity=".8"/>
+    <circle cx="143" cy="102" r="9" fill="#FFB4A2" opacity=".8"/>
+    <!-- にっこり -->
+    <path d="M91 104 Q100 113 109 104" stroke="#3A2E2A" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <!-- キラキラ -->
+    <path d="M164 38l3 7 7 3-7 3-3 7-3-7-7-3 7-3Z" fill="#FFD766"/>
+    <path d="M34 32l2.2 5 5 2.2-5 2.2-2.2 5-2.2-5-5-2.2 5-2.2Z" fill="#FFD766"/>
   </symbol>
 </svg>
 <main>
@@ -122,7 +127,7 @@
     <form id="calc-form" onsubmit="return false">
       <div class="field">
         <label for="in-salary">💰 月収を入れてください<span class="hint">引かれる前の金額。だいたいでOK</span></label>
-        <div class="yen-input big-input"><input type="text" id="in-salary" inputmode="numeric" placeholder="300000" autocomplete="off"></div>
+        <div class="yen-input big-input"><input type="text" id="in-salary" inputmode="numeric" placeholder="300,000" autocomplete="off"></div>
       </div>
       <div class="field">
         <label for="in-bonus">ボーナス(1年分の合計)<span class="hint">わからなければ空欄でOK</span></label>
@@ -139,6 +144,7 @@
             <option value="0">0人</option><option value="1">1人</option>
             <option value="2">2人</option><option value="3">3人</option>
             <option value="4">4人</option><option value="5">5人</option>
+            <option value="6">6人</option><option value="7">7人</option>
           </select>
           <details class="mini-guide">
             <summary>扶養ってなんだっけ?</summary>
@@ -309,8 +315,9 @@
     <p class="g-note">あなたの手取り、正確に出します。<br>入力する項目(扶養・住民税など)、ぜんぶわかりそうですか?</p>
     <div class="choice2">
       <button class="choice" type="button" id="w-guide">🦸 不安…おまかせする(質問に答えるだけ)</button>
-      <button class="choice alt" type="button" id="w-self">✍️ わかる!自分で入力する</button>
+      <button class="choice" type="button" id="w-self">✍️ わかる!自分で入力する</button>
     </div>
+    <p class="privacy">入力した内容は、どこにも送信・保存されません</p>
   </div>
 </div>
 
@@ -322,13 +329,14 @@
     <h2 id="g-q"></h2>
     <p class="g-note" id="g-note"></p>
     <div class="g-inputrow" id="g-inputrow" hidden>
-      <div class="yen-input big-input"><input type="text" id="g-input" inputmode="numeric" autocomplete="off"></div>
+      <div class="yen-input big-input" id="g-input-wrap"><input type="text" id="g-input" inputmode="numeric" autocomplete="off"></div>
     </div>
     <div class="g-inputrow" id="g-selectrow" hidden>
       <select id="g-select"></select>
     </div>
     <div class="choice2" id="g-choices"></div>
     <button class="g-back" type="button" id="g-back">← ひとつ前にもどる</button>
+    <p class="privacy">入力した内容は、どこにも送信・保存されません</p>
   </div>
 </div>
 

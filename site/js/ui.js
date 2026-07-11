@@ -21,6 +21,15 @@
   }
   form.pref.value = "tokyo";
 
+  /* 金額入力はカンマ区切りで表示(計算時は数字だけ読むので安全) */
+  const commaFmt = (v) => Number(v).toLocaleString("ja-JP");
+  for (const el of [form.salary, form.bonus]) {
+    el.addEventListener("input", () => {
+      const digits = String(el.value).replace(/[^\d]/g, "");
+      el.value = digits ? commaFmt(digits) : "";
+    });
+  }
+
   function readInput() {
     const num = (el) => {
       const v = parseInt(String(el.value).replace(/[^\d]/g, ""), 10);
@@ -113,8 +122,8 @@
   function restoreFromUrl() {
     const q = new URLSearchParams(location.search);
     if (!q.has("m")) return;
-    form.salary.value = q.get("m") || "";
-    form.bonus.value = q.get("b") === "0" ? "" : (q.get("b") || "");
+    form.salary.value = q.get("m") ? commaFmt(q.get("m")) : "";
+    form.bonus.value = (q.get("b") && q.get("b") !== "0") ? commaFmt(q.get("b")) : "";
     if (R.prefectures[q.get("p")]) form.pref.value = q.get("p");
     const age = q.get("a") === "1" ? "40to64" : (q.get("a") === "2" ? "over65" : "under40");
     document.querySelector(`input[name="age"][value="${age}"]`).checked = true;
