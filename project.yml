@@ -31,14 +31,16 @@ targets:
         NSUserNotificationsUsageDescription: "リマインダーと習慣通知に使用します"
         NSFaceIDUsageDescription: "アプリロック解除に使用します"
         ITSAppUsesNonExemptEncryption: false
-    entitlements:
-      path: Nexus/Nexus.entitlements
-      properties:
-        aps-environment: development
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.personal.nexus
-        TARGETED_DEVICE_FAMILY: "1"
+        TARGETED_DEVICE_FAMILY: "1,2"   # iPhone + iPad(Apple Silicon MacでもiPadアプリとしてそのまま動く)
+        SUPPORTS_MACCATALYST: false
 
   NexusWidgets:
     type: app-extension
