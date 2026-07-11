@@ -9,7 +9,6 @@
     bonus: $("in-bonus"),
     pref: $("in-pref"),
     dependents: $("in-dependents"),
-    noResident: $("in-noresident"),
   };
 
   /* 都道府県セレクトを生成 */
@@ -33,7 +32,8 @@
       prefecture: form.pref.value,
       age: document.querySelector('input[name="age"]:checked').value,
       dependents: parseInt(form.dependents.value, 10),
-      noResidentTax: form.noResident.checked,
+      // 「去年も収入があった? いいえ」= 住民税なし(前年無収入)
+      noResidentTax: document.querySelector('input[name="lastyear"]:checked').value === "no",
     };
   }
 
@@ -64,7 +64,7 @@
     // 内訳テーブル(月々 / 年間)
     const m = r.monthly;
     const rows = [
-      ["額面(支給額)", m.gross, r.annualGross, false],
+      ["支給額(引かれる前)", m.gross, r.annualGross, false],
       ["健康保険" + (r.detail.kaigoApplied ? "+介護保険" : "") + "+支援金", -m.health, -(m.health * 12 + r.bonus.health), true],
       ["厚生年金", -m.pension, -(m.pension * 12 + r.bonus.pension), true],
       ["雇用保険", -m.employment, -(m.employment * 12 + r.bonus.employment), true],
@@ -89,25 +89,25 @@
       `${R.prefectures[p.prefecture].name}の健康保険料率${r.detail.healthRatePct.toFixed(2)}%で計算。月々の税額は年額の12分の1(概算)。`;
 
     // シェア文言(結果込み)
-    const shareText = `額面${yen(p.monthlySalary)}円の手取り、月${yen(m.netApprox)}円だった(手取り率${(r.annual.netRate * 100).toFixed(1)}%)。自分の数字は30秒でわかる↓`;
+    const shareText = `月収${yen(p.monthlySalary)}円の手取り、月${yen(m.netApprox)}円だった(手取り率${(r.annual.netRate * 100).toFixed(1)}%)。自分の数字は30秒でわかる↓`;
     $("share-x").href = "https://x.com/intent/post?text=" + encodeURIComponent(shareText + "\n" + shareUrl(p));
     updateUrl(p);
   }
 
-  /* URLパラメータ(共有・復元用) */
-  function shareUrl(p) {
-    const q = new URLSearchParams({
+  /* URLパラメータ(共有・復元用) a: 0=〜39歳 1=40〜64歳 2=65歳〜 */
+  function ageCode(age) { return age === "40to64" ? "1" : (age === "over65" ? "2" : "0"); }
+  function params(p) {
+    return new URLSearchParams({
       m: p.monthlySalary, b: p.annualBonus || 0, p: p.prefecture,
-      a: p.age === "40to64" ? "1" : "0", d: p.dependents, n: p.noResidentTax ? "1" : "0",
+      a: ageCode(p.age), d: p.dependents, n: p.noResidentTax ? "1" : "0",
     });
-    return location.origin + location.pathname + "?" + q.toString();
+  }
+  function shareUrl(p) {
+    return location.origin + location.pathname + "?" + params(p).toString();
   }
   function updateUrl(p) {
     if (p.monthlySalary >= 10000) {
-      history.replaceState(null, "", "?" + new URLSearchParams({
-        m: p.monthlySalary, b: p.annualBonus || 0, p: p.prefecture,
-        a: p.age === "40to64" ? "1" : "0", d: p.dependents, n: p.noResidentTax ? "1" : "0",
-      }));
+      history.replaceState(null, "", "?" + params(p));
     }
   }
   function restoreFromUrl() {
@@ -116,9 +116,10 @@
     form.salary.value = q.get("m") || "";
     form.bonus.value = q.get("b") === "0" ? "" : (q.get("b") || "");
     if (R.prefectures[q.get("p")]) form.pref.value = q.get("p");
-    document.querySelector(`input[name="age"][value="${q.get("a") === "1" ? "40to64" : "under40"}"]`).checked = true;
+    const age = q.get("a") === "1" ? "40to64" : (q.get("a") === "2" ? "over65" : "under40");
+    document.querySelector(`input[name="age"][value="${age}"]`).checked = true;
     form.dependents.value = q.get("d") || "0";
-    form.noResident.checked = q.get("n") === "1";
+    document.querySelector(`input[name="lastyear"][value="${q.get("n") === "1" ? "no" : "yes"}"]`).checked = true;
   }
 
   $("copy-url").addEventListener("click", async () => {

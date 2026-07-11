@@ -66,69 +66,73 @@
   <header class="site-header">
     <p class="site-name">手取りチェッカー</p>
     <h1>手取り計算ツール<span style="font-size:.72em">(2026年・令和8年度対応)</span></h1>
-    <p class="lede">月収を入れるだけ。最新の社会保険料率と税制改正を反映した手取り額が、その場でわかります。</p>
+    <p class="lede">月収を入れるだけ。あなたの手取りが、その場でパッとわかります。</p>
     <ul class="badges">
-      <li>登録不要</li>
-      <li>入力データ送信なし</li>
-      <li>令和8年度料率・出典明記</li>
-      <li>子育て支援金 対応</li>
+      <li>🆓 無料・登録なし</li>
+      <li>⏱ 30秒でわかる</li>
+      <li>🔒 入力データはどこにも送られません</li>
+      <li>✅ 2026年の最新版</li>
     </ul>
   </header>
 
   <!-- ======== ツール本体 ======== -->
   <section class="card" aria-label="手取り計算フォーム">
-    <p class="form-lede">用意するのは給与明細1枚だけ。なければ月収の見込み額でも計算できます。</p>
+    <p class="form-lede">👛 用意するのは給与明細1枚。なければ、だいたいの月収だけでもOK!</p>
     <form id="calc-form" onsubmit="return false">
       <div class="field">
-        <label for="in-salary">月収(額面)<span class="hint">給与明細の「総支給額」の欄</span></label>
+        <label for="in-salary">月収<span class="hint">引かれる前の金額。給与明細の「総支給額」の欄</span></label>
         <div class="yen-input"><input type="text" id="in-salary" inputmode="numeric" placeholder="300000" autocomplete="off"></div>
       </div>
       <div class="field">
-        <label for="in-bonus">年間ボーナス(額面)<span class="hint">任意。年2回なら合計額</span></label>
+        <label for="in-bonus">ボーナス(1年分の合計)<span class="hint">わからなければ空欄でOK</span></label>
         <div class="yen-input"><input type="text" id="in-bonus" inputmode="numeric" placeholder="0" autocomplete="off"></div>
       </div>
       <div class="row2">
         <div class="field">
-          <label for="in-pref">勤務先の都道府県<span class="hint">健康保険料率が変わります</span></label>
+          <label for="in-pref">会社がある都道府県<span class="hint">住まいではなく勤務先</span></label>
           <select id="in-pref"></select>
         </div>
         <div class="field">
-          <label for="in-dependents">扶養家族の数<span class="hint">税の扶養(16歳以上)</span></label>
+          <label for="in-dependents">扶養している家族<span class="hint">いなければ0人のまま</span></label>
           <select id="in-dependents">
             <option value="0">0人</option><option value="1">1人</option>
             <option value="2">2人</option><option value="3">3人</option>
             <option value="4">4人</option><option value="5">5人</option>
           </select>
+          <details class="mini-guide">
+            <summary>扶養ってなんだっけ?</summary>
+            <p>あなたの収入で生活している家族のことです。たとえば、収入がない・少ない(年収123万円以下)配偶者や、16歳以上のお子さん。<strong>独身の方や共働きのご夫婦は「0人」のままでOK</strong>です。16歳未満のお子さんは、税金の計算では対象外なので数えません。</p>
+          </details>
         </div>
       </div>
       <div class="field">
-        <label>年齢</label>
+        <label>年齢<span class="hint">40〜64歳は介護保険料のぶん少し引かれます</span></label>
         <div class="seg">
-          <label><input type="radio" name="age" value="under40" checked><span>40歳未満</span></label>
-          <label><input type="radio" name="age" value="40to64"><span>40〜64歳(介護保険あり)</span></label>
+          <label><input type="radio" name="age" value="under40" checked><span>〜39歳</span></label>
+          <label><input type="radio" name="age" value="40to64"><span>40〜64歳</span></label>
+          <label><input type="radio" name="age" value="over65"><span>65歳〜</span></label>
         </div>
       </div>
-      <div class="field check">
-        <input type="checkbox" id="in-noresident">
-        <label for="in-noresident">住民税なしで計算(新社会人1年目・前年無収入の方)</label>
+      <div class="field">
+        <label>去年(2025年)も働いて収入がありましたか?<span class="hint">住民税は「去年の収入」で決まるため</span></label>
+        <div class="seg">
+          <label><input type="radio" name="lastyear" value="yes" checked><span>はい</span></label>
+          <label><input type="radio" name="lastyear" value="no"><span>いいえ(新社会人など)</span></label>
+        </div>
       </div>
     </form>
 
     <details class="input-guide">
-      <summary>入力する数字はどこを見ればいい?</summary>
+      <summary>💡 どの数字を入れればいいか、もう少しくわしく</summary>
       <dl>
-        <dt>月収(額面)</dt>
-        <dd>給与明細の<strong>「総支給額」(「支給合計」)</strong>の欄です。銀行に振り込まれる額ではなく、保険料や税金が引かれる前の金額。基本給・残業代・各種手当をすべて含みます。内定通知や求人票しか手元にない方は「月給」の額でOKです。</dd>
-        <dt>年間ボーナス(額面)</dt>
-        <dd>賞与明細の「総支給額」の1年分の合計です。まだわからない場合は求人票の<strong>「賞与:基本給×◯か月分」</strong>から概算できます(例: 基本給25万円×年2か月分=50万円)。不明なら空欄のままでも大丈夫 — 月々の手取り額には影響しません。</dd>
-        <dt>勤務先の都道府県</dt>
-        <dd>お住まいではなく<strong>会社(勤務先)の所在地</strong>です。健康保険料率が都道府県ごとに少しずつ違うためです。</dd>
-        <dt>扶養家族の数</dt>
-        <dd>税の扶養に入れている<strong>16歳以上</strong>の家族の人数です。例: 年収123万円以下(いわゆる「103万円の壁」は令和7年改正で123万円に)の配偶者、16歳以上のお子さん、仕送りしている親御さん。単身の方や共働きで扶養なしの場合は0人。16歳未満のお子さんは所得税の扶養控除の対象外のため数えません。</dd>
+        <dt>月収</dt>
+        <dd>給与明細の<strong>「総支給額」</strong>の欄です(振り込まれた額ではありません)。転職前なら内定通知の「月給」でOK。交通費は入れたままで大丈夫です。</dd>
+        <dt>ボーナス</dt>
+        <dd>1年分の合計です。「基本給×◯か月分」でざっくりでもOK。空欄でも月々の手取りは正しく出ます。</dd>
         <dt>年齢</dt>
-        <dd>40〜64歳の方は<strong>介護保険料</strong>が健康保険料に上乗せして引かれるため、該当する区分を選んでください。</dd>
-        <dt>住民税なしオプション</dt>
-        <dd>住民税は「前年の収入」に対してかかる税金です。新社会人1年目や前年に収入がなかった方はまだ引かれないため、チェックを入れると実際に近い手取りになります(2年目の6月から天引きが始まります)。</dd>
+        <dd>40歳から介護保険料(月2千円くらい)が加わり、65歳からは給料からは引かれなくなります。<strong>70歳以上の方</strong>は年金保険料もかからなくなるため、実際の手取りはこの結果より少し多めになります。</dd>
+        <dt>去年の収入</dt>
+        <dd>住民税は「去年の収入」にかかる後払いの税金です。だから新社会人の1年目は住民税ゼロ。<strong>2年目の6月から</strong>天引きが始まります(「いいえ」を選ぶとその状態で計算します)。</dd>
       </dl>
     </details>
   </section>
@@ -172,8 +176,8 @@
 
   <!-- ======== 解説(SEO/AI引用の受け皿) ======== -->
   <article class="prose">
-    <h2 id="quick">手取り早見表(2026年・月収別)</h2>
-    <p>東京都・40歳未満・扶養なし・賞与なしの場合の概算です(本ツールの検証済み計算エンジンで算出)。</p>
+    <h2 id="quick">📋 手取り早見表(2026年・月収別)</h2>
+    <p>月収ごとの手取りのめやすです(東京都・独身・ボーナスなしの場合)。</p>
     <table>
       <thead><tr><th>月収(額面)</th><th>手取り(月)</th><th>手取り(年)</th><th>手取り率</th></tr></thead>
       <tbody>
@@ -189,38 +193,41 @@
       </tbody>
     </table>
 
-    <h2 id="how">計算方法と根拠(2026年・令和8年度)</h2>
-    <p>手取り = 額面 −(健康保険料 + 介護保険料 + 子ども・子育て支援金 + 厚生年金保険料 + 雇用保険料)−(所得税 + 住民税)。本ツールは次の公表数値で計算しています。</p>
-    <table>
-      <thead><tr><th>項目</th><th>2026年の値</th><th>備考</th></tr></thead>
-      <tbody>
-        <tr><td>健康保険料率</td><td>9.21〜10.55%(都道府県別)</td><td>協会けんぽ・令和8年3月分〜。本人負担は折半</td></tr>
-        <tr><td>介護保険料率</td><td>1.62%</td><td>40〜64歳のみ。全国一律・折半</td></tr>
-        <tr><td>子ども・子育て支援金</td><td>0.23%</td><td>2026年4月〜新設。折半(本人0.115%)。賞与も対象</td></tr>
-        <tr><td>厚生年金保険料率</td><td>18.3%(本人9.15%)</td><td>標準報酬月額の上限65万円(68万円への引き上げは2027年9月から)</td></tr>
-        <tr><td>雇用保険料率</td><td>0.5%(本人負担・一般の事業)</td><td>令和8年4月〜引き下げ</td></tr>
-        <tr><td>基礎控除(所得税)</td><td>最大104万円</td><td>令和8年度改正。合計所得489万円以下は一律104万円(令和8・9年分)</td></tr>
-        <tr><td>給与所得控除</td><td>最低65万円</td><td>令和7年分〜</td></tr>
-        <tr><td>復興特別所得税</td><td>2.1%</td><td>所得税額に上乗せ</td></tr>
-        <tr><td>住民税</td><td>所得割10% + 均等割等5,000円</td><td>前年も同収入だった前提の概算。基礎控除43万円</td></tr>
-      </tbody>
-    </table>
+    <h2 id="how">🧮 なにが引かれてるの?(計算方法と根拠)</h2>
+    <p>手取り = 月収 −「社会保険料」−「税金」。それだけです。使っている料率はぜんぶ国や協会けんぽの公表値で、勝手な推計はしていません。</p>
+    <details>
+      <summary>計算に使っている料率をぜんぶ見る(2026年・令和8年度)</summary>
+      <table>
+        <thead><tr><th>項目</th><th>2026年の値</th><th>備考</th></tr></thead>
+        <tbody>
+          <tr><td>健康保険料率</td><td>9.21〜10.55%(都道府県別)</td><td>協会けんぽ・令和8年3月分〜。本人負担は折半</td></tr>
+          <tr><td>介護保険料率</td><td>1.62%</td><td>40〜64歳のみ。全国一律・折半</td></tr>
+          <tr><td>子ども・子育て支援金</td><td>0.23%</td><td>2026年4月〜新設。折半(本人0.115%)。賞与も対象</td></tr>
+          <tr><td>厚生年金保険料率</td><td>18.3%(本人9.15%)</td><td>標準報酬月額の上限65万円(68万円への引き上げは2027年9月から)</td></tr>
+          <tr><td>雇用保険料率</td><td>0.5%(本人負担・一般の事業)</td><td>令和8年4月〜引き下げ</td></tr>
+          <tr><td>基礎控除(所得税)</td><td>最大104万円</td><td>令和8年度改正。合計所得489万円以下は一律104万円(令和8・9年分)</td></tr>
+          <tr><td>給与所得控除</td><td>最低65万円</td><td>令和7年分〜</td></tr>
+          <tr><td>復興特別所得税</td><td>2.1%</td><td>所得税額に上乗せ</td></tr>
+          <tr><td>住民税</td><td>所得割10% + 均等割等5,000円</td><td>前年も同収入だった前提の概算。基礎控除43万円</td></tr>
+        </tbody>
+      </table>
+    </details>
 
     <details>
-      <summary>都道府県別 健康保険料率一覧(令和8年度・協会けんぽ)</summary>
+      <summary>あなたの県の健康保険料率を見る(47都道府県・令和8年度)</summary>
       <table id="pref-table"><thead><tr><th>都道府県</th><th>料率</th><th>都道府県</th><th>料率</th></tr></thead><tbody></tbody></table>
       <p class="note">労使合計の率。給与から引かれる本人負担はこの半分です。適用は令和8年3月分(4月納付分)から。</p>
     </details>
 
-    <h2 id="changes">2026年の変更点まとめ</h2>
+    <h2 id="changes">✨ 2026年、ここが変わった</h2>
     <ul>
-      <li><strong>健康保険料率の引き下げ</strong> — 全国平均10.0%→9.9%。34年ぶりの平均料率引き下げで、40都道府県で下がりました。</li>
-      <li><strong>子ども・子育て支援金の徴収開始</strong>(2026年4月〜)— 料率0.23%(本人負担0.115%)。月収30万円で月345円の新しい天引きです。</li>
-      <li><strong>雇用保険料率の引き下げ</strong> — 本人負担0.55%→0.5%。</li>
-      <li><strong>基礎控除の引き上げ</strong>(令和8年分所得税)— 合計所得489万円以下は一律104万円に。年収500万円前後までの会社員は昨年より所得税が下がります。</li>
+      <li><strong>健康保険料が下がった</strong> — 34年ぶりの引き下げで、40都道府県で安くなりました。</li>
+      <li><strong>新しい天引き「子ども・子育て支援金」が始まった</strong>(2026年4月〜)— 月収30万円で月345円です。</li>
+      <li><strong>雇用保険も下がった</strong> — 本人負担0.55%→0.5%。</li>
+      <li><strong>所得税が安くなった</strong> — 基礎控除が104万円に上がり、年収500万円くらいまでの人は去年より税金が下がっています。</li>
     </ul>
 
-    <h2 id="faq">よくある質問</h2>
+    <h2 id="faq">❓ よくある質問</h2>
     <details><summary>月収30万円の手取りはいくら?</summary>
       <p>東京都・40歳未満・扶養なしなら<strong>月あたり約24.0万円</strong>です(2026年)。健康保険+支援金15,120円、厚生年金27,450円、雇用保険1,500円、所得税・住民税(月割)約16,250円が引かれます。年間では手取り約287.6万円、手取り率79.9%です。</p>
     </details>
@@ -240,7 +247,7 @@
       <p>社会保険料は協会けんぽの公表料率・等級表どおりに計算しており、原則1円単位で一致します(端数処理の事業所差で最大数円の差)。所得税・住民税は生命保険料控除・iDeCo・住宅ローン控除などの個別控除を含まない<strong>概算</strong>です。正確な税額は源泉徴収票・住民税決定通知書をご確認ください。</p>
     </details>
 
-    <h2 id="sources">出典</h2>
+    <h2 id="sources">📚 出典(数字のよりどころ)</h2>
     <ul class="sources">
       <li>全国健康保険協会(協会けんぽ)「令和8年度 都道府県単位保険料率」「令和8年度保険料額表(令和8年3月分から)」</li>
       <li>厚生労働省「令和8年度 雇用保険料率のご案内」</li>
