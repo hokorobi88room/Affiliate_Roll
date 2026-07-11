@@ -94,8 +94,8 @@
     tbody.appendChild(sum);
 
     $("r-caption").textContent =
-      `標準報酬月額 ${yen(r.detail.standardMonthlyHealth)}円(健保)/${yen(r.detail.standardMonthlyPension)}円(厚年)・` +
-      `${R.prefectures[p.prefecture].name}の健康保険料率${r.detail.healthRatePct.toFixed(2)}%で計算。月々の税額は年額の12分の1(概算)。`;
+      `${R.prefectures[p.prefecture].name}の健康保険料率${r.detail.healthRatePct.toFixed(2)}%・令和8年度の公表値で計算しました。` +
+      `月々の税額は年額を12で割った概算です。`;
 
     // シェア文言(結果込み)
     const shareText = `月収${yen(p.monthlySalary)}円の手取り、月${yen(m.netApprox)}円だった(手取り率${(r.annual.netRate * 100).toFixed(1)}%)。自分の数字は30秒でわかる↓`;

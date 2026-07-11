@@ -50,9 +50,33 @@ a { color: var(--accent); text-underline-offset: 3px; }
 @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
 .site-name { font-size: 14px; font-weight: 800; letter-spacing: .05em; color: var(--accent); margin: 0; }
 .site-name .at { font-weight: 600; color: var(--muted); font-size: 12px; }
-h1 { font-size: clamp(27px, 7vw, 38px); line-height: 1.35; margin: 6px 0 4px; font-weight: 800; text-wrap: balance; }
-h1 em { font-style: normal; color: var(--accent); }
-.lede { color: var(--muted); font-size: 14px; margin: 4px 0 0; }
+/* サイト名が主役(ブランドを覚えてもらう) */
+h1.brand {
+  font-size: clamp(30px, 8.6vw, 46px); line-height: 1.3;
+  margin: 0 0 2px; font-weight: 800; color: var(--accent);
+}
+h1.brand .at { font-size: .42em; font-weight: 700; color: var(--muted); margin-left: 2px; }
+.tagline { font-size: clamp(19px, 5.4vw, 26px); font-weight: 800; margin: 10px 0 2px; line-height: 1.45; }
+.tagline em { font-style: normal; color: var(--accent); }
+.lede { color: var(--muted); font-size: 13.5px; margin: 4px 0 0; }
+
+/* 経理マンの吹き出し(気づかせたい一言はこれで目立たせる) */
+.km-say { display: flex; align-items: flex-start; gap: 10px; margin: 14px 0; }
+.km-say .m { width: 56px; flex: none; }
+.km-say .m svg { width: 100%; height: auto; display: block; }
+.km-say .bubble {
+  position: relative; flex: 1; margin: 2px 0 0;
+  background: var(--surface); border: 2px solid var(--accent);
+  border-radius: 16px; padding: 12px 15px;
+  font-size: 14.5px; font-weight: 800; line-height: 1.7;
+}
+.km-say .bubble::before {
+  content: ""; position: absolute; left: -9px; top: 20px;
+  width: 14px; height: 14px; background: var(--surface);
+  border-left: 2px solid var(--accent); border-bottom: 2px solid var(--accent);
+  transform: rotate(45deg);
+}
+.km-say .bubble small { display: block; font-weight: 500; color: var(--muted); font-size: 12px; margin-top: 3px; }
 .badges { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 16px; padding: 0; list-style: none; }
 .badges li {
   font-size: 12px; font-weight: 700; padding: 5px 13px; border-radius: 999px;
@@ -266,6 +290,11 @@ table.breakdown { width: 100%; border-collapse: collapse; font-size: 14px; }
 .prose .quiz { font-weight: 800; font-size: 15px; }
 .prose table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
 .prose th, .prose td { padding: 8px 10px; border-bottom: 1px solid var(--line); text-align: left; font-variant-numeric: tabular-nums; }
+.prose table.tight th, .prose table.tight td { white-space: nowrap; }
+/* 狭い画面では「手取り(年)」列を省き、主役の手取り率を見切れさせない */
+@media (max-width: 460px) {
+  .prose table.tight th:nth-child(3), .prose table.tight td:nth-child(3) { display: none; }
+}
 .prose thead th { color: var(--muted); font-size: 12px; }
 .prose details {
   background: var(--surface); border: 1px solid var(--line);

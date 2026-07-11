@@ -105,12 +105,10 @@
   <header class="site-header">
     <div class="hero-top">
       <div class="mascot" aria-hidden="true"><svg><use href="#keiriman"/></svg></div>
-      <div>
-        <p class="site-name">あなたの経理マン<span class="at">@綻流夢</span></p>
-        <h1>その月収、<br>手取りで<em>いくら?</em></h1>
-        <p class="lede">保険料と税金を引いた「実際に使えるお金」を30秒で計算します(2026年・令和8年度対応)。</p>
-      </div>
+      <h1 class="brand">あなたの<br>経理マン<span class="at">@綻流夢</span></h1>
     </div>
+    <p class="tagline">その月収、手取りで<em>いくら?</em></p>
+    <p class="lede">保険料と税金を引いた「実際に使えるお金」を30秒で計算します(2026年・令和8年度対応)。</p>
     <ul class="badges">
       <li>🆓 無料・登録なし</li>
       <li>🔒 データ送信なし</li>
@@ -215,10 +213,12 @@
   <!-- ======== 解説(SEO/AI引用の受け皿) ======== -->
   <article class="prose">
     <h2 id="quick">📋 手取り早見表(2026年・月収別)</h2>
-    <p class="quiz">Q. 月収が上がるにつれて、手取り「率」が下がっていくこと、ご存知でしたか?👇</p>
-    <p class="note" style="margin-top:0">東京都・独身・ボーナスなしのめやすです。いちばん右の列に注目。</p>
-    <table>
-      <thead><tr><th>月収(額面)</th><th>手取り(月)</th><th>手取り(年)</th><th>手取り率</th></tr></thead>
+    <div class="km-say">
+      <span class="m" aria-hidden="true"><svg viewBox="0 0 200 210"><use href="#keiriman"/></svg></span>
+      <p class="bubble">Q. 月収が上がるにつれて、手取り「率」は下がっていく — ご存知でしたか?いちばん右の列を見てください👇<small>東京都・独身・ボーナスなしのめやすです</small></p>
+    </div>
+    <table class="tight">
+      <thead><tr><th>月収(引かれる前)</th><th>手取り(月)</th><th>手取り(年)</th><th>手取り率</th></tr></thead>
       <tbody>
         <tr><td>20万円</td><td>162,728円</td><td>1,952,740円</td><td>81.4%</td></tr>
         <tr><td>25万円</td><td>199,998円</td><td>2,399,972円</td><td>80.0%</td></tr>
@@ -259,6 +259,10 @@
     </details>
 
     <h2 id="changes">✨ 2026年、ここが変わった</h2>
+    <div class="km-say">
+      <span class="m" aria-hidden="true"><svg viewBox="0 0 200 210"><use href="#keiriman"/></svg></span>
+      <p class="bubble">気づいてました?今年の4月から、あなたの給与明細に新しい天引きがひとつ増えています👇</p>
+    </div>
     <ul>
       <li><strong>健康保険料が下がった</strong> — 34年ぶりの引き下げで、40都道府県で安くなりました。</li>
       <li><strong>新しい天引き「子ども・子育て支援金」が始まった</strong>(2026年4月〜)— 月収30万円で月345円です。</li>
@@ -270,14 +274,14 @@
     <details><summary>月収30万円の手取りはいくら?</summary>
       <p>東京都・40歳未満・扶養なしなら<strong>月あたり約24.0万円</strong>です(2026年)。健康保険+支援金15,120円、厚生年金27,450円、雇用保険1,500円、所得税・住民税(月割)約16,250円が引かれます。年間では手取り約287.6万円、手取り率79.9%です。</p>
     </details>
-    <details><summary>手取りは額面の何割?</summary>
+    <details><summary>手取りは月収の何割?</summary>
       <p>月収20万〜60万円ではおおむね<strong>75〜82%</strong>です。収入が上がるほど所得税率が上がるため、手取り率は少しずつ下がります。</p>
     </details>
     <details><summary>交通費(通勤手当)は月収に含める?</summary>
-      <p>含めたままで大丈夫です。社会保険料は<strong>通勤手当込みの総支給額</strong>(標準報酬月額)で決まります。なお通勤手当は所得税では非課税(月15万円まで)のため、通勤手当が大きい方は本ツールの税額がわずかに多め(=手取りが少なめ)に出ます。</p>
+      <p>含めたままで大丈夫です。社会保険料は<strong>通勤手当込みの総支給額</strong>で決まります。なお通勤手当は所得税がかからない(月15万円まで)ため、通勤手当が大きい方は本ツールの税額がわずかに多め(=手取りが少なめ)に出ます。</p>
     </details>
     <details><summary>ボーナスからも保険料や税金は引かれる?</summary>
-      <p>引かれます。賞与も健康保険・厚生年金・雇用保険・支援金の対象で(標準賞与額ベース・折半)、所得税もかかります。本ツールは年間賞与額を入れると自動で反映します。</p>
+      <p>引かれます。ボーナスも給料と同じように保険料と所得税の対象です。本ツールはボーナスの年間合計を入れると自動で反映します。</p>
     </details>
     <details><summary>入力したデータはどこかに送信される?</summary>
       <p><strong>送信されません。</strong>計算はすべてこのページのJavaScriptが端末内で行い、外部サーバーへの通信はありません。年収のような繊細な数字をAIチャットやクラウドに渡したくない方でも安心して使えます。</p>
