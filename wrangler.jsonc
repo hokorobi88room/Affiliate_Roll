@@ -1,0 +1,11 @@
+// Cloudflare Workers(新ダッシュボードのGit連携)用設定。
+// `npx wrangler deploy` が site/ を静的アセットとして配信する。
+// 静的アセットへのリクエストは無料・無制限(0円運用は維持)。
+// ※旧 Cloudflare Pages のフローで接続した場合、このファイルは無視される(警告ログのみ)。
+{
+  "name": "tedori-checker",
+  "compatibility_date": "2026-07-12",
+  "assets": {
+    "directory": "./site"
+  }
+}
