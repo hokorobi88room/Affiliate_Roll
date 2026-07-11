@@ -24,6 +24,7 @@ struct MoreView: View {
     var body: some View {
         NavigationStack {
             List {
+                NavigationLink { InsightsView() } label: { Label("インサイト", systemImage: "chart.bar.xaxis") }
                 NavigationLink { HabitsView() } label: { Label("習慣トラッカー", systemImage: "flame.fill") }
                 NavigationLink { NotesView() } label: { Label("ノート", systemImage: "note.text") }
                 NavigationLink { FocusTimerView() } label: { Label("集中タイマー", systemImage: "timer") }

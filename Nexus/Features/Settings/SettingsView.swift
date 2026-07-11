@@ -4,8 +4,7 @@ import SwiftData
 struct SettingsView: View {
     @AppStorage("accentColorName") private var accentColorName = "indigo"
     @AppStorage("appLockEnabled") private var appLockEnabled = false
-    @AppStorage("assistantPersona") private var persona =
-        "あなたは私専属の有能なパーソナルアシスタントです。簡潔かつ的確に日本語で答えてください。"
+    @AppStorage("assistantPersona") private var persona = AssistantPrompts.defaultPersona
     @State private var apiKey = ""
     @State private var apiKeySaved = false
     @State private var exportURL: URL?

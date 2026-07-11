@@ -7,6 +7,7 @@ struct DashboardView: View {
     @Query private var transactions: [Transaction]
     @Query private var focusSessions: [FocusSession]
     @State private var showQuickCapture = false
+    @State private var showBriefing = false
 
     private var todayTasks: [TaskItem] {
         tasks.filter { !$0.isDone }
@@ -31,9 +32,16 @@ struct DashboardView: View {
             ScrollView {
                 VStack(spacing: 16) {
                     greetingHeader
+                    briefingButton
                     statRow
                     todaySection
                     habitSection
+                    NavigationLink { InsightsView() } label: {
+                        Label("インサイトを見る", systemImage: "chart.bar.xaxis")
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 10)
+                            .background(.thinMaterial, in: RoundedRectangle(cornerRadius: 14))
+                    }
                 }
                 .padding()
             }
@@ -46,6 +54,7 @@ struct DashboardView: View {
                 }
             }
             .sheet(isPresented: $showQuickCapture) { QuickCaptureView() }
+            .sheet(isPresented: $showBriefing) { BriefingView() }
         }
     }
 
@@ -65,6 +74,30 @@ struct DashboardView: View {
         case 11..<17: return "こんにちは 👋"
         default: return "こんばんは 🌙"
         }
+    }
+
+    private var briefingButton: some View {
+        Button {
+            showBriefing = true
+        } label: {
+            HStack {
+                Image(systemName: "sparkles")
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("今日のブリーフィング").font(.subheadline.bold())
+                    Text("AIがタスク・家計・習慣を横断して作戦を立てます")
+                        .font(.caption).foregroundStyle(.secondary)
+                }
+                Spacer()
+                Image(systemName: "chevron.right").font(.caption).foregroundStyle(.secondary)
+            }
+            .padding()
+            .background(
+                LinearGradient(colors: [.indigo.opacity(0.18), .purple.opacity(0.18)],
+                               startPoint: .leading, endPoint: .trailing),
+                in: RoundedRectangle(cornerRadius: 16)
+            )
+        }
+        .buttonStyle(.plain)
     }
 
     private var statRow: some View {

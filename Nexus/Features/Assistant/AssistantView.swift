@@ -6,11 +6,10 @@ struct AssistantView: View {
     @Query(sort: \Conversation.updatedAt, order: .reverse) private var conversations: [Conversation]
     @State private var current: Conversation?
     @State private var input = ""
-    @State private var isStreaming = false
-    @State private var streamingText = ""
+    @State private var isWorking = false
+    @State private var statusText = ""
     @State private var errorMessage: String?
-    @AppStorage("assistantPersona") private var persona =
-        "あなたは私専属の有能なパーソナルアシスタントです。簡潔かつ的確に日本語で答えてください。"
+    @AppStorage("assistantPersona") private var persona = AssistantPrompts.defaultPersona
 
     var body: some View {
         NavigationStack {
@@ -32,6 +31,10 @@ struct AssistantView: View {
                 Text(errorMessage ?? "")
             }
         }
+    }
+
+    private var suggestions: [String] {
+        ["今日の状況を教えて", "今月何に使いすぎてる?", "期限切れのタスクを整理して", "習慣の調子はどう?"]
     }
 
     private var historyMenu: some View {
@@ -60,23 +63,53 @@ struct AssistantView: View {
                             MessageBubble(role: msg.role, content: msg.content)
                         }
                     } else {
-                        ContentUnavailableView("なんでも聞いてください",
-                                               systemImage: "sparkles",
-                                               description: Text("Claude搭載のパーソナルアシスタント"))
-                            .padding(.top, 80)
+                        emptyState
                     }
-                    if isStreaming {
-                        MessageBubble(role: "assistant",
-                                      content: streamingText.isEmpty ? "…" : streamingText)
-                            .id("streaming")
+                    if isWorking {
+                        HStack(spacing: 8) {
+                            ProgressView()
+                            Text(statusText.isEmpty ? "考え中…" : statusText)
+                                .font(.subheadline).foregroundStyle(.secondary)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal, 4)
+                        .id("working")
                     }
                 }
                 .padding()
             }
-            .onChange(of: streamingText) {
-                withAnimation { proxy.scrollTo("streaming", anchor: .bottom) }
+            .onChange(of: statusText) {
+                withAnimation { proxy.scrollTo("working", anchor: .bottom) }
+            }
+            .onChange(of: current?.messages.count) {
+                if let last = current?.sortedMessages.last {
+                    withAnimation { proxy.scrollTo(last.persistentModelID, anchor: .bottom) }
+                }
             }
         }
+    }
+
+    private var emptyState: some View {
+        VStack(spacing: 16) {
+            Image(systemName: "sparkles").font(.system(size: 44)).foregroundStyle(.tint)
+            Text("アプリの中身がわかるアシスタント").font(.headline)
+            Text("タスク・家計・習慣・ノートを読み書きできます").font(.caption).foregroundStyle(.secondary)
+            VStack(spacing: 8) {
+                ForEach(suggestions, id: \.self) { text in
+                    Button {
+                        input = text
+                        send()
+                    } label: {
+                        Text(text)
+                            .font(.subheadline)
+                            .padding(.horizontal, 14).padding(.vertical, 8)
+                            .background(.thinMaterial, in: Capsule())
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+        }
+        .padding(.top, 40)
     }
 
     private var inputBar: some View {
@@ -90,7 +123,7 @@ struct AssistantView: View {
             } label: {
                 Image(systemName: "arrow.up.circle.fill").font(.system(size: 32))
             }
-            .disabled(input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || isStreaming)
+            .disabled(input.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || isWorking)
         }
         .padding(.horizontal)
         .padding(.vertical, 8)
@@ -115,28 +148,69 @@ struct AssistantView: View {
         context.insert(userMsg)
         convo.updatedAt = .now
 
-        let history = convo.sortedMessages.map {
-            ClaudeService.APIMessage(role: $0.role, content: $0.content)
+        let history: [[String: Any]] = convo.sortedMessages.map {
+            ["role": $0.role, "content": $0.content]
         }
 
-        isStreaming = true
-        streamingText = ""
+        isWorking = true
+        statusText = ""
         Task {
             do {
-                for try await chunk in ClaudeService.shared.streamReply(messages: history, system: persona) {
-                    streamingText += chunk
-                }
-                let reply = ChatMessage(role: "assistant", content: streamingText)
-                reply.conversation = convo
-                context.insert(reply)
+                let reply = try await ClaudeService.shared.runAgent(
+                    userMessages: history,
+                    system: persona + AssistantPrompts.toolGuidance,
+                    tools: NexusTools.definitions,
+                    executeTool: { name, toolInput in
+                        await MainActor.run {
+                            NexusTools.execute(name: name, input: toolInput, context: context)
+                        }
+                    },
+                    onStatus: { status in
+                        Task { @MainActor in statusText = status }
+                    }
+                )
+                let assistantMsg = ChatMessage(role: "assistant",
+                                               content: reply.isEmpty ? "(応答なし)" : reply)
+                assistantMsg.conversation = convo
+                context.insert(assistantMsg)
                 convo.updatedAt = .now
             } catch {
                 errorMessage = error.localizedDescription
             }
-            isStreaming = false
-            streamingText = ""
+            isWorking = false
+            statusText = ""
         }
     }
+}
+
+enum AssistantPrompts {
+    static let defaultPersona =
+        "あなたは私専属の有能なパーソナルアシスタントです。簡潔かつ的確に日本語で答えてください。"
+
+    static let toolGuidance = """
+
+
+    あなたはユーザーのパーソナル管理アプリ「Nexus」に組み込まれており、\
+    ツールでタスク・家計簿・習慣・ノートを直接読み書きできます。\
+    質問に答える前に必要なデータをツールで確認し、推測でなく実データに基づいて答えること。\
+    書き込み系ツールは実行後に何をしたか一言で報告すること。\
+    金額は「1,234円」のように読みやすく整形すること。
+    """
+
+    static let briefing = """
+    今日のブリーフィングを作成してください。手順:
+    1. get_overviewで全体を把握
+    2. list_tasks(today)とlist_tasks(overdue)で今日やるべきことを確認
+    3. habits_statusで習慣を確認
+    4. finance_summary(0)で今月の家計を確認
+    その上で、以下の構成で簡潔にまとめて:
+    ## 今日の作戦
+    (最優先事項2〜3個)
+    ## 注意
+    (期限切れ・使いすぎ・途切れそうな習慣などの警告。なければ省略)
+    ## ひとこと
+    (前向きな一言)
+    """
 }
 
 struct MessageBubble: View {
