@@ -231,18 +231,20 @@
       <span class="m" aria-hidden="true"><svg viewBox="0 0 200 210"><use href="#keiriman"/></svg></span>
       <p class="bubble">Q. 月収20万円の人と60万円の人、手取り「率」が高いのはどっち? — 答えは、いちばん右の列にあります👇<small>東京都・独身・ボーナスなしのめやす。あなたの県・ボーナスではズレます</small></p>
     </div>
+    <!-- 早見表の「手取り(月)」はツールの表示式(支給額−丸め済み各控除行)と同一の値にすること。
+         生成: node -e で ui.js と同じ taxM/residentM/netM を計算(年次更新時に再生成) -->
     <table class="tight">
       <thead><tr><th>月収(引かれる前)</th><th>手取り(月)</th><th>手取り(年)</th><th>手取り率</th></tr></thead>
       <tbody>
         <tr><td>20万円</td><td>162,728円</td><td>1,952,740円</td><td>81.4%</td></tr>
-        <tr><td>25万円</td><td>199,998円</td><td>2,399,972円</td><td>80.0%</td></tr>
+        <tr><td>25万円</td><td>199,997円</td><td>2,399,972円</td><td>80.0%</td></tr>
         <tr><td>30万円</td><td>239,680円</td><td>2,876,160円</td><td>79.9%</td></tr>
-        <tr><td>35万円</td><td>276,208円</td><td>3,314,492円</td><td>78.9%</td></tr>
-        <tr><td>40万円</td><td>313,929円</td><td>3,767,152円</td><td>78.5%</td></tr>
+        <tr><td>35万円</td><td>276,207円</td><td>3,314,492円</td><td>78.9%</td></tr>
+        <tr><td>40万円</td><td>313,930円</td><td>3,767,152円</td><td>78.5%</td></tr>
         <tr><td>45万円</td><td>353,581円</td><td>4,242,968円</td><td>78.6%</td></tr>
         <tr><td>50万円</td><td>388,500円</td><td>4,662,000円</td><td>77.7%</td></tr>
-        <tr><td>55万円</td><td>423,419円</td><td>5,081,032円</td><td>77.0%</td></tr>
-        <tr><td>60万円</td><td>454,437円</td><td>5,453,248円</td><td>75.7%</td></tr>
+        <tr><td>55万円</td><td>423,420円</td><td>5,081,032円</td><td>77.0%</td></tr>
+        <tr><td>60万円</td><td>454,438円</td><td>5,453,248円</td><td>75.7%</td></tr>
       </tbody>
     </table>
     <p style="margin:16px 0"><button class="btn" type="button" data-guide-start="salary">🦸 あなたの条件だと?30秒で計算する</button></p>

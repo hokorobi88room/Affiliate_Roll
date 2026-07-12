@@ -181,7 +181,7 @@
     $("r-caption").textContent =
       `${R.prefectures[p.prefecture].name}の健康保険料率${r.detail.healthRatePct.toFixed(2)}%・令和8年度の公表値で計算しました。` +
       `月々の税額は年額を12で割った概算、住民税は「去年も同じくらいの収入」前提のめやすです。` +
-      (r.bonus.gross > 0 ? "ボーナスぶんの保険料・税金は「年間」の列にだけ入っています。" : "") +
+      (r.bonus.gross > 0 ? "ボーナスぶんの保険料・所得税は「年間」の列にだけ入っています(住民税は毎月に均等割り)。" : "") +
       (p.age === "over65" ? "※70歳以上の方は年金の保険料が引かれなくなるため、実際の手取りはこれより多くなります。" : "");
 
     // 経理マンのリアクション(復唱→損の数値化・累積化→転換→問い)
@@ -228,8 +228,12 @@
   function restoreFromUrl() {
     const q = new URLSearchParams(location.search);
     if (!q.has("m")) return false;
-    form.salary.value = q.get("m") ? commaFmt(q.get("m")) : "";
-    form.bonus.value = (q.get("b") && q.get("b") !== "0") ? commaFmt(q.get("b")) : "";
+    // 改変・切損URLでも壊れて見えないよう、数字だけを取り出して復元する
+    const mDigits = digitsOf(q.get("m") || "");
+    const bDigits = digitsOf(q.get("b") || "");
+    if (!mDigits) return false;
+    form.salary.value = commaFmt(mDigits);
+    form.bonus.value = (bDigits && bDigits !== "0") ? commaFmt(bDigits) : "";
     if (R.prefectures[q.get("p")]) form.pref.value = q.get("p");
     const age = q.get("a") === "1" ? "40to64" : (q.get("a") === "2" ? "over65" : "under40");
     if (age === "under40") {
@@ -256,10 +260,15 @@
     } catch { /* clipboard未対応環境は無視 */ }
   });
 
-  /* 入力のたび即時再計算(ツールの武器) */
+  /* 入力のたび即時再計算(ツールの武器)。
+     ユーザー自身が条件を変えたら「あなた専用に設定しました」等のバナーは役目を終えるので消す */
+  const onFormEvent = (e) => {
+    if (e.isTrusted) $("guide-banner").hidden = true;
+    render();
+  };
   for (const el of document.querySelectorAll("#calc-form input, #calc-form select")) {
-    el.addEventListener("input", render);
-    el.addEventListener("change", render);
+    el.addEventListener("input", onFormEvent);
+    el.addEventListener("change", onFormEvent);
   }
 
   /* アフィリエイト枠: 設定があるときだけ表示 */

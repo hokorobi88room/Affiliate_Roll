@@ -121,7 +121,9 @@
         let v = parseInt(KM.digitsOf(inp.value), 10);
         if (s.input === "salary" && (isNaN(v) || v < 10000)) {
           $("g-note").hidden = false;
-          $("g-note").textContent = "1万円以上の数字を入れてください(だいたいでOK!)";
+          $("g-note").textContent = (v > 0 && v < 1000)
+            ? `もしかして${v}万円ですか?「円」の単位で入れてください(例: ${KM.commaFmt(v * 10000)})`
+            : "1万円以上の数字を入れてください(だいたいでOK!)";
           inp.focus();
           return;
         }
