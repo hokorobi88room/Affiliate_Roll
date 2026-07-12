@@ -159,6 +159,9 @@ input:focus, select:focus {
 .seg label:has(input:checked) { background: var(--accent); color: #fff; font-weight: 800; }
 .seg label:has(input:focus-visible) { outline: 3px solid var(--focus); outline-offset: -3px; }
 .seg label + label { border-left: 2px solid var(--line-strong); }
+/* 触られるまでデフォルト選択に色をつけない(どちらかを「推し」に見せない) */
+.seg.untouched label:has(input:checked) { background: transparent; color: inherit; font-weight: 700; }
+.seg.age-detail { margin-top: 8px; }
 
 /* フィールド直下のミニ解説 */
 .mini-guide { margin-top: 7px; }

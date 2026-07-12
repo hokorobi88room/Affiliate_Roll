@@ -24,7 +24,7 @@
   "url": "https://tedori-checker.hokorobi88room.workers.dev/",
   "applicationCategory": "FinanceApplication",
   "operatingSystem": "Any",
-  "description": "月収(額面)から2026年(令和8年度)の社会保険料と税金を差し引いた手取り額を計算する無料ツール。協会けんぽ47都道府県別料率、子ども・子育て支援金、令和8年分基礎控除(104万円)に対応。",
+  "description": "月収(引かれる前の金額)から2026年(令和8年度)の社会保険料と税金を差し引いた手取り額を計算する無料ツール。協会けんぽ47都道府県別料率、子ども・子育て支援金、令和8年分基礎控除(104万円)に対応。",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
   "dateModified": "2026-07-11"
 }
@@ -37,22 +37,22 @@
     {
       "@type": "Question",
       "name": "月収30万円の手取りはいくらですか?(2026年)",
-      "acceptedAnswer": { "@type": "Answer", "text": "2026年(令和8年度)の東京都・40歳未満・扶養なしの場合、月収30万円(額面)の手取りは月あたり約24.0万円です。内訳は健康保険+子ども・子育て支援金15,120円、厚生年金27,450円、雇用保険1,500円、所得税・住民税(月割)約16,250円が差し引かれます。年間では額面360万円に対し手取り約287.6万円(手取り率79.9%)です。" }
+      "acceptedAnswer": { "@type": "Answer", "text": "2026年(令和8年度)の東京都・40歳未満・扶養なしの場合、月収30万円(引かれる前)の手取りは月あたり約24.0万円です。内訳は健康保険+子ども・子育て支援金15,120円、厚生年金27,450円、雇用保険1,500円、所得税・住民税(月割)約16,250円が差し引かれます。年間では月収合計360万円に対し手取り約287.6万円(手取り率79.9%)です。" }
     },
     {
       "@type": "Question",
-      "name": "手取りは額面の何割ですか?",
+      "name": "手取りは月収の何割ですか?",
       "acceptedAnswer": { "@type": "Answer", "text": "月収20万〜60万円の会社員でおおむね75〜82%です。収入が上がるほど税率が上がるため手取り率は下がります。例: 月収20万円→約81%、月収40万円→約78%、月収60万円→約76%(2026年・東京都・独身の場合)。" }
     },
     {
       "@type": "Question",
       "name": "2026年(令和8年)の手取り計算は何が変わりましたか?",
-      "acceptedAnswer": { "@type": "Answer", "text": "主な変更点は4つ。①協会けんぽの健康保険料率が全国平均9.9%に引き下げ(40都道府県で引き下げ)、②2026年4月から子ども・子育て支援金(料率0.23%・労使折半)の徴収開始、③雇用保険料率が労働者負担0.5%に引き下げ、④令和8年分の所得税から基礎控除が合計所得489万円以下で一律104万円に引き上げ。" }
+      "acceptedAnswer": { "@type": "Answer", "text": "主な変更点は4つ。①協会けんぽの健康保険料率が全国平均9.9%に引き下げ(40都道府県で引き下げ)、②2026年4月から子ども・子育て支援金(料率0.23%・会社と本人で半分ずつ)の徴収開始、③雇用保険料率が労働者負担0.5%に引き下げ、④令和8年分の所得税から基礎控除が合計所得489万円以下で一律104万円に引き上げ。" }
     },
     {
       "@type": "Question",
       "name": "子ども・子育て支援金とは何ですか?給料からいくら引かれますか?",
-      "acceptedAnswer": { "@type": "Answer", "text": "2026年4月に始まった、健康保険料と併せて徴収される拠出金です。令和8年度の料率は0.23%で労使折半のため、本人負担は標準報酬月額×0.115%。月収30万円なら月345円が給与から引かれます。賞与からも同率で徴収されます。" }
+      "acceptedAnswer": { "@type": "Answer", "text": "2026年4月に始まった、健康保険料と併せて徴収される拠出金です。令和8年度の料率は0.23%で会社と本人で半分ずつ負担するため、本人負担は月収のおよそ0.115%。月収30万円なら月345円が給与から引かれます。賞与からも同率で徴収されます。" }
     },
     {
       "@type": "Question",
@@ -113,7 +113,7 @@
     <ul class="badges">
       <li>🆓 無料・登録なし</li>
       <li>🔒 データ送信なし</li>
-      <li>✅ 2026年最新</li>
+      <li>✅ 協会けんぽ・国税庁の公表値</li>
     </ul>
     <div class="hero-cta">
       <button class="btn ghost big" type="button" id="cta-guide">🦸 経理マンにおまかせで出す(おすすめ)</button>
@@ -123,7 +123,6 @@
 
   <!-- ======== ツール本体 ======== -->
   <section class="card" id="calc-card" aria-label="手取り計算フォーム">
-    <p class="note" style="margin:0 0 14px">会社の保険(健康保険・厚生年金)で働いている方向けです。パート(扶養内)・自営業・年金のみの方は実際と変わります。</p>
     <form id="calc-form" onsubmit="return false">
       <div class="field">
         <label for="in-salary">💰 月収を入れてください<span class="hint">引かれる前の金額。だいたいでOK</span></label>
@@ -155,21 +154,25 @@
       </div>
       <div class="field">
         <label>年齢<span class="hint">40〜64歳は介護保険料のぶん少し引かれます</span></label>
-        <div class="seg">
+        <div class="seg untouched">
           <label><input type="radio" name="age" value="under40" checked><span>〜39歳</span></label>
-          <label><input type="radio" name="age" value="40to64"><span>40〜64歳</span></label>
-          <label><input type="radio" name="age" value="over65"><span>65歳〜</span></label>
+          <label><input type="radio" name="age" value="40plus"><span>40歳〜</span></label>
+        </div>
+        <div class="seg age-detail" id="age-detail" hidden>
+          <label><input type="radio" name="age2" value="40to64" checked><span>40〜64歳</span></label>
+          <label><input type="radio" name="age2" value="over65"><span>65歳〜</span></label>
         </div>
       </div>
       <div class="field">
-        <label>去年(2025年)も働いて収入がありましたか?<span class="hint">住民税は「去年の収入」で決まるため。去年といまで収入が大きく違う方は住民税がズレます</span></label>
-        <div class="seg">
+        <label>去年(2025年)も働いて収入がありましたか?<span class="hint">住民税は「去年の収入」で決まるためです</span></label>
+        <div class="seg untouched">
           <label><input type="radio" name="lastyear" value="yes" checked><span>はい(だいたい同じ)</span></label>
           <label><input type="radio" name="lastyear" value="no"><span>いいえ(新社会人など)</span></label>
         </div>
       </div>
     </form>
-    <p class="note" style="margin-top:16px">😵‍💫 むずかしい? → <button type="button" class="linklike" data-guide-start="salary">🦸 経理マンにおまかせ(質問に答えるだけ)</button></p>
+    <p class="note" style="margin-top:16px">🏢 会社の保険で働いている方向けです(パート扶養内・自営業・年金のみの方は目安)</p>
+    <p class="note" style="margin-top:10px">😵‍💫 むずかしい? → <button type="button" class="linklike" data-guide-start="salary">🦸 経理マンにおまかせ(質問に答えるだけ)</button></p>
   </section>
 
   <!-- ======== 結果 ======== -->
@@ -199,10 +202,16 @@
     </div>
     <p class="note" id="r-caption"></p>
 
+    <div class="km-say">
+      <span class="m" aria-hidden="true"><svg viewBox="0 0 200 210"><use href="#keiriman"/></svg></span>
+      <p class="bubble" id="r-react"></p>
+    </div>
+
     <div class="offer" id="offer-box" hidden>
       <h3 id="offer-title"></h3>
       <p id="offer-desc"></p>
       <a class="btn" id="offer-link" rel="sponsored noopener" target="_blank"></a>
+      <p class="note" style="margin-top:10px">やるかどうかは、あなたの自由です。</p>
       <p class="disclosure">※このリンクはアフィリエイト広告を含みます</p>
     </div>
 
@@ -219,7 +228,7 @@
     <h2 id="quick">📋 手取り早見表(2026年・月収別)</h2>
     <div class="km-say">
       <span class="m" aria-hidden="true"><svg viewBox="0 0 200 210"><use href="#keiriman"/></svg></span>
-      <p class="bubble">Q. 月収が上がるにつれて、手取り「率」は下がっていく — ご存知でしたか?いちばん右の列を見てください👇<small>東京都・独身・ボーナスなしのめやすです</small></p>
+      <p class="bubble">Q. 月収20万円の人と60万円の人、手取り「率」が高いのはどっち? — 答えは、いちばん右の列にあります👇<small>東京都・独身・ボーナスなしのめやす。あなたの県・ボーナスではズレます</small></p>
     </div>
     <table class="tight">
       <thead><tr><th>月収(引かれる前)</th><th>手取り(月)</th><th>手取り(年)</th><th>手取り率</th></tr></thead>
@@ -244,15 +253,15 @@
       <table>
         <thead><tr><th>項目</th><th>2026年の値</th><th>備考</th></tr></thead>
         <tbody>
-          <tr><td>健康保険料率</td><td>9.21〜10.55%(都道府県別)</td><td>協会けんぽ・令和8年3月分〜。本人負担は折半</td></tr>
-          <tr><td>介護保険料率</td><td>1.62%</td><td>40〜64歳のみ。全国一律・折半</td></tr>
-          <tr><td>子ども・子育て支援金</td><td>0.23%</td><td>2026年4月〜新設。折半(本人0.115%)。賞与も対象</td></tr>
-          <tr><td>厚生年金保険料率</td><td>18.3%(本人9.15%)</td><td>標準報酬月額の上限65万円(68万円への引き上げは2027年9月から)</td></tr>
+          <tr><td>健康保険料率</td><td>9.21〜10.55%(都道府県別)</td><td>協会けんぽ・令和8年3月分〜。会社と半分ずつ(給料から引かれるのはこの半分)</td></tr>
+          <tr><td>介護保険料率</td><td>1.62%</td><td>40〜64歳のみ。全国一律・会社と半分ずつ</td></tr>
+          <tr><td>子ども・子育て支援金</td><td>0.23%</td><td>2026年4月〜新設。会社と半分ずつ(本人0.115%)。ボーナスも対象</td></tr>
+          <tr><td>厚生年金保険料率</td><td>18.3%(本人9.15%)</td><td>月収65万円をこえた分には年金の保険料はかかりません(上限は2027年9月に68万円へ上がります)</td></tr>
           <tr><td>雇用保険料率</td><td>0.5%(本人負担・一般の事業)</td><td>令和8年4月〜引き下げ</td></tr>
           <tr><td>基礎控除(所得税)</td><td>最大104万円</td><td>令和8年度改正。合計所得489万円以下は一律104万円(令和8・9年分)</td></tr>
           <tr><td>給与所得控除</td><td>最低65万円</td><td>令和7年分〜</td></tr>
           <tr><td>復興特別所得税</td><td>2.1%</td><td>所得税額に上乗せ</td></tr>
-          <tr><td>住民税</td><td>所得割10% + 均等割等5,000円</td><td>前年も同収入だった前提の概算。基礎控除43万円</td></tr>
+          <tr><td>住民税</td><td>収入に応じた分10% + だれでも定額5,000円</td><td>前年も同収入だった前提の概算。基礎控除43万円</td></tr>
         </tbody>
       </table>
     </details>
@@ -260,7 +269,7 @@
     <details>
       <summary>あなたの県の健康保険料率を見る(47都道府県・令和8年度)</summary>
       <table id="pref-table"><thead><tr><th>都道府県</th><th>料率</th><th>都道府県</th><th>料率</th></tr></thead><tbody></tbody></table>
-      <p class="note">労使合計の率。給与から引かれる本人負担はこの半分です。適用は令和8年3月分(4月納付分)から。</p>
+      <p class="note">会社と本人を合わせた率。給料から引かれるのはこの半分です。適用は令和8年3月分(4月納付分)から。</p>
     </details>
 
     <h2 id="changes">✨ 2026年、ここが変わった</h2>
@@ -274,6 +283,8 @@
       <li><strong>雇用保険も下がった</strong> — 本人負担0.55%→0.5%。</li>
       <li><strong>所得税が安くなった</strong> — 基礎控除が104万円に上がり、年収500万円くらいまでの人は去年より税金が下がっています。</li>
     </ul>
+    <p class="quiz">ですから — 去年のままの手取り感覚は、もう古い数字です。</p>
+    <p style="margin:14px 0"><button class="btn" type="button" data-guide-start="salary">🦸 2026年のあなたの数字に更新する</button></p>
 
     <h2 id="faq">❓ よくある質問</h2>
     <details><summary>月収30万円の手取りはいくら?</summary>
@@ -325,7 +336,7 @@
   <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="w-title" tabindex="-1">
     <button class="dialog-close" type="button" aria-label="閉じる">×</button>
     <div class="m"><svg viewBox="0 0 200 210" style="width:96px;height:101px"><use href="#keiriman"/></svg></div>
-    <h2 id="w-title">むずかしい項目、<br>経理マンにおまかせしますか?</h2>
+    <h2 id="w-title">手取りの計算、<br>経理マンにおまかせしますか?</h2>
     <p class="g-note">ご訪問ありがとうございます😊 質問に答えるだけで、あなたの手取りを30秒で出します。</p>
     <div class="choice2">
       <button class="choice" type="button" id="w-guide">🦸 経理マンにおまかせで出す(おすすめ)</button>

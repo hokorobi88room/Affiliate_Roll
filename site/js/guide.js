@@ -28,7 +28,7 @@
     },
     lastyear: {
       no: 3, q: "去年(2025年)も働いて収入がありましたか?",
-      note: "住民税は「去年の収入」で決まるため確認します。年金を受け取っていた方も「はい」です。去年といまで収入が大きく違う方は、住民税の欄が実際と少しズレます",
+      note: "住民税は「去年の収入」で決まるためです(去年、年金を受け取っていた方も「はい」)",
       choices: [
         ["はい(だいたい同じくらい)", "age1", { lastyear: "yes" }],
         ["いいえ(新社会人など)", "age1", { lastyear: "no" }],
@@ -67,8 +67,8 @@
       ],
     },
     depN: {
-      no: 5, q: "何人ですか?(数字で入力)",
-      note: "16歳未満のお子さんは数に入れません",
+      no: 5, q: "あなたの収入で暮らしている16歳以上の家族は、何人ですか?",
+      note: "数字で入れてください。16歳未満のお子さんは数に入れません",
       input: "dependents", unit: "人", placeholder: "2", next: "pref",
     },
     pref: {
@@ -94,7 +94,7 @@
   function show(stepKey) {
     const s = STEPS[stepKey];
     current = stepKey;
-    $("g-progress").textContent = `Q${s.no} / ${TOTAL}`;
+    $("g-progress").textContent = partialStart ? "あと1〜2問で決まります" : `Q${s.no} / ${TOTAL}`;
     $("g-q").textContent = s.q;
     $("g-note").textContent = s.note || "";
     $("g-note").hidden = !s.note;
@@ -191,8 +191,16 @@
     if ("pref" in answers) { $("in-pref").value = answers.pref; fire($("in-pref"), "change"); }
     if ("dependents" in answers) { $("in-dependents").value = String(answers.dependents); fire($("in-dependents"), "change"); }
     if ("age" in answers) {
-      const r = document.querySelector(`input[name="age"][value="${answers.age}"]`);
-      r.checked = true; fire(r, "change");
+      // フォーム側は2段階(〜39歳/40歳〜 → 40〜64歳/65歳〜)
+      if (answers.age === "under40") {
+        const r = document.querySelector('input[name="age"][value="under40"]');
+        r.checked = true; fire(r, "change");
+      } else {
+        const r1 = document.querySelector('input[name="age"][value="40plus"]');
+        const r2 = document.querySelector(`input[name="age2"][value="${answers.age}"]`);
+        r1.checked = true; r2.checked = true;
+        fire(r1, "change"); fire(r2, "change");
+      }
     }
     if ("lastyear" in answers) {
       const r = document.querySelector(`input[name="lastyear"][value="${answers.lastyear}"]`);
