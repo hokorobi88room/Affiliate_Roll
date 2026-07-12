@@ -13,6 +13,9 @@
 <meta property="og:url" content="https://tedori-checker.hokorobi88room.workers.dev/">
 <meta property="og:image" content="https://tedori-checker.hokorobi88room.workers.dev/ogp.png">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FDF6EA">
+<link rel="apple-touch-icon" href="icon-180.png">
 <link rel="stylesheet" href="css/style.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='52' r='45' fill='%23FFF3DE'/%3E%3Cpath d='M12 40 Q50 26 88 40 L88 58 Q50 46 12 58 Z' fill='%2317734C'/%3E%3Ccircle cx='33' cy='47' r='6.5' fill='%23fff'/%3E%3Ccircle cx='33' cy='47' r='3' fill='%233A2E2A'/%3E%3Ccircle cx='67' cy='47' r='6.5' fill='%23fff'/%3E%3Ccircle cx='67' cy='47' r='3' fill='%233A2E2A'/%3E%3Cpath d='M36 74 Q50 84 64 74' stroke='%233A2E2A' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <script type="application/ld+json">
@@ -125,12 +128,16 @@
   <section class="card" id="calc-card" aria-label="手取り計算フォーム">
     <form id="calc-form" onsubmit="return false">
       <div class="field">
-        <label for="in-salary">💰 月収を入れてください<span class="hint">引かれる前の金額。だいたいでOK</span></label>
+        <div class="seg" style="max-width:300px;margin-bottom:12px">
+          <label><input type="radio" name="salarymode" value="monthly" checked><span>月収で入れる</span></label>
+          <label><input type="radio" name="salarymode" value="annual"><span>年収で入れる</span></label>
+        </div>
+        <label for="in-salary" id="salary-label">💰 月収を入れてください<span class="hint" id="salary-label-hint">引かれる前の金額。だいたいでOK</span></label>
         <div class="yen-input big-input"><input type="text" id="in-salary" inputmode="numeric" placeholder="300,000" autocomplete="off"></div>
         <p class="note" id="salary-hint" hidden></p>
       </div>
-      <div class="field">
-        <label for="in-bonus">ボーナス(1年分の合計)<span class="hint">わからなければ空欄でOK</span></label>
+      <div class="field" id="bonus-field">
+        <label for="in-bonus">ボーナス(1年分の合計)<span class="hint">わからなければ空欄でOK。<a href="bonus.html">ボーナスだけ詳しく→</a></span></label>
         <div class="yen-input"><input type="text" id="in-bonus" inputmode="numeric" placeholder="0" autocomplete="off"></div>
         <p class="note" id="bonus-hint" hidden></p>
       </div>
@@ -138,6 +145,7 @@
         <div class="field">
           <label for="in-pref">会社がある都道府県<span class="hint">住まいではなく勤務先</span></label>
           <select id="in-pref"></select>
+          <p class="note" id="pref-rank" style="margin-top:6px"></p>
         </div>
         <div class="field">
           <label for="in-dependents">扶養している家族<span class="hint">いなければ0人のまま</span></label>
@@ -149,7 +157,7 @@
           </select>
           <details class="mini-guide">
             <summary>扶養ってなんだっけ?</summary>
-            <p>あなたの収入で暮らしている<strong>16歳以上</strong>の家族のこと。<strong>独身なら0人でOK。</strong>共働きでも、16歳以上のお子さんや仕送り中の親御さんがいれば数えます。<br>迷ったら → <button type="button" class="linklike" data-guide-start="dep1">質問に答えて決める</button></p>
+            <p>あなたの収入で暮らしている<strong>16歳以上</strong>の家族のこと。<strong>独身なら0人でOK。</strong>共働きでも、16歳以上のお子さんや仕送り中の親御さんがいれば数えます。<br>迷ったら → <button type="button" class="linklike" data-guide-start="dep1">質問に答えて決める</button><br>パートで「壁」が気になる方 → <a href="kabe.html" class="linklike">扶養の壁 診断へ</a></p>
           </details>
         </div>
       </div>
@@ -216,9 +224,24 @@
       <p class="disclosure">※このリンクはアフィリエイト広告を含みます</p>
     </div>
 
+    <details class="mini-guide" style="margin-top:14px">
+      <summary>🎁 ふるさと納税の上限も出ました</summary>
+      <p id="furusato-line"></p>
+    </details>
+    <details class="mini-guide">
+      <summary>🔎 逆に、目標の手取りから必要な月収を出す</summary>
+      <p>
+        目標の手取り(月)
+        <span class="yen-input" style="display:inline-block;max-width:200px;vertical-align:middle;margin:0 6px"><input type="text" id="rev-target" inputmode="numeric" placeholder="300,000" autocomplete="off"></span>
+        <button type="button" class="btn" id="rev-run" style="padding:10px 16px;font-size:13px">逆算する!</button>
+      </p>
+      <p id="rev-out" hidden></p>
+    </details>
+
     <div class="share-row">
       <a class="btn" id="share-x" target="_blank" rel="noopener">結果をXでシェア</a>
       <button class="btn ghost" id="copy-url" type="button">結果URLをコピー</button>
+      <button class="btn ghost" id="share-img" type="button">📷 画像で保存</button>
     </div>
     <p class="note">🙈 金額は出したくない? → <a class="linklike" id="share-x-anon" target="_blank" rel="noopener">手取り率だけでシェアする</a></p>
     <p class="note">シェアされるのは入力条件のみです(計算はリンクを開いた人の端末内で再実行されます)。</p>
@@ -262,7 +285,7 @@
           <tr><td>厚生年金保険料率</td><td>18.3%(本人9.15%)</td><td>月収65万円をこえた分には年金の保険料はかかりません(上限は2027年9月に68万円へ上がります)</td></tr>
           <tr><td>雇用保険料率</td><td>0.5%(本人負担・一般の事業)</td><td>令和8年4月〜引き下げ</td></tr>
           <tr><td>基礎控除(所得税)</td><td>最大104万円</td><td>令和8年度改正。合計所得489万円以下は一律104万円(令和8・9年分)</td></tr>
-          <tr><td>給与所得控除</td><td>最低65万円</td><td>令和7年分〜</td></tr>
+          <tr><td>給与所得控除</td><td>最低74万円</td><td>令和8年度改正。本則69万円+令和8・9年分の特例5万円(収入220万円以下で適用)</td></tr>
           <tr><td>復興特別所得税</td><td>2.1%</td><td>所得税額に上乗せ</td></tr>
           <tr><td>住民税</td><td>収入に応じた分10% + だれでも定額5,000円</td><td>前年も同収入だった前提の概算。基礎控除43万円</td></tr>
         </tbody>
@@ -327,6 +350,8 @@
   <footer class="site-footer">
     <nav>
       <a href="./">手取り計算</a>
+      <a href="bonus.html">ボーナス手取り</a>
+      <a href="kabe.html">扶養の壁 診断</a>
       <a href="about.html">運営者情報</a>
       <a href="privacy.html">プライバシーポリシー</a>
     </nav>

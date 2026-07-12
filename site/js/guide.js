@@ -52,7 +52,7 @@
     },
     dep1: {
       no: 5, q: "あなたの収入で暮らしている「16歳以上」の家族はいますか?",
-      note: "例: 収入の少ない(年収123万円以下)配偶者、高校生・大学生のお子さん、仕送り中の親御さん。小さいお子さん(16歳未満)は、税金の計算では数えないルールです",
+      note: "例: 収入の少ない(年収136万円以下)配偶者、高校生・大学生のお子さん、仕送り中の親御さん。小さいお子さん(16歳未満)は、税金の計算では数えないルールです",
       choices: [
         ["いない", "pref", { dependents: 0 }],
         ["いる", "dep2", {}],
@@ -208,6 +208,9 @@
   /* ---------- 完了: フォームに反映して結果へ ---------- */
   function finish() {
     const fire = (el, type) => el.dispatchEvent(new Event(type, { bubbles: true }));
+    // おまかせは月収で聞いているので、フォームも月収モードに揃える
+    const monthlyMode = document.querySelector('input[name="salarymode"][value="monthly"]');
+    if (monthlyMode && !monthlyMode.checked) { monthlyMode.checked = true; fire(monthlyMode, "change"); }
     if ("salary" in answers) { $("in-salary").value = KM.commaFmt(answers.salary); fire($("in-salary"), "input"); }
     if ("bonus" in answers) { $("in-bonus").value = answers.bonus ? KM.commaFmt(answers.bonus) : ""; fire($("in-bonus"), "input"); }
     if ("pref" in answers) { $("in-pref").value = answers.pref; fire($("in-pref"), "change"); }

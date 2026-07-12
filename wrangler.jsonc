@@ -6,6 +6,7 @@
   "name": "tedori-checker",
   "compatibility_date": "2026-07-12",
   "assets": {
-    "directory": "./site"
+    "directory": "./site",
+    "not_found_handling": "404-page"
   }
 }

@@ -55,15 +55,30 @@
     };
     // 年齢は2段階の2択(〜39歳/40歳〜 → 40〜64歳/65歳〜)
     const ageBase = document.querySelector('input[name="age"]:checked').value;
+    // 年収モードでは12等分して月収に(ボーナス込みの年収を想定するためボーナス欄は使わない)
+    const annualMode = document.querySelector('input[name="salarymode"]:checked').value === "annual";
     return {
-      monthlySalary: num(form.salary),
-      annualBonus: num(form.bonus),
+      monthlySalary: annualMode ? Math.round(num(form.salary) / 12) : num(form.salary),
+      annualBonus: annualMode ? 0 : num(form.bonus),
+      annualMode,
       prefecture: form.pref.value,
       age: ageBase === "40plus" ? document.querySelector('input[name="age2"]:checked').value : "under40",
       dependents: parseInt(form.dependents.value, 10),
       // 「去年も収入があった? いいえ」= 住民税なし(前年無収入)
       noResidentTax: document.querySelector('input[name="lastyear"]:checked').value === "no",
     };
+  }
+
+  /* 月収/年収モードの切替(ラベル・ボーナス欄の表示を追従) */
+  function syncSalaryMode() {
+    const annual = document.querySelector('input[name="salarymode"]:checked').value === "annual";
+    $("salary-label").childNodes[0].textContent = annual ? "💰 年収を入れてください" : "💰 月収を入れてください";
+    $("salary-label-hint").textContent = annual ? "引かれる前の年収。ボーナスも入れてOK" : "引かれる前の金額。だいたいでOK";
+    form.salary.placeholder = annual ? "4,500,000" : "300,000";
+    $("bonus-field").hidden = annual; // 年収にはボーナスも入っている前提なので二重計上を防ぐ
+  }
+  for (const rdo of document.querySelectorAll('input[name="salarymode"]')) {
+    rdo.addEventListener("change", syncSalaryMode);
   }
 
   /* 「40歳〜」を選んだときだけ詳細(40〜64/65〜)の2択を出す */
@@ -119,11 +134,20 @@
     form.bonus.dispatchEvent(new Event("input", { bubbles: true }));
   });
 
+  /* 都道府県を選んだら、料率の全国順位をひとこと(データへのリアクション) */
+  const rateAsc = Object.values(R.prefectures).map((x) => x.rate).sort((a, b) => a - b);
+  function prefRank(key) {
+    const pref = R.prefectures[key];
+    const rank = rateAsc.findIndex((v) => v === pref.rate) + 1;
+    $("pref-rank").textContent = `${pref.name}の保険料率は、47都道府県で安いほうから${rank}番目です`;
+  }
+
   function render() {
     const p = readInput();
     const out = $("result");
-    salaryHint(p.monthlySalary);
+    salaryHint(parseInt(digitsOf(form.salary.value), 10) || 0); // 救済は入力欄の生の値で判定(年収モードでも正しく効く)
     bonusHint(p.annualBonus);
+    prefRank(p.prefecture);
     if (p.monthlySalary < 10000) {
       out.hidden = true;
       $("result-peek").hidden = true;
@@ -182,7 +206,21 @@
       `${R.prefectures[p.prefecture].name}の健康保険料率${r.detail.healthRatePct.toFixed(2)}%・令和8年度の公表値で計算しました。` +
       `月々の税額は年額を12で割った概算、住民税は「去年も同じくらいの収入」前提のめやすです。` +
       (r.bonus.gross > 0 ? "ボーナスぶんの保険料・所得税は「年間」の列にだけ入っています(住民税は毎月に均等割り)。" : "") +
+      (p.annualMode ? "年収は12等分して計算しています(ボーナスの割合によって少しズレます)。" : "") +
       (p.age === "over65" ? "※70歳以上の方は年金の保険料が引かれなくなるため、実際の手取りはこれより多くなります。" : "");
+
+    // ふるさと納税の上限(めやす): 住民税の収入に応じた分 × 20% ÷ (90% − 所得税率×1.021) + 2,000円
+    const shotokuwari = r.annual.residentTax > 0 ? Math.max(0, r.annual.residentTax - R.residentPerCapita + R.residentAdjustmentCredit) : 0;
+    let marginal = 0;
+    for (const b of R.incomeTaxBrackets) { if (b[0] === null || r.detail.taxableIncome <= b[0]) { marginal = b[1]; break; } }
+    if (shotokuwari > 0) {
+      const limit = Math.floor((shotokuwari * 0.2 / (0.9 - marginal * 1.021) + 2000) / 1000) * 1000;
+      $("furusato-line").innerHTML =
+        `あなたの上限は <strong>約${yen(limit)}円</strong>(めやす)。この金額までの寄付なら、実質2,000円の負担で返礼品がもらえます。` +
+        `<br><span style="color:var(--muted);font-size:12px">住宅ローン控除・医療費控除などがある方はズレます。正確な額は寄付サイトの詳細シミュレーターで確認してください。</span>`;
+    } else {
+      $("furusato-line").textContent = "この条件では住民税がかからないため、ふるさと納税の節税メリットはありません。";
+    }
 
     // 経理マンのリアクション(復唱→損の数値化・累積化→転換→問い)
     const rateNum = r.annual.netRate * 100;
@@ -282,6 +320,77 @@
     a.textContent = o.cta;
     a.href = o.url;
     box.hidden = false;
+  }
+
+  /* 逆算: 目標の手取り(月)→必要な月収(いまの条件で二分探索) */
+  KM.attachMoneyInput($("rev-target"));
+  function netMonthlyFor(gross, base) {
+    const r = window.TedoriCalc.calcNet({ ...base, monthlySalary: gross, annualBonus: 0 }, R);
+    const taxM = Math.round(r.annual.incomeTax / 12);
+    const residentM = Math.round(r.annual.residentTax / 12);
+    return r.monthly.gross - r.monthly.health - r.monthly.pension - r.monthly.employment - taxM - residentM;
+  }
+  $("rev-run").addEventListener("click", () => {
+    const target = parseInt(digitsOf($("rev-target").value), 10) || 0;
+    const outEl = $("rev-out");
+    outEl.hidden = false;
+    if (target < 10000) { outEl.textContent = "1万円以上の数字を入れてください"; return; }
+    const base = readInput();
+    if (netMonthlyFor(2000000, base) < target) {
+      outEl.textContent = "月収200万円でも届かない目標です。桁を確認してください";
+      return;
+    }
+    let lo = 10000, hi = 2000000;
+    for (let i = 0; i < 40; i++) {
+      const mid = Math.round((lo + hi) / 2);
+      if (netMonthlyFor(mid, base) >= target) hi = mid; else lo = mid;
+    }
+    const need = Math.ceil(hi / 1000) * 1000;
+    outEl.innerHTML = `手取り月${yen(target)}円には、月収(引かれる前)<strong>約${yen(need)}円</strong>が必要です(いまの条件・ボーナスなしで計算)`;
+  });
+
+  /* 画像で保存: 経理マン入りの結果カードを生成(端末内で生成・どこにも送信しない) */
+  $("share-img").addEventListener("click", async () => {
+    const p = readInput();
+    if (p.monthlySalary < 10000) return;
+    const r = window.TedoriCalc.calcNet(p, R);
+    const rate = (r.annual.netRate * 100).toFixed(1);
+    const netMText = $("peek-amount").textContent; // 「月239,680円」
+    const mascot = document.querySelector("#keiriman").innerHTML;
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+      <rect width="1200" height="630" fill="#FDF6EA"/>
+      <g transform="translate(70,120) scale(1.85)">${mascot}</g>
+      <g font-family="Hiragino Maru Gothic ProN, Hiragino Sans, sans-serif">
+        <text x="500" y="150" font-size="46" font-weight="800" fill="#17734C">あなたの経理マン@綻流夢</text>
+        <text x="500" y="265" font-size="52" font-weight="800" fill="#3A2E2A">わたしの手取り率は…</text>
+        <text x="500" y="420" font-size="120" font-weight="800" fill="#17734C">${rate}%</text>
+        <text x="500" y="510" font-size="44" font-weight="800" fill="#3A2E2A">手取り ${netMText}</text>
+        <text x="500" y="575" font-size="28" font-weight="700" fill="#6F6152">2026年(令和8年度)の最新ルールで計算</text>
+      </g>
+    </svg>`;
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = 1200; canvas.height = 630;
+      canvas.getContext("2d").drawImage(img, 0, 0);
+      canvas.toBlob(async (blob) => {
+        const file = new File([blob], "keiriman-tedori.png", { type: "image/png" });
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          try { await navigator.share({ files: [file] }); return; } catch { /* キャンセル時は保存へ */ }
+        }
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "keiriman-tedori.png";
+        a.click();
+        URL.revokeObjectURL(a.href);
+      }, "image/png");
+    };
+    img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+  });
+
+  /* PWA: オフラインでも計算できるように(データはどこにも送らない設計と相性◎) */
+  if ("serviceWorker" in navigator && location.protocol === "https:") {
+    navigator.serviceWorker.register("sw.js").catch(() => { /* 未対応環境は無視 */ });
   }
 
   /* 結果ミニバー: 結果が画面外にあるときだけ出す */
