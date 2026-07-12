@@ -132,6 +132,7 @@
       <div class="field">
         <label for="in-bonus">ボーナス(1年分の合計)<span class="hint">わからなければ空欄でOK</span></label>
         <div class="yen-input"><input type="text" id="in-bonus" inputmode="numeric" placeholder="0" autocomplete="off"></div>
+        <p class="note" id="bonus-hint" hidden></p>
       </div>
       <div class="row2">
         <div class="field">
@@ -158,7 +159,7 @@
           <label><input type="radio" name="age" value="under40" checked><span>〜39歳</span></label>
           <label><input type="radio" name="age" value="40plus"><span>40歳〜</span></label>
         </div>
-        <div class="seg age-detail" id="age-detail" hidden>
+        <div class="seg age-detail untouched" id="age-detail" hidden>
           <label><input type="radio" name="age2" value="40to64" checked><span>40〜64歳</span></label>
           <label><input type="radio" name="age2" value="over65"><span>65歳〜</span></label>
         </div>
@@ -281,7 +282,7 @@
       <li><strong>健康保険料が下がった</strong> — 34年ぶりの引き下げで、40都道府県で安くなりました。</li>
       <li><strong>新しい天引き「子ども・子育て支援金」が始まった</strong>(2026年4月〜)— 月収30万円で月345円です。</li>
       <li><strong>雇用保険も下がった</strong> — 本人負担0.55%→0.5%。</li>
-      <li><strong>所得税が安くなった</strong> — 基礎控除が104万円に上がり、年収500万円くらいまでの人は去年より税金が下がっています。</li>
+      <li><strong>所得税が安くなった</strong> — 収入のうち税金がかからない枠が104万円に広がり、年収500万円くらいまでの人は去年より税金が下がっています。</li>
     </ul>
     <p class="quiz">ですから — 去年のままの手取り感覚は、もう古い数字です。</p>
     <p style="margin:14px 0"><button class="btn" type="button" data-guide-start="salary">🦸 2026年のあなたの数字に更新する</button></p>
@@ -303,7 +304,7 @@
       <p><strong>送信されません。</strong>計算はすべてこのページのJavaScriptが端末内で行い、外部サーバーへの通信はありません。年収のような繊細な数字をAIチャットやクラウドに渡したくない方でも安心して使えます。</p>
     </details>
     <details><summary>計算結果は正確?</summary>
-      <p>社会保険料は協会けんぽの公表料率・等級表どおりに計算しており、原則1円単位で一致します(端数処理の事業所差で最大数円の差)。所得税・住民税は生命保険料控除・iDeCo・住宅ローン控除などの個別控除を含まない<strong>概算</strong>です。正確な税額は源泉徴収票・住民税決定通知書をご確認ください。</p>
+      <p>社会保険料は協会けんぽが公表している料率と保険料の一覧表のとおりに計算しており、原則1円単位で一致します(端数処理の事業所差で最大数円の差)。所得税・住民税は生命保険料控除・iDeCo・住宅ローン控除などの個別控除を含まない<strong>概算</strong>です。正確な税額は源泉徴収票・住民税決定通知書をご確認ください。</p>
     </details>
 
     <p style="margin:16px 0"><button class="btn" type="button" data-guide-start="salary">🦸 経理マンにおまかせで自分の手取りを出す</button></p>
@@ -355,7 +356,7 @@
     <h2 id="g-q"></h2>
     <p class="g-note" id="g-note" role="status"></p>
     <div class="g-inputrow" id="g-inputrow" hidden>
-      <div class="yen-input big-input" id="g-input-wrap"><input type="text" id="g-input" inputmode="numeric" autocomplete="off"></div>
+      <div class="yen-input big-input" id="g-input-wrap"><input type="text" id="g-input" inputmode="numeric" enterkeyhint="done" autocomplete="off"></div>
     </div>
     <div class="g-inputrow" id="g-selectrow" hidden>
       <select id="g-select"></select>

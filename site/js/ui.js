@@ -101,10 +101,29 @@
     form.salary.focus();
   });
 
+  /* ボーナス欄にも同じ救済(「50」= 50万のつもり) */
+  function bonusHint(v) {
+    const hint = $("bonus-hint");
+    if (v > 0 && v < 1000) {
+      hint.innerHTML = `もしかして <strong>${v}万円</strong> ですか? → ` +
+        `<button type="button" class="linklike" id="bonus-fix" data-v="${v * 10000}">${yen(v * 10000)}円で計算する</button>`;
+      hint.hidden = false;
+    } else {
+      hint.hidden = true;
+    }
+  }
+  $("bonus-hint").addEventListener("click", (e) => {
+    const b = e.target.closest("#bonus-fix");
+    if (!b) return;
+    form.bonus.value = commaFmt(b.dataset.v);
+    form.bonus.dispatchEvent(new Event("input", { bubbles: true }));
+  });
+
   function render() {
     const p = readInput();
     const out = $("result");
     salaryHint(p.monthlySalary);
+    bonusHint(p.annualBonus);
     if (p.monthlySalary < 10000) {
       out.hidden = true;
       $("result-peek").hidden = true;
@@ -113,7 +132,14 @@
     const r = window.TedoriCalc.calcNet(p, R);
     out.hidden = false;
 
-    $("r-monthly").innerHTML = `${yen(r.monthly.netApprox)}<small>円</small>`;
+    /* 月々の表示値は「表の列を足したら必ず合う」ことを最優先に、
+       表示用の丸め済み行からそのまま組み立てる(ボーナスぶんの税・保険料は年間列のみ) */
+    const m = r.monthly;
+    const taxM = Math.round(r.annual.incomeTax / 12 * (p.monthlySalary * 12 / r.annualGross));
+    const residentM = Math.round(r.annual.residentTax / 12);
+    const netM = m.gross - m.health - m.pension - m.employment - taxM - residentM;
+
+    $("r-monthly").innerHTML = `${yen(netM)}<small>円</small>`;
     $("r-sub").innerHTML =
       `年間の手取り <strong>${yen(r.annual.net)}円</strong> / 手取り率 <strong>${(r.annual.netRate * 100).toFixed(1)}%</strong>` +
       (r.bonus.gross > 0 ? `(ボーナス含む)` : "");
@@ -130,15 +156,14 @@
     $("lg-si").textContent = `${yen(si)}円(${(si / total * 100).toFixed(1)}%)`;
     $("lg-tax").textContent = `${yen(tax)}円(${(tax / total * 100).toFixed(1)}%)`;
 
-    // 内訳テーブル(月々 / 年間)
-    const m = r.monthly;
+    // 内訳テーブル(月々 / 年間)— 月々列は足したら必ず手取り行に一致する
     const rows = [
       ["支給額(引かれる前)", m.gross, r.annualGross, false],
       ["健康保険" + (r.detail.kaigoApplied ? "+介護保険" : "") + "+支援金", -m.health, -(m.health * 12 + r.bonus.health), true],
       ["厚生年金", -m.pension, -(m.pension * 12 + r.bonus.pension), true],
       ["雇用保険", -m.employment, -(m.employment * 12 + r.bonus.employment), true],
-      ["所得税(復興税込)", -Math.round(r.annual.incomeTax / 12), -r.annual.incomeTax, true],
-      ["住民税", -Math.round(r.annual.residentTax / 12), -r.annual.residentTax, true],
+      ["所得税", -taxM, -r.annual.incomeTax, true],
+      ["住民税", -residentM, -r.annual.residentTax, true],
     ];
     const tbody = $("r-rows");
     tbody.innerHTML = "";
@@ -150,23 +175,29 @@
     }
     const sum = document.createElement("tr");
     sum.className = "sum";
-    sum.innerHTML = `<td>手取り</td><td>${yen(m.netApprox)}</td><td>${yen(r.annual.net)}</td>`;
+    sum.innerHTML = `<td>手取り</td><td>${yen(netM)}</td><td>${yen(r.annual.net)}</td>`;
     tbody.appendChild(sum);
 
     $("r-caption").textContent =
       `${R.prefectures[p.prefecture].name}の健康保険料率${r.detail.healthRatePct.toFixed(2)}%・令和8年度の公表値で計算しました。` +
       `月々の税額は年額を12で割った概算、住民税は「去年も同じくらいの収入」前提のめやすです。` +
+      (r.bonus.gross > 0 ? "ボーナスぶんの保険料・税金は「年間」の列にだけ入っています。" : "") +
       (p.age === "over65" ? "※70歳以上の方は年金の保険料が引かれなくなるため、実際の手取りはこれより多くなります。" : "");
 
-    // 経理マンのリアクション(現在進行形の損: 数値化→累積化→転換)
+    // 経理マンのリアクション(復唱→損の数値化・累積化→転換→問い)
+    const rateNum = r.annual.netRate * 100;
+    const opener =
+      rateNum >= 80 ? `手取り率<strong>${rateNum.toFixed(1)}%</strong> — 80%台キープ、なかなか優秀です。` :
+      rateNum >= 75 ? `手取り率は<strong>${rateNum.toFixed(1)}%</strong>。だいたい4分の1が天引きです。` :
+      `手取り率<strong>${rateNum.toFixed(1)}%</strong>…税率の階段を一段のぼっていますね。`;
     const annualDeduct = r.annualGross - r.annual.net;
     $("r-react").innerHTML =
-      `ご存知でしたか?あなたのお給料、毎月<strong>${yen(m.gross - m.netApprox)}円</strong>が自動で引かれています。` +
-      `10年つづくと約<strong>${Math.round(annualDeduct * 10 / 10000).toLocaleString("ja-JP")}万円</strong>。` +
-      `この天引きは、経理マンでも減らせません — 減らせるのは、スマホ代や保険など「毎月出ていくほう」のお金です。`;
+      opener +
+      `あなたのお給料からは毎月<strong>${yen(m.gross - netM)}円</strong>が自動で引かれ、10年で約<strong>${Math.round(annualDeduct * 10 / 10000).toLocaleString("ja-JP")}万円</strong>。` +
+      `ここは経理マンでも減らせません。減らせるのは、スマホ代や保険など「毎月出ていくほう」 — もし月5,000円変われば、手取りが月5,000円増えたのと同じです。最後に見直したのは、いつですか?`;
 
     // 画面下部のミニバー(結果が画面外でも「出た」と分かるように)
-    $("peek-amount").textContent = `月${yen(m.netApprox)}円`;
+    $("peek-amount").textContent = `月${yen(netM)}円`;
     requestAnimationFrame(() => {
       const rect = out.getBoundingClientRect();
       $("result-peek").hidden = rect.top < window.innerHeight && rect.bottom > 0;
@@ -174,7 +205,7 @@
 
     // シェア文言(1円単位を晒さない万円丸め+受け手への問いで渡す)
     const rate = (r.annual.netRate * 100).toFixed(1);
-    const shareText = `月収${man(p.monthlySalary)}万円だと、手取りは月${man(m.netApprox)}万円(手取り率${rate}%)。あなたは何%?30秒で出る↓`;
+    const shareText = `月収${man(p.monthlySalary)}万円だと、手取りは月${man(netM)}万円(手取り率${rate}%)。あなたは何%?30秒で出る↓`;
     $("share-x").href = "https://x.com/intent/post?text=" + encodeURIComponent(shareText + "\n" + shareUrl(p));
     // 金額を伏せたい人向け
     $("share-x-anon").href = "https://x.com/intent/post?text=" +
@@ -208,7 +239,9 @@
       document.querySelector(`input[name="age2"][value="${age}"]`).checked = true;
     }
     syncAgeDetail();
-    form.dependents.value = q.get("d") || "0";
+    // dパラメータは実在する選択肢のみ受け付ける(改変URLでNaN表示にならないように)
+    const d = q.get("d");
+    form.dependents.value = Array.from(form.dependents.options).some((o) => o.value === d) ? d : "0";
     document.querySelector(`input[name="lastyear"][value="${q.get("n") === "1" ? "no" : "yes"}"]`).checked = true;
     // 復元された値は意図のある選択なので、未選択スタイルを解除する
     for (const seg of document.querySelectorAll(".seg.untouched")) seg.classList.remove("untouched");

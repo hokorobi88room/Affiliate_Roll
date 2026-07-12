@@ -89,12 +89,19 @@
 
   /* ---------- 金額入力(カンマ・全角対応は ui.js の共通ヘルパー) ---------- */
   KM.attachMoneyInput($("g-input"));
+  /* Enter/スマホの決定キーでも進める */
+  $("g-input").addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" || e.isComposing) return;
+    e.preventDefault();
+    const btn = $("g-choices").querySelector(".choice.primary");
+    if (btn) btn.click();
+  });
 
   /* ---------- 画面描画 ---------- */
   function show(stepKey) {
     const s = STEPS[stepKey];
     current = stepKey;
-    $("g-progress").textContent = partialStart ? "あと1〜2問で決まります" : `Q${s.no} / ${TOTAL}`;
+    $("g-progress").textContent = partialStart ? "あと少しで決まります" : `Q${s.no} / ${TOTAL}`;
     $("g-q").textContent = s.q;
     $("g-note").textContent = s.note || "";
     $("g-note").hidden = !s.note;
@@ -118,6 +125,13 @@
           inp.focus();
           return;
         }
+        if (s.input === "bonus" && v > 0 && v < 1000) {
+          // 「50」= 50万円のつもり、を黙って通さない
+          $("g-note").hidden = false;
+          $("g-note").textContent = `もしかして${v}万円ですか?「円」の単位で入れてください(例: ${KM.commaFmt(v * 10000)})`;
+          inp.focus();
+          return;
+        }
         if (s.input === "dependents") {
           if (isNaN(v) || v < 2) {
             $("g-note").hidden = false;
@@ -125,7 +139,13 @@
             inp.focus();
             return;
           }
-          v = Math.min(v, 7); // フォームの選択肢は7人まで
+          if (v > 7) {
+            // 黙って書き換えず、目の前で7に直してから進んでもらう
+            inp.value = "7";
+            $("g-note").hidden = false;
+            $("g-note").textContent = "このツールは7人まで対応しています。7人として計算します(実際の手取りは、これより少し多くなります)。もう一度「これでOK!」を押してください";
+            return;
+          }
         }
         answers[s.input] = isNaN(v) ? 0 : v;
         if (s.next === "pref" && partialStart) { finish(); return; }
