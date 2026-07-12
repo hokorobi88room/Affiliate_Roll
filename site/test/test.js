@@ -21,7 +21,10 @@ eq("月収200万→厚年上限65万", C.standardMonthly(2000000, R.gradesPensio
 eq("月収8万→厚年下限8.8万", C.standardMonthly(80000, R.gradesPension), 88000);
 
 console.log("[2] 給与所得控除(令和8年分)");
-eq("収入150万→65万(最低保障)", C.salaryDeduction(1500000, R.salaryDeductionBrackets), 650000);
+// 令和8年度改正: 最低保障74万円(本則69万+令和8・9年特例5万)。収入220万円以下で適用
+eq("収入150万→74万(最低保障)", C.salaryDeduction(1500000, R.salaryDeductionBrackets), 740000);
+eq("収入200万→74万(最低保障が220万まで効く)", C.salaryDeduction(2000000, R.salaryDeductionBrackets), 740000);
+eq("収入230万→77万(30%+8万)", C.salaryDeduction(2300000, R.salaryDeductionBrackets), 770000);
 eq("収入300万→98万", C.salaryDeduction(3000000, R.salaryDeductionBrackets), 980000);
 eq("収入500万→144万", C.salaryDeduction(5000000, R.salaryDeductionBrackets), 1440000);
 eq("収入1000万→195万(上限)", C.salaryDeduction(10000000, R.salaryDeductionBrackets), 1950000);
