@@ -5,7 +5,7 @@
   "use strict";
   const $ = (id) => document.getElementById(id);
   const R = window.RATES2026;
-  const comma = (v) => Number(v).toLocaleString("ja-JP");
+  const KM = window.KM; // ui.js の金額入力ヘルパー(カンマ・全角対応)
 
   /* ---------- ステップ定義(選択肢は必ず2つ以下) ---------- */
   const STEPS = {
@@ -28,9 +28,9 @@
     },
     lastyear: {
       no: 3, q: "去年(2025年)も働いて収入がありましたか?",
-      note: "住民税は「去年の収入」で決まるので、確認させてください",
+      note: "住民税は「去年の収入」で決まるため確認します。年金を受け取っていた方も「はい」です。去年といまで収入が大きく違う方は、住民税の欄が実際と少しズレます",
       choices: [
-        ["はい", "age1", { lastyear: "yes" }],
+        ["はい(だいたい同じくらい)", "age1", { lastyear: "yes" }],
         ["いいえ(新社会人など)", "age1", { lastyear: "no" }],
       ],
     },
@@ -51,16 +51,16 @@
       ],
     },
     dep1: {
-      no: 5, q: "あなたの収入で暮らしている家族はいますか?",
-      note: "例: 年収123万円以下の配偶者、16歳以上のお子さん、仕送りしている親御さん。16歳未満のお子さんは数えません",
+      no: 5, q: "あなたの収入で暮らしている「16歳以上」の家族はいますか?",
+      note: "例: 収入の少ない(年収123万円以下)配偶者、高校生・大学生のお子さん、仕送り中の親御さん。小さいお子さん(16歳未満)は、税金の計算では数えないルールです",
       choices: [
-        ["いない(独身・共働きなど)", "pref", { dependents: 0 }],
+        ["いない", "pref", { dependents: 0 }],
         ["いる", "dep2", {}],
       ],
     },
     dep2: {
-      no: 5, q: "あなたの収入で暮らしている家族は、何人ですか?",
-      note: "年収123万円以下の配偶者、16歳以上のお子さん、仕送りしている親御さんの合計。16歳未満のお子さんは数に入れません",
+      no: 5, q: "あなたの収入で暮らしている16歳以上の家族は、何人ですか?",
+      note: "16歳未満のお子さんは数に入れません",
       choices: [
         ["1人", "pref", { dependents: 1 }],
         ["2人以上", "depN", {}],
@@ -83,14 +83,12 @@
   let answers = {};
   let history = [];
   let current = null;
-  let partialStart = null; // 途中の項目だけ決めたいとき(例: 扶養だけ)
+  let partialStart = null;   // 途中の項目だけ決めたいとき(例: 扶養だけ)
+  let lastFocus = null;      // 閉じたときフォーカスを戻す先
+  let lockedScrollY = 0;
 
-  /* ---------- 金額入力はカンマ区切りで表示 ---------- */
-  $("g-input").addEventListener("input", () => {
-    const el = $("g-input");
-    const digits = String(el.value).replace(/[^\d]/g, "");
-    el.value = digits ? comma(digits) : "";
-  });
+  /* ---------- 金額入力(カンマ・全角対応は ui.js の共通ヘルパー) ---------- */
+  KM.attachMoneyInput($("g-input"));
 
   /* ---------- 画面描画 ---------- */
   function show(stepKey) {
@@ -110,10 +108,10 @@
       $("g-input-wrap").classList.toggle("unit-nin", s.unit === "人");
       const inp = $("g-input");
       inp.placeholder = s.placeholder || "";
-      inp.value = answers[s.input] ? comma(answers[s.input]) : "";
+      inp.value = answers[s.input] ? KM.commaFmt(answers[s.input]) : "";
       const btn = mkChoice("これでOK!", true);
       btn.addEventListener("click", () => {
-        let v = parseInt(String(inp.value).replace(/[^\d]/g, ""), 10);
+        let v = parseInt(KM.digitsOf(inp.value), 10);
         if (s.input === "salary" && (isNaN(v) || v < 10000)) {
           $("g-note").hidden = false;
           $("g-note").textContent = "1万円以上の数字を入れてください(だいたいでOK!)";
@@ -134,7 +132,8 @@
         go(s.next);
       });
       choices.appendChild(btn);
-      setTimeout(() => inp.focus(), 60);
+      // ソフトキーボードで決定ボタンが隠れないように
+      setTimeout(() => { inp.focus(); btn.scrollIntoView({ block: "nearest" }); }, 60);
     } else if (s.select) {
       selectRow.hidden = false;
       const sel = $("g-select");
@@ -145,8 +144,8 @@
           opt.textContent = p.name;
           sel.appendChild(opt);
         }
-        sel.value = "tokyo";
       }
+      sel.value = answers.pref || $("in-pref").value || "tokyo";
       const btn = mkChoice("これで完了!🎉", true);
       btn.addEventListener("click", () => {
         answers.pref = sel.value;
@@ -158,13 +157,16 @@
         const btn = mkChoice(label, false);
         btn.addEventListener("click", () => {
           Object.assign(answers, patch);
-          if (next === "pref" && partialStart) { finish(); return; } // 部分モードは都道府県まで聞かない
+          if (next === "pref" && partialStart) { finish(); return; }
           go(next);
         });
         choices.appendChild(btn);
       }
     }
-    $("g-back").hidden = history.length === 0;
+    // Q1では「もどる」の代わりに逃げ道(やめて自分で入力)を出す
+    const back = $("g-back");
+    back.hidden = false;
+    back.textContent = history.length === 0 ? "× やめる(自分で入力する)" : "← ひとつ前にもどる";
   }
 
   /* 選択肢は色分けしない。塗るのは決定ボタン(primary)だけ */
@@ -184,8 +186,8 @@
   /* ---------- 完了: フォームに反映して結果へ ---------- */
   function finish() {
     const fire = (el, type) => el.dispatchEvent(new Event(type, { bubbles: true }));
-    if ("salary" in answers) { $("in-salary").value = comma(answers.salary); fire($("in-salary"), "input"); }
-    if ("bonus" in answers) { $("in-bonus").value = answers.bonus ? comma(answers.bonus) : ""; fire($("in-bonus"), "input"); }
+    if ("salary" in answers) { $("in-salary").value = KM.commaFmt(answers.salary); fire($("in-salary"), "input"); }
+    if ("bonus" in answers) { $("in-bonus").value = answers.bonus ? KM.commaFmt(answers.bonus) : ""; fire($("in-bonus"), "input"); }
     if ("pref" in answers) { $("in-pref").value = answers.pref; fire($("in-pref"), "change"); }
     if ("dependents" in answers) { $("in-dependents").value = String(answers.dependents); fire($("in-dependents"), "change"); }
     if ("age" in answers) {
@@ -209,40 +211,83 @@
       banner.hidden = false;
     }
 
-    close($("guide"));
+    close($("guide"), { restoreFocus: false });
     const result = $("result");
     if (!result.hidden) result.scrollIntoView({ behavior: "smooth" });
     else $("in-salary").focus();
   }
 
-  /* ---------- 開閉 ---------- */
-  function open(el) { el.hidden = false; document.body.style.overflow = "hidden"; }
-  function close(el) { el.hidden = true; document.body.style.overflow = ""; }
+  /* ---------- 開閉(スクロールロック・フォーカス管理つき) ---------- */
+  const mainEl = document.querySelector("main");
+  function open(el) {
+    lastFocus = document.activeElement;
+    lockedScrollY = window.scrollY;
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${lockedScrollY}px`;
+    document.body.style.width = "100%";
+    el.hidden = false;
+    if ("inert" in mainEl) mainEl.inert = true;
+    const dialog = el.querySelector(".dialog");
+    dialog.focus({ preventScroll: true });
+  }
+  function close(el, opts) {
+    el.hidden = true;
+    if ("inert" in mainEl) mainEl.inert = false;
+    document.body.style.position = "";
+    document.body.style.top = "";
+    document.body.style.width = "";
+    window.scrollTo(0, lockedScrollY);
+    const restore = !opts || opts.restoreFocus !== false;
+    if (restore && lastFocus && document.contains(lastFocus)) lastFocus.focus({ preventScroll: true });
+  }
 
   function startGuide(fromStep) {
     answers = {};
     history = [];
     partialStart = (fromStep && fromStep !== "salary") ? fromStep : null;
-    close($("welcome"));
+    // フォームに入力済みの値は引き継ぐ(二度打たせない)
+    if (!partialStart) {
+      const cur = parseInt(KM.digitsOf($("in-salary").value), 10);
+      if (cur >= 10000) answers.salary = cur;
+      const bonus = parseInt(KM.digitsOf($("in-bonus").value), 10);
+      if (bonus > 0) answers.bonus = bonus;
+    }
+    if ($("welcome") && !$("welcome").hidden) close($("welcome"), { restoreFocus: false });
     open($("guide"));
     show(fromStep || "salary");
   }
 
   /* ---------- イベント ---------- */
   $("g-back").addEventListener("click", () => {
-    const prev = history.pop();
-    if (prev) show(prev);
+    if (history.length === 0) {
+      close($("guide"));
+      $("in-salary").focus();
+      return;
+    }
+    show(history.pop());
   });
   $("cta-guide").addEventListener("click", () => startGuide("salary"));
   $("w-guide").addEventListener("click", () => startGuide("salary"));
   $("w-self").addEventListener("click", () => {
-    close($("welcome"));
+    close($("welcome"), { restoreFocus: false });
     sessionStorage.setItem("km_greeted", "1");
     $("in-salary").focus();
   });
   for (const btn of document.querySelectorAll("[data-guide-start]")) {
     btn.addEventListener("click", () => startGuide(btn.dataset.guideStart));
   }
+  // ×ボタン・背景タップ・Escのどれでも閉じられる(閉じ込めない)
+  for (const btn of document.querySelectorAll(".dialog-close")) {
+    btn.addEventListener("click", () => close(btn.closest(".overlay")));
+  }
+  for (const ov of document.querySelectorAll(".overlay")) {
+    ov.addEventListener("click", (e) => { if (e.target === ov) close(ov); });
+  }
+  document.addEventListener("keydown", (e) => {
+    if (e.key !== "Escape") return;
+    if (!$("guide").hidden) close($("guide"));
+    else if (!$("welcome").hidden) close($("welcome"));
+  });
 
   /* ---------- 初回のご挨拶(共有リンクで来た人には出さない) ---------- */
   const hasParams = new URLSearchParams(location.search).has("m");

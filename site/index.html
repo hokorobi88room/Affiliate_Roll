@@ -11,7 +11,8 @@
 <meta property="og:title" content="あなたの経理マン@綻流夢|月収を入れるだけ、手取りがすぐわかる(2026年対応)">
 <meta property="og:description" content="その月収、手取りでいくら?質問に答えるだけで、あなた専用の手取り額を30秒で計算。登録不要・データ送信なし。">
 <meta property="og:url" content="https://tedori-checker.hokorobi88room.workers.dev/">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://tedori-checker.hokorobi88room.workers.dev/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="css/style.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='52' r='45' fill='%23FFF3DE'/%3E%3Cpath d='M12 40 Q50 26 88 40 L88 58 Q50 46 12 58 Z' fill='%2317734C'/%3E%3Ccircle cx='33' cy='47' r='6.5' fill='%23fff'/%3E%3Ccircle cx='33' cy='47' r='3' fill='%233A2E2A'/%3E%3Ccircle cx='67' cy='47' r='6.5' fill='%23fff'/%3E%3Ccircle cx='67' cy='47' r='3' fill='%233A2E2A'/%3E%3Cpath d='M36 74 Q50 84 64 74' stroke='%233A2E2A' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
 <script type="application/ld+json">
@@ -115,17 +116,19 @@
       <li>✅ 2026年最新</li>
     </ul>
     <div class="hero-cta">
-      <button class="btn big" type="button" id="cta-guide">🦸 質問に答えるだけ(おすすめ)</button>
-      <a class="btn ghost big" href="#calc-card">⚡ 自分でサッと入力</a>
+      <button class="btn ghost big" type="button" id="cta-guide">🦸 経理マンにおまかせで出す(おすすめ)</button>
+      <a class="btn ghost big" href="#calc-card">✍️ 自分で入力して出す</a>
     </div>
   </header>
 
   <!-- ======== ツール本体 ======== -->
   <section class="card" id="calc-card" aria-label="手取り計算フォーム">
+    <p class="note" style="margin:0 0 14px">会社の保険(健康保険・厚生年金)で働いている方向けです。パート(扶養内)・自営業・年金のみの方は実際と変わります。</p>
     <form id="calc-form" onsubmit="return false">
       <div class="field">
         <label for="in-salary">💰 月収を入れてください<span class="hint">引かれる前の金額。だいたいでOK</span></label>
         <div class="yen-input big-input"><input type="text" id="in-salary" inputmode="numeric" placeholder="300,000" autocomplete="off"></div>
+        <p class="note" id="salary-hint" hidden></p>
       </div>
       <div class="field">
         <label for="in-bonus">ボーナス(1年分の合計)<span class="hint">わからなければ空欄でOK</span></label>
@@ -146,7 +149,7 @@
           </select>
           <details class="mini-guide">
             <summary>扶養ってなんだっけ?</summary>
-            <p>あなたの収入で暮らしている家族のこと。<strong>独身・共働きなら0人でOK!</strong><br>迷ったら → <button type="button" class="linklike" data-guide-start="dep1">質問に答えて決める</button></p>
+            <p>あなたの収入で暮らしている<strong>16歳以上</strong>の家族のこと。<strong>独身なら0人でOK。</strong>共働きでも、16歳以上のお子さんや仕送り中の親御さんがいれば数えます。<br>迷ったら → <button type="button" class="linklike" data-guide-start="dep1">質問に答えて決める</button></p>
           </details>
         </div>
       </div>
@@ -159,14 +162,14 @@
         </div>
       </div>
       <div class="field">
-        <label>去年(2025年)も働いて収入がありましたか?<span class="hint">住民税は「去年の収入」で決まるため</span></label>
+        <label>去年(2025年)も働いて収入がありましたか?<span class="hint">住民税は「去年の収入」で決まるため。去年といまで収入が大きく違う方は住民税がズレます</span></label>
         <div class="seg">
-          <label><input type="radio" name="lastyear" value="yes" checked><span>はい</span></label>
+          <label><input type="radio" name="lastyear" value="yes" checked><span>はい(だいたい同じ)</span></label>
           <label><input type="radio" name="lastyear" value="no"><span>いいえ(新社会人など)</span></label>
         </div>
       </div>
     </form>
-    <p class="note" style="margin-top:16px">😵‍💫 むずかしい? → <button type="button" class="linklike mini-guide-btn" data-guide-start="salary" style="background:none;border:none;padding:0;font-family:inherit;font-size:12.5px;font-weight:800;color:var(--accent);text-decoration:underline;cursor:pointer">経理マンにおまかせ(質問に答えるだけ)</button></p>
+    <p class="note" style="margin-top:16px">😵‍💫 むずかしい? → <button type="button" class="linklike" data-guide-start="salary">🦸 経理マンにおまかせ(質問に答えるだけ)</button></p>
   </section>
 
   <!-- ======== 結果 ======== -->
@@ -207,6 +210,7 @@
       <a class="btn" id="share-x" target="_blank" rel="noopener">結果をXでシェア</a>
       <button class="btn ghost" id="copy-url" type="button">結果URLをコピー</button>
     </div>
+    <p class="note">🙈 金額は出したくない? → <a class="linklike" id="share-x-anon" target="_blank" rel="noopener">手取り率だけでシェアする</a></p>
     <p class="note">シェアされるのは入力条件のみです(計算はリンクを開いた人の端末内で再実行されます)。</p>
   </section>
 
@@ -231,6 +235,7 @@
         <tr><td>60万円</td><td>454,437円</td><td>5,453,248円</td><td>75.7%</td></tr>
       </tbody>
     </table>
+    <p style="margin:16px 0"><button class="btn" type="button" data-guide-start="salary">🦸 あなたの条件だと?30秒で計算する</button></p>
 
     <h2 id="how">🧮 なにが引かれてるの?(計算方法と根拠)</h2>
     <p>手取り = 月収 −「社会保険料」−「税金」。それだけです。使っている料率はぜんぶ国や協会けんぽの公表値で、勝手な推計はしていません。</p>
@@ -275,7 +280,7 @@
       <p>東京都・40歳未満・扶養なしなら<strong>月あたり約24.0万円</strong>です(2026年)。健康保険+支援金15,120円、厚生年金27,450円、雇用保険1,500円、所得税・住民税(月割)約16,250円が引かれます。年間では手取り約287.6万円、手取り率79.9%です。</p>
     </details>
     <details><summary>手取りは月収の何割?</summary>
-      <p>月収20万〜60万円ではおおむね<strong>75〜82%</strong>です。収入が上がるほど所得税率が上がるため、手取り率は少しずつ下がります。</p>
+      <p>会社の保険で働く会社員なら、月収20万〜60万円でおおむね<strong>75〜82%</strong>です。収入が上がるほど所得税率が上がるため、手取り率は少しずつ下がります。</p>
     </details>
     <details><summary>交通費(通勤手当)は月収に含める?</summary>
       <p>含めたままで大丈夫です。社会保険料は<strong>通勤手当込みの総支給額</strong>で決まります。なお通勤手当は所得税がかからない(月15万円まで)ため、通勤手当が大きい方は本ツールの税額がわずかに多め(=手取りが少なめ)に出ます。</p>
@@ -290,6 +295,8 @@
       <p>社会保険料は協会けんぽの公表料率・等級表どおりに計算しており、原則1円単位で一致します(端数処理の事業所差で最大数円の差)。所得税・住民税は生命保険料控除・iDeCo・住宅ローン控除などの個別控除を含まない<strong>概算</strong>です。正確な税額は源泉徴収票・住民税決定通知書をご確認ください。</p>
     </details>
 
+    <p style="margin:16px 0"><button class="btn" type="button" data-guide-start="salary">🦸 経理マンにおまかせで自分の手取りを出す</button></p>
+
     <h2 id="sources">📚 出典(数字のよりどころ)</h2>
     <ul class="sources">
       <li>全国健康保険協会(協会けんぽ)「令和8年度 都道府県単位保険料率」「令和8年度保険料額表(令和8年3月分から)」</li>
@@ -300,6 +307,8 @@
     </ul>
     <p class="note">最終更新: 2026年7月 / 本ツールは情報提供を目的とした概算シミュレーターであり、税務・社会保険の個別相談は税理士・社会保険労務士等の専門家にご確認ください。</p>
   </article>
+
+  <button class="result-peek" id="result-peek" type="button" hidden>あなたの手取り <strong id="peek-amount">—</strong> ▼</button>
 
   <footer class="site-footer">
     <nav>
@@ -313,13 +322,14 @@
 
 <!-- ご挨拶ポップアップ -->
 <div class="overlay" id="welcome" hidden>
-  <div class="dialog" role="dialog" aria-modal="true" aria-label="ご挨拶">
+  <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="w-title" tabindex="-1">
+    <button class="dialog-close" type="button" aria-label="閉じる">×</button>
     <div class="m"><svg viewBox="0 0 200 210" style="width:96px;height:101px"><use href="#keiriman"/></svg></div>
-    <h2>ご訪問ありがとうございます😊<br>あなたの経理マンです!</h2>
-    <p class="g-note">あなたの手取り、正確に出します。<br>入力する項目(扶養・住民税など)、ぜんぶわかりそうですか?</p>
+    <h2 id="w-title">むずかしい項目、<br>経理マンにおまかせしますか?</h2>
+    <p class="g-note">ご訪問ありがとうございます😊 質問に答えるだけで、あなたの手取りを30秒で出します。</p>
     <div class="choice2">
-      <button class="choice" type="button" id="w-guide">🦸 不安…おまかせする(質問に答えるだけ)</button>
-      <button class="choice" type="button" id="w-self">✍️ わかる!自分で入力する</button>
+      <button class="choice" type="button" id="w-guide">🦸 経理マンにおまかせで出す(おすすめ)</button>
+      <button class="choice" type="button" id="w-self">✍️ 自分で入力して出す</button>
     </div>
     <p class="privacy">入力した内容は、どこにも送信・保存されません</p>
   </div>
@@ -327,11 +337,12 @@
 
 <!-- おまかせモード(2択で進む) -->
 <div class="overlay" id="guide" hidden>
-  <div class="dialog" role="dialog" aria-modal="true" aria-label="おまかせモード">
+  <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="g-q" tabindex="-1">
+    <button class="dialog-close" type="button" aria-label="やめて自分で入力する">×</button>
     <div class="m"><svg viewBox="0 0 200 210" style="width:72px;height:76px"><use href="#keiriman"/></svg></div>
     <p class="g-progress" id="g-progress"></p>
     <h2 id="g-q"></h2>
-    <p class="g-note" id="g-note"></p>
+    <p class="g-note" id="g-note" role="status"></p>
     <div class="g-inputrow" id="g-inputrow" hidden>
       <div class="yen-input big-input" id="g-input-wrap"><input type="text" id="g-input" inputmode="numeric" autocomplete="off"></div>
     </div>

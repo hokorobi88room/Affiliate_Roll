@@ -7,8 +7,9 @@
   --surface: #FFFFFF;
   --surface2: #F6EEDF;
   --ink: #3A2E2A;
-  --muted: #8A7B6C;
-  --line: #EDDFC8;
+  --muted: #6F6152;        /* WCAG AA(4.5:1)を満たす補助色 */
+  --line: #EDDFC8;         /* 区切り線(装飾用) */
+  --line-strong: #5F8D72;  /* 入力欄・ボタンの輪郭(3:1以上) */
   --accent: #17734C;
   --accent2: #0E5C3B;
   --accent-weak: #E2F3E9;
@@ -122,7 +123,7 @@ input[type="text"], input[type="number"], select {
   font-size: 18px;
   font-family: inherit;
   padding: 14px 15px;
-  border: 2px solid var(--line);
+  border: 2px solid var(--line-strong);
   border-radius: 14px;
   background: var(--surface);
   color: var(--ink);
@@ -148,7 +149,7 @@ input:focus, select:focus {
 }
 .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 @media (max-width: 480px) { .row2 { grid-template-columns: 1fr; } }
-.seg { display: flex; border: 2px solid var(--line); border-radius: 14px; overflow: hidden; background: var(--surface); }
+.seg { display: flex; border: 2px solid var(--line-strong); border-radius: 14px; overflow: hidden; background: var(--surface); }
 .seg label {
   flex: 1; text-align: center; padding: 13px 4px; font-size: 14px; font-weight: 700;
   cursor: pointer; user-select: none;
@@ -157,7 +158,7 @@ input:focus, select:focus {
 .seg input { position: absolute; opacity: 0; }
 .seg label:has(input:checked) { background: var(--accent); color: #fff; font-weight: 800; }
 .seg label:has(input:focus-visible) { outline: 3px solid var(--focus); outline-offset: -3px; }
-.seg label + label { border-left: 2px solid var(--line); }
+.seg label + label { border-left: 2px solid var(--line-strong); }
 
 /* フィールド直下のミニ解説 */
 .mini-guide { margin-top: 7px; }
@@ -172,10 +173,13 @@ input:focus, select:focus {
   background: var(--accent-weak); border-radius: 14px;
   padding: 10px 14px; margin: 8px 0 0; font-size: 13px; line-height: 1.75;
 }
-.mini-guide button.linklike {
-  background: none; border: none; padding: 0; font-family: inherit; font-size: 13px;
+/* テキスト風リンク(統一定義)。見た目は小さくても当たり判定は44px級に */
+.linklike {
+  background: none; border: none; font-family: inherit; font-size: 13px;
   font-weight: 800; color: var(--accent); text-decoration: underline; cursor: pointer;
+  display: inline-block; padding: 12px 8px; margin: -10px -6px;
 }
+.mini-guide summary { padding: 10px 0; }
 
 /* ---- 結果 ---- */
 #result { scroll-margin-top: 12px; }
@@ -191,7 +195,7 @@ input:focus, select:focus {
   font-weight: 800;
   line-height: 1.15;
   margin: 2px 0 0;
-  color: var(--c-net);
+  color: var(--accent);
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.01em;
 }
@@ -220,7 +224,7 @@ table.breakdown { width: 100%; border-collapse: collapse; font-size: 14px; }
 .breakdown th:first-child, .breakdown td:first-child { text-align: left; }
 .breakdown thead th { font-size: 12px; color: var(--muted); font-weight: 700; }
 .breakdown .sum td { font-weight: 800; border-top: 2px solid var(--ink); border-bottom: none; }
-.breakdown .sum td:not(:first-child) { color: var(--c-net); }
+.breakdown .sum td:not(:first-child) { color: var(--accent); }
 .breakdown .indent td:first-child { padding-left: 22px; color: var(--muted); }
 
 /* シェア */
@@ -237,24 +241,38 @@ table.breakdown { width: 100%; border-collapse: collapse; font-size: 14px; }
 }
 .offer h3 { font-size: 14.5px; margin: 0 0 6px; font-weight: 800; }
 .offer p { font-size: 13px; margin: 0 0 12px; color: var(--muted); }
-.offer .disclosure { font-size: 11px; color: var(--muted); margin: 10px 0 0; }
+.offer .disclosure { font-size: 12px; color: var(--muted); margin: 10px 0 0; }
 [hidden] { display: none !important; }
 
 /* ---- ポップアップ(ご挨拶・おまかせモード) ---- */
 .overlay {
   position: fixed; inset: 0; z-index: 50;
   background: rgba(58, 40, 10, .45);
-  display: flex; align-items: center; justify-content: center;
+  display: flex; align-items: flex-start; justify-content: center;
   padding: 18px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 .dialog {
+  position: relative;
   background: var(--surface); border-radius: 24px;
   width: 100%; max-width: 430px;
+  margin: auto 0; /* 縦センター(あふれたらスクロール) */
   padding: 26px 22px 22px; text-align: center;
   box-shadow: 0 18px 50px rgba(40, 25, 0, .3);
   animation: pop .25s ease;
-  max-height: 90vh; overflow-y: auto;
+  max-height: 90vh; max-height: 90dvh; overflow-y: auto;
+  overscroll-behavior: contain;
+  outline: none;
 }
+.dialog-close {
+  position: absolute; top: 4px; right: 4px;
+  width: 44px; height: 44px;
+  background: none; border: none; cursor: pointer;
+  font-size: 24px; line-height: 1; color: var(--muted);
+  border-radius: 12px;
+}
+.dialog-close:hover { background: var(--surface2); }
 @keyframes pop { from { transform: scale(.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 .dialog .m { width: 96px; margin: 0 auto 6px; }
 .dialog h2 { font-size: 19px; font-weight: 800; margin: 4px 0 6px; line-height: 1.5; }
@@ -266,7 +284,7 @@ table.breakdown { width: 100%; border-collapse: collapse; font-size: 14px; }
   display: block; width: 100%; cursor: pointer;
   font-family: inherit; font-size: 16px; font-weight: 800;
   padding: 16px 14px; border-radius: 16px;
-  background: var(--surface); color: var(--ink); border: 2px solid var(--line);
+  background: var(--surface); color: var(--ink); border: 2px solid var(--line-strong);
   transition: transform .12s ease, border-color .12s ease, background .12s ease;
 }
 .choice:hover { transform: translateY(-1px); border-color: var(--accent); background: var(--accent-weak); }
@@ -274,13 +292,14 @@ table.breakdown { width: 100%; border-collapse: collapse; font-size: 14px; }
 /* 決定ボタン(選択肢ではない)だけ塗る */
 .choice.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
 .choice.primary:hover { background: var(--accent2); }
-.dialog .privacy { font-size: 11.5px; color: var(--muted); margin: 14px 0 0; }
+.dialog .privacy { font-size: 12px; color: var(--muted); margin: 14px 0 0; }
 .dialog .privacy::before { content: "🔒 "; }
 .yen-input.unit-nin::after { content: "人"; }
 .g-inputrow { margin: 4px 0 12px; }
 .g-back {
   background: none; border: none; font-family: inherit; cursor: pointer;
-  font-size: 12.5px; color: var(--muted); margin-top: 14px; text-decoration: underline;
+  font-size: 12.5px; color: var(--muted); margin-top: 4px; text-decoration: underline;
+  padding: 14px 12px; /* タップしやすく */
 }
 
 /* ---- 解説・FAQ ---- */
@@ -314,6 +333,18 @@ table.breakdown { width: 100%; border-collapse: collapse; font-size: 14px; }
 .prose details p:last-child, .prose details .note:last-child { margin-bottom: 14px; }
 .sources { font-size: 13px; color: var(--muted); }
 .sources li { margin: 4px 0; }
+
+/* 結果ミニバー(結果が画面外のときだけ表示) */
+.result-peek {
+  position: fixed; left: 50%; transform: translateX(-50%); bottom: 14px; z-index: 40;
+  border: none; cursor: pointer;
+  background: var(--accent); color: #fff;
+  font-family: inherit; font-weight: 800; font-size: 13.5px;
+  padding: 13px 22px; border-radius: 999px;
+  box-shadow: 0 4px 16px rgba(23, 115, 76, .35);
+  white-space: nowrap;
+}
+.result-peek strong { font-size: 15px; margin: 0 2px; }
 
 /* ---- フッター ---- */
 .site-footer {

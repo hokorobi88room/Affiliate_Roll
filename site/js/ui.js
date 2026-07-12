@@ -1,8 +1,32 @@
-/* 手取りチェッカー UI制御(すべて端末内で完結・外部送信なし) */
+/* あなたの経理マン UI制御(すべて端末内で完結・外部送信なし) */
 (function () {
   "use strict";
   const $ = (id) => document.getElementById(id);
   const yen = (v) => Math.round(v).toLocaleString("ja-JP");
+  const man = (v) => (Math.round(v / 1000) / 10).toLocaleString("ja-JP"); // 万円(小数1桁)
+
+  /* ---- 金額入力の共通ヘルパー(guide.jsからも使う) ---- */
+  const zen2han = (s) => String(s).replace(/[０-９]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0xFEE0));
+  const digitsOf = (s) => zen2han(s).replace(/[^\d]/g, "");
+  const commaFmt = (v) => Number(v).toLocaleString("ja-JP");
+  /* カンマ整形してもカーソル位置(数字何個目の直後か)を保つ */
+  function formatMoneyInput(el) {
+    const pos = el.selectionStart ?? el.value.length;
+    const digitsLeft = digitsOf(el.value.slice(0, pos)).length;
+    const digits = digitsOf(el.value);
+    el.value = digits ? commaFmt(digits) : "";
+    let idx = 0, seen = 0;
+    while (idx < el.value.length && seen < digitsLeft) {
+      if (/\d/.test(el.value[idx])) seen++;
+      idx++;
+    }
+    try { el.setSelectionRange(idx, idx); } catch { /* 未対応環境は無視 */ }
+  }
+  function attachMoneyInput(el) {
+    el.addEventListener("input", (ev) => { if (ev.isComposing) return; formatMoneyInput(el); });
+    el.addEventListener("compositionend", () => formatMoneyInput(el)); // IME(全角)確定時
+  }
+  window.KM = { zen2han, digitsOf, commaFmt, formatMoneyInput, attachMoneyInput };
 
   const form = {
     salary: $("in-salary"),
@@ -21,18 +45,12 @@
   }
   form.pref.value = "tokyo";
 
-  /* 金額入力はカンマ区切りで表示(計算時は数字だけ読むので安全) */
-  const commaFmt = (v) => Number(v).toLocaleString("ja-JP");
-  for (const el of [form.salary, form.bonus]) {
-    el.addEventListener("input", () => {
-      const digits = String(el.value).replace(/[^\d]/g, "");
-      el.value = digits ? commaFmt(digits) : "";
-    });
-  }
+  attachMoneyInput(form.salary);
+  attachMoneyInput(form.bonus);
 
   function readInput() {
     const num = (el) => {
-      const v = parseInt(String(el.value).replace(/[^\d]/g, ""), 10);
+      const v = parseInt(digitsOf(el.value), 10);
       return isNaN(v) ? 0 : v;
     };
     return {
@@ -46,17 +64,46 @@
     };
   }
 
+  /* 月収の入力ミス救済(「30」= 30万のつもり等)。無反応にしない */
+  function salaryHint(v) {
+    const hint = $("salary-hint");
+    if (v > 0 && v < 10000) {
+      if (v < 1000) {
+        hint.innerHTML = `もしかして <strong>${v}万円</strong> ですか? → ` +
+          `<button type="button" class="linklike" id="salary-fix" data-v="${v * 10000}">${yen(v * 10000)}円で計算する</button>`;
+      } else {
+        hint.textContent = "「円」の単位で、1万円以上の数字を入れてください(例: 300,000)";
+      }
+      hint.hidden = false;
+    } else {
+      hint.hidden = true;
+    }
+  }
+  $("salary-hint").addEventListener("click", (e) => {
+    const b = e.target.closest("#salary-fix");
+    if (!b) return;
+    form.salary.value = commaFmt(b.dataset.v);
+    form.salary.dispatchEvent(new Event("input", { bubbles: true }));
+    form.salary.focus();
+  });
+
   function render() {
     const p = readInput();
     const out = $("result");
-    if (p.monthlySalary < 10000) { out.hidden = true; updateUrl(p); return; }
+    salaryHint(p.monthlySalary);
+    if (p.monthlySalary < 10000) {
+      out.hidden = true;
+      $("result-peek").hidden = true;
+      updateUrl(p);
+      return;
+    }
     const r = window.TedoriCalc.calcNet(p, R);
     out.hidden = false;
 
-    $("r-monthly").innerHTML = `${yen(r.monthly.netApprox / 10000 >= 100 ? r.monthly.netApprox : r.monthly.netApprox)}<small>円</small>`;
+    $("r-monthly").innerHTML = `${yen(r.monthly.netApprox)}<small>円</small>`;
     $("r-sub").innerHTML =
       `年間の手取り <strong>${yen(r.annual.net)}円</strong> / 手取り率 <strong>${(r.annual.netRate * 100).toFixed(1)}%</strong>` +
-      (r.bonus.gross > 0 ? `(賞与含む)` : "");
+      (r.bonus.gross > 0 ? `(ボーナス含む)` : "");
 
     // 構成バー
     const si = r.annual.socialInsurance;
@@ -97,9 +144,20 @@
       `${R.prefectures[p.prefecture].name}の健康保険料率${r.detail.healthRatePct.toFixed(2)}%・令和8年度の公表値で計算しました。` +
       `月々の税額は年額を12で割った概算です。`;
 
-    // シェア文言(結果込み)
-    const shareText = `月収${yen(p.monthlySalary)}円の手取り、月${yen(m.netApprox)}円だった(手取り率${(r.annual.netRate * 100).toFixed(1)}%)。自分の数字は30秒でわかる↓`;
+    // 画面下部のミニバー(結果が画面外でも「出た」と分かるように)
+    $("peek-amount").textContent = `月${yen(m.netApprox)}円`;
+    requestAnimationFrame(() => {
+      const rect = out.getBoundingClientRect();
+      $("result-peek").hidden = rect.top < window.innerHeight && rect.bottom > 0;
+    });
+
+    // シェア文言(1円単位を晒さない万円丸め+率主体)
+    const rate = (r.annual.netRate * 100).toFixed(1);
+    const shareText = `月収${man(p.monthlySalary)}万円だと、手取りは月${man(m.netApprox)}万円(手取り率${rate}%)。2026年の自分の数字は30秒でわかる↓`;
     $("share-x").href = "https://x.com/intent/post?text=" + encodeURIComponent(shareText + "\n" + shareUrl(p));
+    // 金額を伏せたい人向け
+    $("share-x-anon").href = "https://x.com/intent/post?text=" +
+      encodeURIComponent(`2026年の手取り率、私は${rate}%だった。あなたは?30秒でわかる↓\n` + location.origin + location.pathname);
     updateUrl(p);
   }
 
@@ -121,7 +179,7 @@
   }
   function restoreFromUrl() {
     const q = new URLSearchParams(location.search);
-    if (!q.has("m")) return;
+    if (!q.has("m")) return false;
     form.salary.value = q.get("m") ? commaFmt(q.get("m")) : "";
     form.bonus.value = (q.get("b") && q.get("b") !== "0") ? commaFmt(q.get("b")) : "";
     if (R.prefectures[q.get("p")]) form.pref.value = q.get("p");
@@ -129,6 +187,7 @@
     document.querySelector(`input[name="age"][value="${age}"]`).checked = true;
     form.dependents.value = q.get("d") || "0";
     document.querySelector(`input[name="lastyear"][value="${q.get("n") === "1" ? "no" : "yes"}"]`).checked = true;
+    return true;
   }
 
   $("copy-url").addEventListener("click", async () => {
@@ -158,6 +217,26 @@
     box.hidden = false;
   }
 
-  restoreFromUrl();
+  /* 結果ミニバー: 結果が画面外にあるときだけ出す */
+  const peek = $("result-peek");
+  peek.addEventListener("click", () => $("result").scrollIntoView({ behavior: "smooth" }));
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        peek.hidden = $("result").hidden || e.isIntersecting;
+      }
+    }, { threshold: 0.05 });
+    io.observe($("result"));
+  }
+
+  const restored = restoreFromUrl();
   render();
+  if (restored) {
+    // 共有リンクで来た人を結果まで案内する(受け手が気づけないのを防ぐ)
+    const banner = $("guide-banner");
+    $("guide-banner-text").textContent = "共有された条件で計算した結果です。月収をあなたの数字に書き換えてみてください";
+    banner.hidden = false;
+    // 読み込み直後なのでアニメーション無しで直行(スクロール復元との競合も避ける)
+    setTimeout(() => $("result").scrollIntoView({ behavior: "instant", block: "start" }), 300);
+  }
 })();
