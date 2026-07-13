@@ -341,7 +341,7 @@ table.breakdown { width: 100%; border-collapse: collapse; font-size: 14px; }
 .discover-head .sub { font-size: 12px; font-weight: 700; color: var(--muted); }
 /* チップ束の見出しは看板より一段控えめ(主従を明確に) */
 .discover-lead { font-size: 13px; font-weight: 800; color: var(--muted); margin: 18px 0 8px; }
-/* 先頭バッジ=機能/ナビ signal を安心バッジと差別化(朱の枠+リンク) */
+/* 先頭バッジ=道具箱への機能/ナビ signal。緑ベタ塗り+白文字で安心バッジと差別化 */
 .badges li.feature { padding: 0; background: none; }
 .badges li.feature a {
   display: inline-flex; align-items: center; gap: 4px;
