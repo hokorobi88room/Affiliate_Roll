@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>副業の税金・20万円の壁|あなたの経理マン@綻流夢(2026年・令和8年度対応)</title>
+<meta name="description" content="副業のもうけ、確定申告いる?税金はいくら?会社員の「20万円の壁」を、本業の年収と副業のもうけを入れるだけで判定する無料ツール。2026年(令和8年度)対応、登録不要・入力データはどこにも送信されません。">
+<link rel="canonical" href="https://tedori-checker.hokorobi88room.workers.dev/fukugyo.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="副業の税金・20万円の壁|あなたの経理マン@綻流夢(2026年対応)">
+<meta property="og:description" content="副業のもうけ、確定申告いる?税金はいくら?『20万円の壁』を、あなたの数字で30秒判定。登録不要・データ送信なし。">
+<meta property="og:url" content="https://tedori-checker.hokorobi88room.workers.dev/fukugyo.html">
+<meta property="og:image" content="https://tedori-checker.hokorobi88room.workers.dev/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FDF6EA">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='52' r='45' fill='%23FFF3DE'/%3E%3Cpath d='M12 40 Q50 26 88 40 L88 58 Q50 46 12 58 Z' fill='%2317734C'/%3E%3Ccircle cx='33' cy='47' r='6.5' fill='%23fff'/%3E%3Ccircle cx='33' cy='47' r='3' fill='%233A2E2A'/%3E%3Ccircle cx='67' cy='47' r='6.5' fill='%23fff'/%3E%3Ccircle cx='67' cy='47' r='3' fill='%233A2E2A'/%3E%3Cpath d='M36 74 Q50 84 64 74' stroke='%233A2E2A' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "副業で年30万円もうけたら税金はいくらですか?(本業年収400万円・2026年)",
+      "acceptedAnswer": { "@type": "Answer", "text": "2026年(令和8年度)、本業の年収400万円の会社員が副業で年30万円もうけた場合、追加でかかる税金の目安は約45,315円です。内訳は所得税(概算・復興特別所得税込み)15,315円と住民税(概算)30,000円。副業のもうけが年20万円をこえているため、所得税の確定申告が必要です。" }
+    },
+    {
+      "@type": "Question",
+      "name": "副業の20万円の壁とは何ですか?",
+      "acceptedAnswer": { "@type": "Answer", "text": "会社で給料をもらう人は、給料以外のもうけ(副業の売上−経費など)が1年で20万円以下なら、所得税の確定申告をしなくてよい、というルールです。ただし住民税の申告は金額にかかわらず必要で、お住まいの市区町村へ届け出ます。もうけが20万円を1円でもこえると、所得税の確定申告が必要になります。" }
+    },
+    {
+      "@type": "Question",
+      "name": "副業が20万円以下なら何もしなくていいですか?",
+      "acceptedAnswer": { "@type": "Answer", "text": "所得税の確定申告は不要ですが、住民税の申告は必要です。20万円以下でも住民税はかかり(もうけの約10%が目安)、お住まいの市区町村へ申告します。また、医療費控除やふるさと納税などで確定申告をする人は、20万円以下でも副業のぶんを申告する必要があります。" }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<main>
+  <header class="site-header">
+    <div class="hero-top">
+      <div class="mascot" aria-hidden="true" style="width:84px"><svg viewBox="0 0 200 210"><use href="#keiriman"/></svg></div>
+      <div>
+        <p class="site-name"><a href="./" style="text-decoration:none;color:inherit">あなたの経理マン@綻流夢</a></p>
+        <h1 style="font-size:clamp(22px,6vw,30px);margin:4px 0 0">副業の税金・20万円の壁</h1>
+      </div>
+    </div>
+    <p class="lede">副業のもうけ、確定申告いる?税金はいくら?「20万円の壁」を、あなたの数字で。</p>
+  </header>
+
+  <!-- ======== ツール本体 ======== -->
+  <section class="card" id="calc-card" aria-label="副業の税金 判定フォーム">
+    <form id="calc-form" onsubmit="return false">
+      <div class="field">
+        <label for="in-side">💡 副業のもうけ(1年ぶん)<span class="hint">売上から経費を引いた金額</span></label>
+        <div class="yen-input big-input"><input type="text" id="in-side" inputmode="numeric" placeholder="300,000" autocomplete="off"></div>
+        <p class="note" id="side-hint" hidden></p>
+      </div>
+      <div class="field">
+        <label for="in-salary">🏢 本業の年収(1年ぶん・引かれる前)<span class="hint">追加の税金の計算に使います。だいたいでOK</span></label>
+        <div class="yen-input"><input type="text" id="in-salary" inputmode="numeric" placeholder="4,000,000" autocomplete="off"></div>
+        <p class="note" id="salary-hint" hidden></p>
+      </div>
+    </form>
+    <p class="note" style="margin-top:16px">🔒 入力した内容は、どこにも送信・保存されません</p>
+    <p class="note" style="margin-top:8px">🏢 会社から給料をもらって働く方(会社員・パート)向けです。自営業だけの方は対象外です。</p>
+  </section>
+
+  <!-- ======== 結果 ======== -->
+  <section class="card" id="result" hidden aria-live="polite">
+    <p class="hero-num-label" id="r-label">—</p>
+    <p class="hero-num" id="r-verdict">—</p>
+    <p class="hero-sub" id="r-sub"></p>
+
+    <div id="r-taxwrap" hidden>
+      <p class="hero-num-label" id="r-tax-label" style="margin-top:20px">追加でかかる税金の目安</p>
+      <p class="hero-num" id="r-tax">—</p>
+      <div class="tbl-wrap" id="r-tbl-wrap">
+        <table class="breakdown">
+          <thead><tr><th>項目</th><th>金額</th></tr></thead>
+          <tbody id="r-rows"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="note" id="r-need-salary" hidden>🏢 本業の年収も入れると、追加でかかる税金の目安が出ます。</p>
+
+    <div class="km-say">
+      <span class="m" aria-hidden="true"><svg viewBox="0 0 200 210"><use href="#keiriman"/></svg></span>
+      <p class="bubble" id="r-react"></p>
+    </div>
+
+    <p class="note" id="r-caption"></p>
+
+    <p style="margin:18px 0 0"><a class="btn" href="./">本業の手取りも知る →</a></p>
+  </section>
+
+  <!-- ======== 解説・FAQ ======== -->
+  <article class="prose">
+    <h2 id="wall">📏 20万円の壁って?</h2>
+    <div class="km-say">
+      <span class="m" aria-hidden="true"><svg viewBox="0 0 200 210"><use href="#keiriman"/></svg></span>
+      <p class="bubble">会社の給料以外のもうけが、1年で20万円以下なら — 所得税の確定申告はいりません。ただし住民税の申告は必要です。<small>会社で給料をもらって働く方(会社員・パート)向けのお話です</small></p>
+    </div>
+    <p>会社で給料をもらう人は、給料以外のもうけ(副業の<strong>売上から経費を引いた金額</strong>など)が1年で<strong>20万円以下</strong>なら、所得税の確定申告をしなくてよいことになっています。<strong>1円でもこえたら、確定申告が必要</strong>です。</p>
+    <p>気をつけたいのは<strong>住民税</strong>。こちらは20万円以下でも申告が必要で、お住まいの市区町村へ届け出ます。もうけの<strong>およそ10%</strong>が住民税の目安です。</p>
+
+    <h2 id="how">🧮 追加の税金はどう出しているの?</h2>
+    <p>追加でかかる税金 =<strong> 副業のもうけ ×(所得税の税率 + 住民税10%)</strong>。所得税の税率は、本業の年収から「税金がかかる分」を概算して求めます(高いほど税率が上がります)。副業のもうけは、本業の収入の上に乗るぶんとして計算します。</p>
+    <details>
+      <summary>使っている数字と考え方(2026年・令和8年度)</summary>
+      <table>
+        <thead><tr><th>項目</th><th>内容</th></tr></thead>
+        <tbody>
+          <tr><td>所得税の税率</td><td>本業の「税金がかかる分」に応じて5〜45%(復興特別所得税2.1%を上乗せ)</td></tr>
+          <tr><td>住民税</td><td>もうけの10%(所得割)</td></tr>
+          <tr><td>本業の税率のもと</td><td>年収 − 給与所得控除 − 基礎控除(最大104万円) − 社会保険料の概算(年収×15%)</td></tr>
+          <tr><td>判定ライン</td><td>副業のもうけ 20万円(1円でもこえたら所得税の確定申告が必要)</td></tr>
+        </tbody>
+      </table>
+      <p class="note">生命保険料控除・iDeCoなどの個別事情は含まない概算です。実際の金額は確定申告や住民税の通知でご確認ください。</p>
+    </details>
+
+    <h2 id="faq">❓ よくある質問</h2>
+    <details><summary>副業で年30万円もうけたら税金は?(本業年収400万円)</summary>
+      <p>本業の年収400万円の会社員が副業で年30万円もうけた場合、追加の税金は<strong>約45,315円</strong>です(2026年)。内訳は所得税(概算・復興税込み)15,315円+住民税(概算)30,000円。20万円をこえているので<strong>確定申告が必要</strong>です。</p>
+    </details>
+    <details><summary>20万円の壁とは?</summary>
+      <p>会社で給料をもらう人が、給料以外のもうけ(売上−経費など)が<strong>1年で20万円以下</strong>なら、所得税の確定申告をしなくてよいというルールです。<strong>1円でもこえたら確定申告が必要</strong>。住民税の申告は金額にかかわらず必要です。</p>
+    </details>
+    <details><summary>副業が20万円以下なら何もしなくていい?</summary>
+      <p>所得税の確定申告は不要ですが、<strong>住民税の申告は必要</strong>です。20万円以下でも住民税はかかり(もうけの約10%が目安)、市区町村へ申告します。医療費控除やふるさと納税などで確定申告をする人は、20万円以下でも副業のぶんの申告が必要です。</p>
+    </details>
+
+    <p style="margin:16px 0"><a class="btn" href="./">本業の手取りも知る →</a></p>
+    <p class="note">最終更新: 2026年7月 / 本ツールは情報提供を目的とした概算シミュレーターであり、税務の個別相談は税理士等の専門家にご確認ください。</p>
+  </article>
+
+  <p style="margin:26px 0"><a class="btn ghost big" href="tools.html">🧰 ほかの道具も見る</a> <a class="btn ghost big" href="./">💰 手取り計算にもどる</a></p>
+
+  <footer class="site-footer">
+    <nav>
+      <a href="./">手取り計算</a>
+      <a href="tools.html">道具箱</a>
+      <a href="about.html">運営者情報</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+    </nav>
+    <p>© 2026 あなたの経理マン@綻流夢</p>
+  </footer>
+</main>
+
+<script src="data/rates2026.js"></script>
+<script src="js/calc.js"></script>
+<script src="js/kmlib.js"></script>
+<script src="js/fukugyo.js"></script>
+</body>
+</html>

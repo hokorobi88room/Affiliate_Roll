@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>残業代の計算|あなたの経理マン@綻流夢(2026年・労働基準法対応)</title>
+<meta name="description" content="時給と残業した時間を入れるだけで、割増を入れた残業代がすぐわかる無料ツール。ふつうの残業・深夜・休日出勤の割増に対応、登録不要・入力データはどこにも送信されません。">
+<link rel="canonical" href="https://tedori-checker.hokorobi88room.workers.dev/zangyo.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="残業代の計算|あなたの経理マン@綻流夢">
+<meta property="og:description" content="時給と残業した時間を入れるだけで、割増を入れた残業代がすぐわかる無料ツール。ふつうの残業・深夜・休日出勤の割増に対応、登録不要・入力データはどこにも送信されません。">
+<meta property="og:url" content="https://tedori-checker.hokorobi88room.workers.dev/zangyo.html">
+<meta property="og:image" content="https://tedori-checker.hokorobi88room.workers.dev/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FDF6EA">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='52' r='45' fill='%23FFF3DE'/%3E%3Cpath d='M12 40 Q50 26 88 40 L88 58 Q50 46 12 58 Z' fill='%2317734C'/%3E%3Ccircle cx='33' cy='47' r='6.5' fill='%23fff'/%3E%3Ccircle cx='33' cy='47' r='3' fill='%233A2E2A'/%3E%3Ccircle cx='67' cy='47' r='6.5' fill='%23fff'/%3E%3Ccircle cx='67' cy='47' r='3' fill='%233A2E2A'/%3E%3Cpath d='M36 74 Q50 84 64 74' stroke='%233A2E2A' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "時給1,500円で20時間の残業代はいくらですか?",
+      "acceptedAnswer": { "@type": "Answer", "text": "ふつうの残業(1.25倍)なら、1,500円 × 1.25倍 × 20時間 = 37,500円です。ふだんの時給ぶん(1時間1,500円)に加えて、1時間あたり375円の割増が上乗せされ、20時間で割増だけでも7,500円になります。" }
+    },
+    {
+      "@type": "Question",
+      "name": "残業代は何倍になりますか?(割増率)",
+      "acceptedAnswer": { "@type": "Answer", "text": "労働基準法の下限で、ふつうの残業は1.25倍、夜22時〜朝5時の残業は1.5倍、休みの日の出勤は1.35倍です。時給1,500円なら、ふつうの残業は1時間1,875円、深夜は2,250円、休日は2,025円になります。会社によってはこれより高いこともあります。" }
+    },
+    {
+      "@type": "Question",
+      "name": "時給がわからないときはどうやって出しますか?",
+      "acceptedAnswer": { "@type": "Answer", "text": "時給 ≒ 月給 ÷ 1か月の平均の労働時間(目安160時間)で、だいたいの時給が出せます。たとえば月給25万6千円なら、256,000円 ÷ 160時間 = 1,600円が時給の目安です。" }
+    },
+    {
+      "@type": "Question",
+      "name": "たくさん残業したら割増率は上がりますか?",
+      "acceptedAnswer": { "@type": "Answer", "text": "1か月の残業が60時間をこえた分は、1.25倍ではなく1.5倍になります(すべての会社が対象)。深夜や休日の割増と重なると、さらに高くなることもあります。" }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<main>
+  <header class="site-header">
+    <div class="hero-top">
+      <div class="mascot" aria-hidden="true" style="width:84px"><svg viewBox="0 0 200 210"><use href="#keiriman"/></svg></div>
+      <div>
+        <p class="site-name"><a href="./" style="text-decoration:none;color:inherit">あなたの経理マン@綻流夢</a></p>
+        <h1 style="font-size:clamp(22px,6vw,30px);margin:4px 0 0">残業代の計算</h1>
+      </div>
+    </div>
+    <p class="lede">その残業、いくらもらえる?割増をぜんぶ入れて計算します(2026年の労働基準法どおり)。</p>
+  </header>
+
+  <!-- ======== ツール本体 ======== -->
+  <section class="card" id="calc-card" aria-label="残業代の計算フォーム">
+    <form id="calc-form" onsubmit="return false">
+      <div class="field">
+        <label for="in-wage">💰 1時間あたりの給料(時給)<span class="hint">引かれる前の金額</span></label>
+        <div class="yen-input big-input"><input type="text" id="in-wage" inputmode="numeric" placeholder="1,500" autocomplete="off"></div>
+        <details class="mini-guide">
+          <summary>時給がわからない?月給から出す</summary>
+          <p>
+            時給 ≒ 月給 ÷ 1か月の平均の労働時間(目安<strong>160時間</strong>)。<br>
+            月給(引かれる前)
+            <span class="yen-input" style="display:inline-block;max-width:190px;vertical-align:middle;margin:0 6px"><input type="text" id="in-monthly" inputmode="numeric" placeholder="256,000" autocomplete="off"></span>
+            <span id="monthly-out" hidden></span>
+          </p>
+        </details>
+      </div>
+
+      <div class="field">
+        <label for="in-hours">⏰ 残業した時間<span class="hint">1か月ぶんなど、まとめてOK</span></label>
+        <div class="yen-input unit-hour"><input type="text" id="in-hours" inputmode="decimal" placeholder="20" autocomplete="off"></div>
+      </div>
+
+      <div class="field">
+        <label>どんな残業?<span class="hint">割増の倍率が変わります</span></label>
+        <div class="seg untouched">
+          <label><input type="radio" name="kind" value="normal" checked><span>ふつうの残業(1.25倍)</span></label>
+          <label><input type="radio" name="kind" value="special"><span>特別な残業</span></label>
+        </div>
+        <div class="seg special-detail untouched" id="special-detail" hidden style="margin-top:8px">
+          <label><input type="radio" name="special" value="night" checked><span>夜22時〜朝5時(1.5倍)</span></label>
+          <label><input type="radio" name="special" value="holiday"><span>休みの日に出勤(1.35倍)</span></label>
+        </div>
+      </div>
+    </form>
+    <p class="note" style="margin-top:16px">🔒 入力した内容は、どこにも送信・保存されません</p>
+    <p class="note" style="margin-top:10px">📈 月60時間をこえる残業は1.5倍になります(大きな会社)。</p>
+  </section>
+
+  <!-- ======== 結果 ======== -->
+  <section class="card" id="result" hidden aria-live="polite">
+    <p class="hero-num-label">残業代(概算)</p>
+    <p class="hero-num" id="r-pay">—</p>
+    <p class="hero-sub" id="r-sub"></p>
+
+    <div class="km-say">
+      <span class="m" aria-hidden="true"><svg viewBox="0 0 200 210"><use href="#keiriman"/></svg></span>
+      <p class="bubble" id="r-react"></p>
+    </div>
+
+    <p class="note" id="r-caption"></p>
+  </section>
+
+  <!-- ======== FAQ ======== -->
+  <article class="prose">
+    <h2 id="faq">❓ よくある質問</h2>
+    <details><summary>時給1,500円で20時間の残業代は?</summary>
+      <p>ふつうの残業(1.25倍)なら、<strong>1,500円 × 1.25倍 × 20時間 = 37,500円</strong>です。ふだんの時給ぶん(1時間1,500円)に加えて、1時間あたり<strong>375円</strong>の割増が上乗せされ、20時間で割増だけでも7,500円になります。</p>
+    </details>
+    <details><summary>残業代は何倍になる?(割増率)</summary>
+      <p>労働基準法の下限で、ふつうの残業は<strong>1.25倍</strong>、夜22時〜朝5時の残業は<strong>1.5倍</strong>、休みの日の出勤は<strong>1.35倍</strong>です。時給1,500円なら、ふつうの残業は1時間1,875円、深夜は2,250円、休日は2,025円。会社によってはこれより高いこともあります。</p>
+    </details>
+    <details><summary>時給がわからないときは?</summary>
+      <p>時給 ≒ 月給 ÷ 1か月の平均の労働時間(目安<strong>160時間</strong>)で出せます。たとえば月給25万6千円なら、<strong>256,000円 ÷ 160時間 = 1,600円</strong>が時給の目安です。</p>
+    </details>
+    <details><summary>たくさん残業したら倍率は上がる?</summary>
+      <p>1か月の残業が<strong>60時間をこえた分</strong>は、1.25倍ではなく<strong>1.5倍</strong>になります(すべての会社が対象)。深夜や休日の割増と重なると、さらに高くなることもあります。</p>
+    </details>
+
+    <p class="note">最終更新: 2026年7月 / 本ツールは情報提供を目的とした概算シミュレーターであり、残業代・労働条件の個別相談は労働基準監督署・社会保険労務士等の専門家にご確認ください。</p>
+  </article>
+
+  <p style="margin:26px 0"><a class="btn ghost big" href="tools.html">🧰 ほかの道具も見る</a> <a class="btn ghost big" href="./">💰 手取り計算にもどる</a></p>
+
+  <footer class="site-footer">
+    <nav>
+      <a href="./">手取り計算</a>
+      <a href="tools.html">道具箱</a>
+      <a href="about.html">運営者情報</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+    </nav>
+    <p>© 2026 あなたの経理マン@綻流夢</p>
+  </footer>
+</main>
+<script src="js/kmlib.js"></script>
+<script src="js/zangyo.js"></script>
+</body>
+</html>

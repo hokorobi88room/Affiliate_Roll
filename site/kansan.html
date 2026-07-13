@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>時給・月給・年収の変換|あなたの経理マン@綻流夢(時給→月給・年収を一発計算)</title>
+<meta name="description" content="時給・日給・月給・年収を入れるだけで、ほかの3つに一発変換。「その時給、月給・年収でいくら?」がすぐわかる無料ツール。登録不要・入力データはどこにも送信されません。">
+<link rel="canonical" href="https://tedori-checker.hokorobi88room.workers.dev/kansan.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="時給・月給・年収の変換|あなたの経理マン@綻流夢">
+<meta property="og:description" content="時給・日給・月給・年収を入れるだけで、ほかの3つに一発変換。「その時給、月給・年収でいくら?」がすぐわかる無料ツール。">
+<meta property="og:url" content="https://tedori-checker.hokorobi88room.workers.dev/kansan.html">
+<meta property="og:image" content="https://tedori-checker.hokorobi88room.workers.dev/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FDF6EA">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='52' r='45' fill='%23FFF3DE'/%3E%3Cpath d='M12 40 Q50 26 88 40 L88 58 Q50 46 12 58 Z' fill='%2317734C'/%3E%3Ccircle cx='33' cy='47' r='6.5' fill='%23fff'/%3E%3Ccircle cx='33' cy='47' r='3' fill='%233A2E2A'/%3E%3Ccircle cx='67' cy='47' r='6.5' fill='%23fff'/%3E%3Ccircle cx='67' cy='47' r='3' fill='%233A2E2A'/%3E%3Cpath d='M36 74 Q50 84 64 74' stroke='%233A2E2A' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "時給1,000円は月給・年収でいくらですか?",
+      "acceptedAnswer": { "@type": "Answer", "text": "1日8時間・1か月20日で働くと、月給は160,000円、年収は1,920,000円(約192万円・ボーナスは別)です。日給は8,000円になります。いずれも引かれる前の金額で、手取りはこれより少なくなります。" }
+    },
+    {
+      "@type": "Question",
+      "name": "月給25万円は時給にするといくらですか?",
+      "acceptedAnswer": { "@type": "Answer", "text": "1日8時間・1か月20日(=月160時間)で働く場合、時給は1,563円です。日給は12,500円、年収は300万円になります(ボーナスは別)。" }
+    },
+    {
+      "@type": "Question",
+      "name": "年収300万円は時給に直すといくらですか?",
+      "acceptedAnswer": { "@type": "Answer", "text": "1日8時間・1か月20日(=年1,920時間)で働く場合、時給は1,563円です。月給は250,000円、日給は12,500円になります。" }
+    },
+    {
+      "@type": "Question",
+      "name": "この年収にボーナスは入っていますか?",
+      "acceptedAnswer": { "@type": "Answer", "text": "入っていません。ここでの年収は、毎月の給料を12か月ぶんにした金額です。ボーナスがある人は、その金額を別に足してください。" }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<main>
+  <header class="site-header">
+    <div class="hero-top">
+      <div class="mascot" aria-hidden="true" style="width:84px"><svg viewBox="0 0 200 210"><use href="#keiriman"/></svg></div>
+      <div>
+        <p class="site-name"><a href="./" style="text-decoration:none;color:inherit">あなたの経理マン@綻流夢</a></p>
+        <h1 style="font-size:clamp(22px,6vw,30px);margin:4px 0 0">時給・月給・年収の変換</h1>
+      </div>
+    </div>
+    <p class="lede">その時給、月給・年収にするといくら?ぜんぶ一発で変換します。</p>
+  </header>
+
+  <!-- ======== ツール本体 ======== -->
+  <section class="card" id="calc-card" aria-label="時給・月給・年収の変換フォーム">
+    <form id="calc-form" onsubmit="return false">
+      <div class="field">
+        <label for="in-amount">💴 金額を入れてください<span class="hint">だいたいでOK</span></label>
+        <div class="yen-input big-input"><input type="text" id="in-amount" inputmode="numeric" placeholder="1,000" autocomplete="off"></div>
+        <p class="note" id="amount-hint" hidden></p>
+      </div>
+      <div class="field">
+        <label for="in-type">入れた金額は?<span class="hint">時給・日給・月給・年収から選ぶ</span></label>
+        <select id="in-type">
+          <option value="hour">時給</option>
+          <option value="day">日給</option>
+          <option value="month">月給</option>
+          <option value="year">年収</option>
+        </select>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label for="in-hours">1日に働く時間<span class="hint">初期は8時間</span></label>
+          <div class="yen-input unit-hour"><input type="text" id="in-hours" inputmode="decimal" value="8" autocomplete="off"></div>
+        </div>
+        <div class="field">
+          <label for="in-days">1か月に働く日数(日)<span class="hint">初期は20日</span></label>
+          <input type="text" id="in-days" inputmode="numeric" value="20" autocomplete="off">
+        </div>
+      </div>
+    </form>
+    <p class="note" style="margin-top:16px">🔒 入力した内容は、どこにも送信・保存されません</p>
+  </section>
+
+  <!-- ======== 結果 ======== -->
+  <section class="card" id="result" hidden aria-live="polite">
+    <p class="hero-num-label" id="r-hero-label">—</p>
+    <p class="hero-num" id="r-hero">—</p>
+    <p class="hero-sub" id="r-sub"></p>
+
+    <div class="tbl-wrap">
+      <table class="breakdown">
+        <thead><tr><th>種類</th><th>金額(引かれる前)</th></tr></thead>
+        <tbody id="r-rows"></tbody>
+      </table>
+    </div>
+    <p class="note" id="r-caption"></p>
+
+    <div class="km-say">
+      <span class="m" aria-hidden="true"><svg viewBox="0 0 200 210"><use href="#keiriman"/></svg></span>
+      <p class="bubble" id="r-react"></p>
+    </div>
+
+    <p style="margin:18px 0 0"><a class="btn" href="./">💰 月々の手取りも計算する →</a></p>
+  </section>
+
+  <!-- ======== 早見表・FAQ ======== -->
+  <article class="prose">
+    <h2 id="quick">📋 時給→月給・年収の早見表</h2>
+    <div class="km-say">
+      <span class="m" aria-hidden="true"><svg viewBox="0 0 200 210"><use href="#keiriman"/></svg></span>
+      <p class="bubble">時給が200円ちがうと、年収はどれくらい変わると思いますか? — 答えは、いちばん右の列にあります👇<small>1日8時間・1か月20日で働いた場合。引かれる前の金額です</small></p>
+    </div>
+    <table>
+      <thead><tr><th>時給</th><th>月給</th><th>年収(ボーナス別)</th></tr></thead>
+      <tbody>
+        <tr><td>800円</td><td>12.8万円</td><td>153.6万円</td></tr>
+        <tr><td>1,000円</td><td>16万円</td><td>192万円</td></tr>
+        <tr><td>1,200円</td><td>19.2万円</td><td>230.4万円</td></tr>
+        <tr><td>1,500円</td><td>24万円</td><td>288万円</td></tr>
+        <tr><td>2,000円</td><td>32万円</td><td>384万円</td></tr>
+      </tbody>
+    </table>
+    <p class="note">1日8時間・1か月20日(=月160時間・年1,920時間)で働いた場合。すべて引かれる前の金額で、年収にボーナスは含みません。</p>
+
+    <h2 id="how">🧮 変換のしくみ</h2>
+    <p>やっていることは、かけ算とわり算だけです。まず時給に直してから、ほかの3つを出しています。</p>
+    <ul>
+      <li><strong>日給</strong> = 時給 × 1日に働く時間</li>
+      <li><strong>月給</strong> = 時給 × 1日に働く時間 × 1か月に働く日数</li>
+      <li><strong>年収</strong> = 月給 × 12か月(ボーナスは別)</li>
+    </ul>
+
+    <h2 id="faq">❓ よくある質問</h2>
+    <details><summary>時給1,000円は月給・年収でいくら?</summary>
+      <p>1日8時間・1か月20日で働くと、月給は<strong>160,000円</strong>、年収は<strong>1,920,000円(約192万円)</strong>です(ボーナスは別)。日給は8,000円。いずれも引かれる前の金額で、手取りはこれより少なくなります。</p>
+    </details>
+    <details><summary>月給25万円は時給にするといくら?</summary>
+      <p>1日8時間・1か月20日(=月160時間)で働くなら、時給は<strong>1,563円</strong>です。日給は12,500円、年収は<strong>300万円</strong>になります(ボーナスは別)。</p>
+    </details>
+    <details><summary>年収300万円は時給に直すといくら?</summary>
+      <p>1日8時間・1か月20日(=年1,920時間)で働くなら、時給は<strong>1,563円</strong>です。月給は250,000円、日給は12,500円になります。</p>
+    </details>
+    <details><summary>この年収にボーナスは入ってる?</summary>
+      <p>入っていません。ここでの年収は、毎月の給料を<strong>12か月ぶん</strong>にした金額です。ボーナスがある人は、その金額を別に足してください。</p>
+    </details>
+
+    <p style="margin:16px 0"><a class="btn" href="./">💰 引いたあとの手取りも計算する →</a></p>
+    <p class="note">最終更新: 2026年7月 / 本ツールは引かれる前の金額どうしを変換する概算ツールです。実際の手取りは保険料と税金のぶん少なくなります。</p>
+  </article>
+
+  <p style="margin:26px 0"><a class="btn ghost big" href="tools.html">🧰 ほかの道具も見る</a> <a class="btn ghost big" href="./">💰 手取り計算にもどる</a></p>
+
+  <footer class="site-footer">
+    <nav>
+      <a href="./">手取り計算</a>
+      <a href="tools.html">道具箱</a>
+      <a href="about.html">運営者情報</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+    </nav>
+    <p>© 2026 あなたの経理マン@綻流夢</p>
+  </footer>
+</main>
+<script src="js/kmlib.js"></script>
+<script src="js/kansan.js"></script>
+</body>
+</html>

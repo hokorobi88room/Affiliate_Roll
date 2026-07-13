@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ローン返済シミュレーション|あなたの経理マン@綻流夢(毎月いくら・利息いくら)</title>
+<meta name="description" content="住宅ローンや車のローンで毎月いくら返す?利息はいくら?借りる金額・金利・年数を入れるだけで、毎月の返済額と利息の合計がすぐわかる無料ツール。登録不要・入力データはどこにも送信されません。">
+<link rel="canonical" href="https://tedori-checker.hokorobi88room.workers.dev/loan.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ローン返済シミュレーション|あなたの経理マン@綻流夢">
+<meta property="og:description" content="住宅ローンや車のローン、毎月いくら?利息はいくら?借りる金額を入れるだけで30秒で計算。登録不要・データ送信なし。">
+<meta property="og:url" content="https://tedori-checker.hokorobi88room.workers.dev/loan.html">
+<meta property="og:image" content="https://tedori-checker.hokorobi88room.workers.dev/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FDF6EA">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='52' r='45' fill='%23FFF3DE'/%3E%3Cpath d='M12 40 Q50 26 88 40 L88 58 Q50 46 12 58 Z' fill='%2317734C'/%3E%3Ccircle cx='33' cy='47' r='6.5' fill='%23fff'/%3E%3Ccircle cx='33' cy='47' r='3' fill='%233A2E2A'/%3E%3Ccircle cx='67' cy='47' r='6.5' fill='%23fff'/%3E%3Ccircle cx='67' cy='47' r='3' fill='%233A2E2A'/%3E%3Cpath d='M36 74 Q50 84 64 74' stroke='%233A2E2A' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "3,000万円を35年・金利1%で借りたら毎月いくらですか?",
+      "acceptedAnswer": { "@type": "Answer", "text": "元利均等で計算すると、毎月の返済額は約84,686円です。返し終わるまでの総返済額は約35,567,998円(約3,557万円)で、そのうち利息だけで約5,567,998円(約557万円)はらう計算になります。ボーナス払い・手数料・保証料は含めていません。" }
+    },
+    {
+      "@type": "Question",
+      "name": "金利が1%から2%に上がると返済はどれくらい増えますか?",
+      "acceptedAnswer": { "@type": "Answer", "text": "3,000万円を35年で借りる場合、金利1%なら毎月84,686円ですが、金利2%だと毎月99,379円になり、毎月の返済が約14,693円増えます。総返済額では約6,171,111円(約617万円)も多くなります。金利の差はわずかに見えても、長い年数では大きな差になります。" }
+    },
+    {
+      "@type": "Question",
+      "name": "車のローン300万円を7年・金利5%で借りるといくらですか?",
+      "acceptedAnswer": { "@type": "Answer", "text": "毎月の返済額は約42,402円です。総返済額は約3,561,745円(約356万円)で、そのうち利息が約561,745円(約56万円)です。金利が高いローンは、期間が短くても利息の負担が意外と重くなります。" }
+    },
+    {
+      "@type": "Question",
+      "name": "元利均等返済とは何ですか?",
+      "acceptedAnswer": { "@type": "Answer", "text": "毎月の返済額が最初から最後まで同じ金額になる、いちばん多い返し方です。返しはじめは返済額のうち利息の割合が多く、進むにつれて元金(借りたお金そのもの)が減っていきます。毎月の負担が一定なので家計の見通しが立てやすいのが特長です。" }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<main>
+  <header class="site-header">
+    <div class="hero-top">
+      <div class="mascot" aria-hidden="true" style="width:84px"><svg viewBox="0 0 200 210"><use href="#keiriman"/></svg></div>
+      <div>
+        <p class="site-name"><a href="./" style="text-decoration:none;color:inherit">あなたの経理マン@綻流夢</a></p>
+        <h1 style="font-size:clamp(22px,6vw,30px);margin:4px 0 0">ローン返済シミュレーション</h1>
+      </div>
+    </div>
+    <p class="lede">住宅ローンや車のローン、毎月いくら返す?利息はいくら?先に知っておきましょう。</p>
+  </header>
+
+  <!-- ======== ツール本体 ======== -->
+  <section class="card" id="calc-card" aria-label="ローン返済シミュレーション">
+    <form id="calc-form" onsubmit="return false">
+      <div class="field">
+        <label>どっちのローン?</label>
+        <div class="seg untouched" id="seg-kind">
+          <label><input type="radio" name="kind" value="house" checked><span>🏠 住宅ローン</span></label>
+          <label><input type="radio" name="kind" value="car"><span>🚗 車・その他</span></label>
+        </div>
+      </div>
+      <div class="field">
+        <label for="in-amount">💴 借りる金額<span class="hint" id="amount-lbl-hint">だいたいでOK</span></label>
+        <div class="yen-input big-input"><input type="text" id="in-amount" inputmode="numeric" value="30,000,000" placeholder="30,000,000" autocomplete="off"></div>
+        <p class="note" id="amount-hint" hidden></p>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label for="in-rate">金利(年)<span class="hint">わからなければ1のまま</span></label>
+          <div class="yen-input unit-pct"><input type="text" id="in-rate" inputmode="decimal" value="1" autocomplete="off"></div>
+        </div>
+        <div class="field">
+          <label for="in-years">返す年数<span class="hint" id="years-lbl-hint">住宅は35年が多め</span></label>
+          <div class="yen-input unit-year"><input type="text" id="in-years" inputmode="numeric" value="35" autocomplete="off"></div>
+        </div>
+      </div>
+    </form>
+    <p class="note" style="margin-top:16px">🔒 入力した内容は、どこにも送信・保存されません</p>
+  </section>
+
+  <!-- ======== 結果 ======== -->
+  <section class="card" id="result" hidden aria-live="polite">
+    <p class="hero-num-label">毎月の返済額</p>
+    <p class="hero-num" id="r-monthly">—</p>
+    <p class="hero-sub" id="r-sub"></p>
+
+    <div class="tbl-wrap">
+      <table class="breakdown">
+        <tbody id="r-rows"></tbody>
+      </table>
+    </div>
+    <p class="note" id="r-note">ボーナス払い・手数料・保証料は入れていません。実際の借入は金融機関にご確認ください。</p>
+
+    <div class="km-say">
+      <span class="m" aria-hidden="true"><svg viewBox="0 0 200 210"><use href="#keiriman"/></svg></span>
+      <p class="bubble" id="r-react"></p>
+    </div>
+
+    <p style="margin:18px 0 0"><a class="btn" href="./">月々の手取りも知る →</a></p>
+  </section>
+
+  <!-- ======== FAQ ======== -->
+  <article class="prose">
+    <h2 id="faq">❓ よくある質問</h2>
+    <details><summary>3,000万円を35年・金利1%で借りたら毎月いくら?</summary>
+      <p>元利均等なら毎月<strong>約84,686円</strong>です。返し終わるまでの総返済額は<strong>約3,557万円</strong>(35,567,998円)、そのうち利息だけで<strong>約557万円</strong>(5,567,998円)はらう計算になります。ボーナス払い・手数料・保証料は入れていません。</p>
+    </details>
+    <details><summary>金利が1%から2%に上がると、どれくらい増える?</summary>
+      <p>3,000万円を35年で借りる場合、金利1%なら毎月84,686円、金利2%だと毎月<strong>99,379円</strong>。毎月<strong>約14,693円</strong>増えます。総返済額では<strong>約617万円</strong>(6,171,111円)も多くなります。金利の差はわずかに見えても、長い年数では大きな差に。</p>
+    </details>
+    <details><summary>車のローン300万円を7年・金利5%だと?</summary>
+      <p>毎月<strong>約42,402円</strong>です。総返済額は<strong>約356万円</strong>(3,561,745円)、利息は<strong>約56万円</strong>(561,745円)。金利が高いローンは、期間が短くても利息の負担が意外と重くなります。</p>
+    </details>
+    <details><summary>「元利均等」ってなに?</summary>
+      <p>毎月の返済額が、最初から最後まで<strong>ずっと同じ金額</strong>になる返し方です。返しはじめは利息の割合が多く、進むにつれて元金(借りたお金そのもの)が減っていきます。毎月の負担が一定なので、家計の見通しが立てやすいのが特長です。</p>
+    </details>
+
+    <p style="margin:16px 0"><a class="btn" href="./">月々の手取りも知る →</a></p>
+    <p class="note">本ツールは情報提供を目的とした概算シミュレーターです。元利均等返済で計算しており、ボーナス払い・手数料・保証料・団体信用生命保険料などは含みません。実際の借入条件は金融機関にご確認ください。</p>
+  </article>
+
+  <p style="margin:26px 0"><a class="btn ghost big" href="tools.html">🧰 ほかの道具も見る</a> <a class="btn ghost big" href="./">💰 手取り計算にもどる</a></p>
+
+  <footer class="site-footer">
+    <nav>
+      <a href="./">手取り計算</a>
+      <a href="tools.html">道具箱</a>
+      <a href="about.html">運営者情報</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+    </nav>
+    <p>© 2026 あなたの経理マン@綻流夢</p>
+  </footer>
+</main>
+
+<script src="js/kmlib.js"></script>
+<script src="js/loan.js"></script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>出産・育児でもらえるお金|あなたの経理マン@綻流夢(2025・2026年対応)</title>
+<meta name="description" content="育休前の月給を入れるだけで、出産育児一時金と育児休業給付金がいくらもらえるかすぐわかる無料ツール。2025年から育休が『手取り実質10割』になった話も。登録不要・入力データはどこにも送信されません。">
+<link rel="canonical" href="https://tedori-checker.hokorobi88room.workers.dev/kosodate.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="出産・育児でもらえるお金|あなたの経理マン@綻流夢">
+<meta property="og:description" content="出産と育休で、いくらもらえる?月給を入れるだけで、出産育児一時金と育休のお金を30秒で計算。登録不要・データ送信なし。">
+<meta property="og:url" content="https://tedori-checker.hokorobi88room.workers.dev/kosodate.html">
+<meta property="og:image" content="https://tedori-checker.hokorobi88room.workers.dev/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FDF6EA">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='52' r='45' fill='%23FFF3DE'/%3E%3Cpath d='M12 40 Q50 26 88 40 L88 58 Q50 46 12 58 Z' fill='%2317734C'/%3E%3Ccircle cx='33' cy='47' r='6.5' fill='%23fff'/%3E%3Ccircle cx='33' cy='47' r='3' fill='%233A2E2A'/%3E%3Ccircle cx='67' cy='47' r='6.5' fill='%23fff'/%3E%3Ccircle cx='67' cy='47' r='3' fill='%233A2E2A'/%3E%3Cpath d='M36 74 Q50 84 64 74' stroke='%233A2E2A' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "月給25万円で1年育休をとるといくらもらえますか?",
+      "acceptedAnswer": { "@type": "Answer", "text": "賃金日額 ≈ 月給 ÷ 30 = 8,333円で計算します。育児休業給付金は、最初の180日が月およそ167,500円、181日以降が月およそ125,000円で、1年ぶんの合計は1,755,000円です。これに出産育児一時金の500,000円を足すと、約2,255,000円になります。育休のお金は非課税で社会保険料も免除なので、手取りで見るとこれよりさらにお得です。" }
+    },
+    {
+      "@type": "Question",
+      "name": "出産育児一時金はいくらですか?",
+      "acceptedAnswer": { "@type": "Answer", "text": "子ども1人につき一律50万円(500,000円)です。多くの場合、病院が直接受け取る「直接支払制度」で、出産費用にそのまま充てられます。双子なら2人ぶんで100万円です。" }
+    },
+    {
+      "@type": "Question",
+      "name": "育休でもらえるお金に税金はかかりますか?",
+      "acceptedAnswer": { "@type": "Answer", "text": "かかりません。育児休業給付金は非課税で、育休中は社会保険料(健康保険・厚生年金)も免除されます。だから額面67%でも、手取りで見ると約8割にあたります。さらに2025年4月からの『出生後休業支援給付』で最大28日ぶん13%が上乗せされ、夫婦で育休をとると手取り実質10割相当になることもあります。" }
+    },
+    {
+      "@type": "Question",
+      "name": "月給が高いと育休のお金に上限はありますか?",
+      "acceptedAnswer": { "@type": "Answer", "text": "あります。育児休業給付金には上限があり、最初の半年(給付率67%)の場合は月およそ323,811円、181日以降(給付率50%)は月およそ241,650円が上限です(令和7年8月時点)。月給が約483,300円をこえると、そこで頭打ちになります。くわしい金額は勤め先やハローワークでご確認ください。" }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<main>
+  <header class="site-header">
+    <div class="hero-top">
+      <div class="mascot" aria-hidden="true" style="width:84px"><svg viewBox="0 0 200 210"><use href="#keiriman"/></svg></div>
+      <div>
+        <p class="site-name"><a href="./" style="text-decoration:none;color:inherit">あなたの経理マン@綻流夢</a></p>
+        <h1 style="font-size:clamp(22px,6vw,30px);margin:4px 0 0">出産・育児でもらえるお金</h1>
+      </div>
+    </div>
+    <p class="lede">出産と育休で、いくらもらえる?2025年に育休が「手取り実質10割」になった話も。</p>
+  </header>
+
+  <!-- ======== ツール本体 ======== -->
+  <section class="card" id="calc-card" aria-label="出産・育児でもらえるお金の計算フォーム">
+    <form id="calc-form" onsubmit="return false">
+      <div class="field">
+        <label for="in-salary">💰 育休に入る前の月給<span class="hint">引かれる前の金額</span></label>
+        <div class="yen-input big-input"><input type="text" id="in-salary" inputmode="numeric" placeholder="250,000" autocomplete="off"></div>
+        <p class="note" id="salary-hint" hidden></p>
+      </div>
+
+      <div class="field">
+        <label>育休はどれくらいとる?<span class="hint">半年で給付率が変わります</span></label>
+        <div class="seg untouched">
+          <label><input type="radio" name="span" value="half" checked><span>半年まで</span></label>
+          <label><input type="radio" name="span" value="year"><span>半年〜1年</span></label>
+        </div>
+      </div>
+    </form>
+    <p class="note" style="margin-top:16px">🔒 入力した内容は、どこにも送信・保存されません</p>
+  </section>
+
+  <!-- ======== 結果 ======== -->
+  <section class="card" id="result" hidden aria-live="polite">
+    <p class="hero-num-label">育休中、毎月もらえるお金(最初の半年・目安)</p>
+    <p class="hero-num" id="r-month">—</p>
+    <p class="hero-sub" id="r-sub"></p>
+
+    <div class="tbl-wrap">
+      <table class="tight">
+        <thead><tr><th>もらえるお金</th><th>金額</th></tr></thead>
+        <tbody id="r-rows"></tbody>
+      </table>
+    </div>
+    <p class="note" id="r-caption"></p>
+
+    <div class="km-say">
+      <span class="m" aria-hidden="true"><svg viewBox="0 0 200 210"><use href="#keiriman"/></svg></span>
+      <p class="bubble" id="r-react"></p>
+    </div>
+
+    <p class="note" style="margin-top:14px">💡 育休のお金は非課税で社会保険料も免除。だから額面67%でも手取りでは約8割。さらに2025年4月からの「出生後休業支援給付」で最大28日ぶん13%が上乗せされ、夫婦で育休をとると手取り実質10割相当になります。</p>
+  </section>
+
+  <!-- ======== 解説・早見表 ======== -->
+  <article class="prose">
+    <h2>💴 月給べつ・もらえるお金の早見表</h2>
+    <p>育休の給付率は、最初の半年が<strong>67%</strong>、半年〜1年が<strong>50%</strong>。出産のときの<strong>出産育児一時金50万円</strong>は、子ども1人につき一律です(下の合計に含めています)。</p>
+    <div class="tbl-wrap">
+      <table class="tight">
+        <thead><tr><th>育休前の月給</th><th>もらえるお金の目安</th></tr></thead>
+        <tbody>
+          <tr><td>20万円</td><td>最初の半年 毎月 約134,000円<br><small>1年とった合計 約1,904,000円(一時金こみ)</small></td></tr>
+          <tr><td>25万円</td><td>最初の半年 毎月 約167,500円<br><small>1年とった合計 約2,255,000円(一時金こみ)</small></td></tr>
+          <tr><td>30万円</td><td>最初の半年 毎月 約201,000円<br><small>1年とった合計 約2,606,000円(一時金こみ)</small></td></tr>
+          <tr><td>40万円</td><td>最初の半年 毎月 約268,000円<br><small>1年とった合計 約3,308,000円(一時金こみ)</small></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">目安の金額です。月給が約48万円をこえると上限で頭打ちになります。実際の金額は勤め先・ハローワークでご確認ください。</p>
+
+    <h2 id="faq">❓ よくある質問</h2>
+    <details><summary>月給25万円で1年育休をとるといくら?</summary>
+      <p>賃金日額 ≈ 月給 ÷ 30 = <strong>8,333円</strong>で計算します。育休のお金は、最初の180日が月およそ<strong>167,500円</strong>、181日以降が月およそ<strong>125,000円</strong>。1年ぶんで<strong>1,755,000円</strong>です。これに出産育児一時金<strong>500,000円</strong>を足すと、<strong>約2,255,000円</strong>になります。しかも育休のお金は税金も社会保険料もかからないので、手取りで見るとさらにお得です。</p>
+    </details>
+    <details><summary>出産育児一時金はいくら?</summary>
+      <p>子ども1人につき<strong>一律50万円(500,000円)</strong>です。多くの場合、病院が直接受け取る「直接支払制度」で出産費用にそのまま充てられます。双子なら2人ぶんで<strong>100万円</strong>です。</p>
+    </details>
+    <details><summary>育休でもらうお金に税金はかかる?</summary>
+      <p>かかりません。育児休業給付金は<strong>非課税</strong>で、育休中は<strong>社会保険料も免除</strong>されます。だから額面67%でも、手取りで見ると<strong>約8割</strong>にあたります。さらに2025年4月からの「出生後休業支援給付」で最大28日ぶん<strong>13%</strong>が上乗せされ、夫婦で育休をとると<strong>手取り実質10割相当</strong>になることもあります。</p>
+    </details>
+    <details><summary>月給が高いと上限はある?</summary>
+      <p>あります。最初の半年(給付率67%)は月およそ<strong>323,811円</strong>、181日以降(給付率50%)は月およそ<strong>241,650円</strong>が上限です(令和7年8月時点)。月給が約<strong>483,300円</strong>をこえると、そこで頭打ちになります。くわしくは勤め先・ハローワークへ。</p>
+    </details>
+
+    <p class="note">最終更新: 2026年7月 / 本ツールは情報提供を目的とした概算シミュレーターであり、給付の金額・条件の個別相談は勤め先・ハローワーク・社会保険労務士等の専門家にご確認ください。</p>
+  </article>
+
+  <p style="margin:26px 0"><a class="btn ghost big" href="tools.html">🧰 ほかの道具も見る</a> <a class="btn ghost big" href="./">💰 手取り計算にもどる</a></p>
+
+  <footer class="site-footer">
+    <nav>
+      <a href="./">手取り計算</a>
+      <a href="tools.html">道具箱</a>
+      <a href="about.html">運営者情報</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+    </nav>
+    <p>© 2026 あなたの経理マン@綻流夢</p>
+  </footer>
+</main>
+<script src="js/kmlib.js"></script>
+<script src="js/kosodate.js"></script>
+</body>
+</html>

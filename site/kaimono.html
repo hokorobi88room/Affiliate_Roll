@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>買い物の計算|消費税・割引・ポイント・割り勘|あなたの経理マン@綻流夢</title>
+<meta name="description" content="消費税・割引・ポイント還元・割り勘をレジ前で一瞬計算。税ぬき⇄税こみ、◯%オフ、実質いくら、ひとりいくらを入れるだけ。登録不要・入力データはどこにも送信されません。">
+<link rel="canonical" href="https://tedori-checker.hokorobi88room.workers.dev/kaimono.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="買い物の計算|あなたの経理マン@綻流夢">
+<meta property="og:description" content="消費税・割引・ポイント・割り勘。レジ前の『けっきょくいくら?』を一瞬で。登録不要・データ送信なし。">
+<meta property="og:url" content="https://tedori-checker.hokorobi88room.workers.dev/kaimono.html">
+<meta property="og:image" content="https://tedori-checker.hokorobi88room.workers.dev/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FDF6EA">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='52' r='45' fill='%23FFF3DE'/%3E%3Cpath d='M12 40 Q50 26 88 40 L88 58 Q50 46 12 58 Z' fill='%2317734C'/%3E%3Ccircle cx='33' cy='47' r='6.5' fill='%23fff'/%3E%3Ccircle cx='33' cy='47' r='3' fill='%233A2E2A'/%3E%3Ccircle cx='67' cy='47' r='6.5' fill='%23fff'/%3E%3Ccircle cx='67' cy='47' r='3' fill='%233A2E2A'/%3E%3Cpath d='M36 74 Q50 84 64 74' stroke='%233A2E2A' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "税ぬき1,000円は税こみでいくらですか?",
+      "acceptedAnswer": { "@type": "Answer", "text": "10%(ふつうの商品)なら税こみ1,100円です(消費税100円)。8%(食品など)なら税こみ1,080円です(消費税80円)。1円の端数の丸め方はお店によって少しちがうことがあります。" }
+    },
+    {
+      "@type": "Question",
+      "name": "税こみ1,100円の税ぬきはいくらですか?",
+      "acceptedAnswer": { "@type": "Answer", "text": "10%の商品なら税ぬき1,000円、消費税は100円です。8%表示の1,080円なら税ぬきは同じく1,000円、消費税は80円です。" }
+    },
+    {
+      "@type": "Question",
+      "name": "1,000円の20%オフはいくらですか?",
+      "acceptedAnswer": { "@type": "Answer", "text": "支払うのは800円で、200円おトクになります。同じ金額なら『200円引き』も支払い800円で結果は同じです。" }
+    },
+    {
+      "@type": "Question",
+      "name": "10,000円を3人で割り勘するとひとりいくらですか?",
+      "acceptedAnswer": { "@type": "Answer", "text": "ぴったりでは3,333.33…円で割り切れないため、多めに切り上げてひとり3,334円が目安です。3人ぶんで10,002円あつまり、もとの10,000円より2円だけ多くなります(あとで誰かに返してもOK)。" }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<main>
+  <header class="site-header">
+    <div class="hero-top">
+      <div class="mascot" aria-hidden="true" style="width:84px"><svg viewBox="0 0 200 210"><use href="#keiriman"/></svg></div>
+      <div>
+        <p class="site-name"><a href="./" style="text-decoration:none;color:inherit">あなたの経理マン@綻流夢</a></p>
+        <h1 style="font-size:clamp(22px,6vw,30px);margin:4px 0 0">買い物の計算</h1>
+      </div>
+    </div>
+    <p class="lede">消費税・割引・ポイント・割り勘。レジ前の「けっきょくいくら?」を一瞬で。</p>
+  </header>
+
+  <!-- ======== ツール本体 ======== -->
+  <section class="card" id="calc-card" aria-label="買い物の計算フォーム">
+    <form id="calc-form" onsubmit="return false">
+      <div class="field">
+        <label for="in-mode">🧮 何を計算する?</label>
+        <select id="in-mode">
+          <option value="in2out">税ぬき → 税こみ(税込を出す)</option>
+          <option value="out2in">税こみ → 税ぬき(中身と消費税を出す)</option>
+          <option value="discount">割引(◯%オフ・◯円引き)</option>
+          <option value="point">ポイント還元(実質いくら)</option>
+          <option value="warikan">割り勘(ひとりいくら)</option>
+        </select>
+      </div>
+
+      <!-- 税ぬき→税こみ -->
+      <div class="mode-block" data-mode="in2out">
+        <div class="field">
+          <label for="in-in2out-amount">税ぬきの金額<span class="hint">値札の数字でOK</span></label>
+          <div class="yen-input big-input"><input type="text" id="in-in2out-amount" inputmode="numeric" placeholder="1,000" autocomplete="off"></div>
+        </div>
+        <div class="field">
+          <label>消費税は何%?<span class="hint">食品は8%が多い</span></label>
+          <div class="seg untouched">
+            <label><input type="radio" name="tax-in2out" value="10" checked><span>10%(ふつう)</span></label>
+            <label><input type="radio" name="tax-in2out" value="8"><span>8%(食品など)</span></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 税こみ→税ぬき -->
+      <div class="mode-block" data-mode="out2in" hidden>
+        <div class="field">
+          <label for="in-out2in-amount">税こみの金額<span class="hint">レシートの合計など</span></label>
+          <div class="yen-input big-input"><input type="text" id="in-out2in-amount" inputmode="numeric" placeholder="1,100" autocomplete="off"></div>
+        </div>
+        <div class="field">
+          <label>消費税は何%?<span class="hint">食品は8%が多い</span></label>
+          <div class="seg untouched">
+            <label><input type="radio" name="tax-out2in" value="10" checked><span>10%(ふつう)</span></label>
+            <label><input type="radio" name="tax-out2in" value="8"><span>8%(食品など)</span></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 割引 -->
+      <div class="mode-block" data-mode="discount" hidden>
+        <div class="field">
+          <label for="in-disc-price">元の値段<span class="hint">割引される前の金額</span></label>
+          <div class="yen-input big-input"><input type="text" id="in-disc-price" inputmode="numeric" placeholder="1,000" autocomplete="off"></div>
+        </div>
+        <div class="field">
+          <label>割引のしかた</label>
+          <div class="seg untouched">
+            <label><input type="radio" name="disc-type" value="pct" checked><span>◯%オフ</span></label>
+            <label><input type="radio" name="disc-type" value="yen"><span>◯円引き</span></label>
+          </div>
+        </div>
+        <div class="field" data-disc="pct">
+          <label for="in-disc-pct">何%オフ?</label>
+          <div class="yen-input unit-pct"><input type="text" id="in-disc-pct" inputmode="decimal" placeholder="20" autocomplete="off"></div>
+        </div>
+        <div class="field" data-disc="yen" hidden>
+          <label for="in-disc-yen">いくら引き?</label>
+          <div class="yen-input"><input type="text" id="in-disc-yen" inputmode="numeric" placeholder="200" autocomplete="off"></div>
+        </div>
+      </div>
+
+      <!-- ポイント還元 -->
+      <div class="mode-block" data-mode="point" hidden>
+        <div class="field">
+          <label for="in-pt-amount">支払う金額<span class="hint">お会計の金額</span></label>
+          <div class="yen-input big-input"><input type="text" id="in-pt-amount" inputmode="numeric" placeholder="3,000" autocomplete="off"></div>
+        </div>
+        <div class="field">
+          <label for="in-pt-rate">還元率<span class="hint">1%や0.5%など</span></label>
+          <div class="yen-input unit-pct"><input type="text" id="in-pt-rate" inputmode="decimal" placeholder="1" autocomplete="off"></div>
+        </div>
+      </div>
+
+      <!-- 割り勘 -->
+      <div class="mode-block" data-mode="warikan" hidden>
+        <div class="field">
+          <label for="in-wk-total">みんなの合計<span class="hint">お会計の合計金額</span></label>
+          <div class="yen-input big-input"><input type="text" id="in-wk-total" inputmode="numeric" placeholder="10,000" autocomplete="off"></div>
+        </div>
+        <div class="field">
+          <label for="in-wk-people">何人で分ける?</label>
+          <div class="yen-input unit-nin"><input type="text" id="in-wk-people" inputmode="numeric" placeholder="3" autocomplete="off"></div>
+        </div>
+      </div>
+    </form>
+    <p class="note" style="margin-top:16px">🔒 入力した内容は、どこにも送信・保存されません</p>
+  </section>
+
+  <!-- ======== 結果 ======== -->
+  <section class="card" id="result" hidden aria-live="polite">
+    <p class="hero-num-label" id="r-label">—</p>
+    <p class="hero-num" id="r-num">—</p>
+    <p class="hero-sub" id="r-sub"></p>
+    <p class="note" id="r-note" hidden></p>
+
+    <div class="km-say">
+      <span class="m" aria-hidden="true"><svg viewBox="0 0 200 210"><use href="#keiriman"/></svg></span>
+      <p class="bubble" id="r-react"></p>
+    </div>
+  </section>
+
+  <!-- ======== 早見表・FAQ ======== -->
+  <article class="prose">
+    <h2>🧾 消費税の早見表</h2>
+    <p class="note">税ぬきの金額から、税こみの金額をひとめで。</p>
+    <table class="tight">
+      <thead><tr><th>税ぬき</th><th>税こみ(10%)</th><th>税こみ(8%)</th></tr></thead>
+      <tbody>
+        <tr><td>100円</td><td>110円</td><td>108円</td></tr>
+        <tr><td>500円</td><td>550円</td><td>540円</td></tr>
+        <tr><td>1,000円</td><td>1,100円</td><td>1,080円</td></tr>
+        <tr><td>3,000円</td><td>3,300円</td><td>3,240円</td></tr>
+        <tr><td>5,000円</td><td>5,500円</td><td>5,400円</td></tr>
+        <tr><td>10,000円</td><td>11,000円</td><td>10,800円</td></tr>
+      </tbody>
+    </table>
+    <p class="note">1円の端数の丸め方は、お店によって少しちがうことがあります。</p>
+
+    <h2 id="faq">❓ よくある質問</h2>
+    <details><summary>税ぬき1,000円は税こみでいくら?</summary>
+      <p>10%(ふつうの商品)なら<strong>1,100円</strong>(消費税100円)。8%(食品など)なら<strong>1,080円</strong>(消費税80円)です。</p>
+    </details>
+    <details><summary>税こみ1,100円の税ぬきは?</summary>
+      <p>10%の商品なら税ぬき<strong>1,000円</strong>、消費税は100円。8%表示の1,080円でも、税ぬきは同じ<strong>1,000円</strong>(消費税80円)です。</p>
+    </details>
+    <details><summary>1,000円の20%オフはいくら?</summary>
+      <p>支払うのは<strong>800円</strong>で、<strong>200円</strong>おトク。同じ金額なら「200円引き」でも支払い800円で結果は同じです。</p>
+    </details>
+    <details><summary>10,000円を3人で割り勘すると?</summary>
+      <p>ぴったりでは3,333.33…円で割り切れないので、多めに切り上げて<strong>ひとり3,334円</strong>が目安。3人ぶんで10,002円あつまり、もとより2円だけ多くなります(あとで誰かに返してもOK)。</p>
+    </details>
+    <p class="note">最終更新: 2026年7月 / 本ツールは買い物の目安を出す概算計算です。1円の端数やポイントの付き方はお店・サービスによって異なる場合があります。</p>
+  </article>
+
+  <p style="margin:26px 0"><a class="btn ghost big" href="tools.html">🧰 ほかの道具も見る</a> <a class="btn ghost big" href="./">💰 手取り計算にもどる</a></p>
+
+  <footer class="site-footer">
+    <nav>
+      <a href="./">手取り計算</a>
+      <a href="tools.html">道具箱</a>
+      <a href="about.html">運営者情報</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+    </nav>
+    <p>© 2026 あなたの経理マン@綻流夢</p>
+  </footer>
+</main>
+<script src="js/kmlib.js"></script>
+<script src="js/kaimono.js"></script>
+</body>
+</html>

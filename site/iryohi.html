@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>医療費控除でいくら戻る|あなたの経理マン@綻流夢(2026年・令和8年度対応)</title>
+<meta name="description" content="1年でかかった医療費を入れるだけで、確定申告で戻ってくる税金の目安がわかる無料ツール。『10万円の壁』(足切りライン)もあなたの数字で表示。登録不要・入力データはどこにも送信されません。">
+<link rel="canonical" href="https://tedori-checker.hokorobi88room.workers.dev/iryohi.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="医療費控除でいくら戻る|あなたの経理マン@綻流夢">
+<meta property="og:description" content="1年でかかった医療費、いくら戻ってくる?『10万円の壁』を、あなたの数字で。登録不要・データ送信なし。">
+<meta property="og:url" content="https://tedori-checker.hokorobi88room.workers.dev/iryohi.html">
+<meta property="og:image" content="https://tedori-checker.hokorobi88room.workers.dev/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FDF6EA">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='52' r='45' fill='%23FFF3DE'/%3E%3Cpath d='M12 40 Q50 26 88 40 L88 58 Q50 46 12 58 Z' fill='%2317734C'/%3E%3Ccircle cx='33' cy='47' r='6.5' fill='%23fff'/%3E%3Ccircle cx='33' cy='47' r='3' fill='%233A2E2A'/%3E%3Ccircle cx='67' cy='47' r='6.5' fill='%23fff'/%3E%3Ccircle cx='67' cy='47' r='3' fill='%233A2E2A'/%3E%3Cpath d='M36 74 Q50 84 64 74' stroke='%233A2E2A' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "医療費が年20万円かかったら いくら戻る?",
+      "acceptedAnswer": { "@type": "Answer", "text": "年収400万円(引かれる前)・保険などで戻ったお金0円の場合、1年で医療費20万円を払ったなら、戻ってくる税金の目安は約15,105円です。あなたの足切りラインは10万円で、それをこえた10万円が控除の対象になります。所得税(限界税率5%)と住民税10%が戻るぶんの目安です。" }
+    },
+    {
+      "@type": "Question",
+      "name": "医療費はいくらから戻りますか?",
+      "acceptedAnswer": { "@type": "Answer", "text": "多くの人は、1年で払った医療費(保険などで戻ったぶんを引いた金額)が10万円をこえた分が対象です。所得が200万円までの人は、10万円ではなく『所得の5%』をこえた分が対象になるので、10万円に届かなくても戻ることがあります。この『こえないと戻らないライン』が足切りラインです。" }
+    },
+    {
+      "@type": "Question",
+      "name": "戻してもらうには何が必要ですか?",
+      "acceptedAnswer": { "@type": "Answer", "text": "医療費控除は年末調整では受けられず、自分で確定申告をする必要があります。病院・歯医者・薬局のレシートや領収書は、申告のために保管しておいてください。ここで出る金額はあくまで目安で、他の控除や税率によって実際の額は少し前後します。" }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<main>
+  <header class="site-header">
+    <div class="hero-top">
+      <div class="mascot" aria-hidden="true" style="width:84px"><svg viewBox="0 0 200 210"><use href="#keiriman"/></svg></div>
+      <div>
+        <p class="site-name"><a href="./" style="text-decoration:none;color:inherit">あなたの経理マン@綻流夢</a></p>
+        <h1 style="font-size:clamp(22px,6vw,30px);margin:4px 0 0">医療費控除でいくら戻る</h1>
+      </div>
+    </div>
+    <p class="lede">1年でかかった医療費、いくら戻ってくる?「10万円の壁」を、あなたの数字で。</p>
+  </header>
+
+  <!-- ======== ツール本体 ======== -->
+  <section class="card" id="calc-card" aria-label="医療費控除の計算フォーム">
+    <form id="calc-form" onsubmit="return false">
+      <div class="field">
+        <label for="in-medical">🧾 1年間に払った医療費<span class="hint">家族ぶんの合計でOK</span></label>
+        <div class="yen-input big-input"><input type="text" id="in-medical" inputmode="numeric" placeholder="200,000" autocomplete="off"></div>
+        <p class="note" id="medical-hint" hidden></p>
+        <details class="mini-guide"><summary>何を入れていい?</summary>
+          <p>病院・歯医者の窓口で払ったお金、処方された薬代、通院の電車・バス代などを、あなたと生計をともにする家族ぶんまとめて合計します。</p>
+        </details>
+      </div>
+      <div class="field">
+        <label for="in-refund">保険などで戻ってきたお金<span class="hint">なければ 0 のまま</span></label>
+        <div class="yen-input"><input type="text" id="in-refund" inputmode="numeric" value="0" autocomplete="off"></div>
+        <p class="note" style="margin-top:6px">生命保険の給付金や、高額療養費で戻ってきたお金があれば入れてください。</p>
+      </div>
+      <div class="field">
+        <label for="in-salary">💰 1年の年収(引かれる前)<span class="hint">戻る税率の計算に使います</span></label>
+        <div class="yen-input"><input type="text" id="in-salary" inputmode="numeric" placeholder="4,000,000" autocomplete="off"></div>
+        <p class="note" id="salary-hint" hidden></p>
+      </div>
+    </form>
+    <p class="note" style="margin-top:16px">🔒 入力した内容は、どこにも送信・保存されません</p>
+  </section>
+
+  <!-- ======== 結果 ======== -->
+  <section class="card" id="result" hidden aria-live="polite">
+    <p class="hero-num-label">戻ってくるお金の目安</p>
+    <p class="hero-num" id="r-num">—</p>
+    <p class="hero-sub" id="r-sub"></p>
+    <p class="note" id="r-cap"></p>
+
+    <div class="km-say">
+      <span class="m" aria-hidden="true"><svg viewBox="0 0 200 210"><use href="#keiriman"/></svg></span>
+      <p class="bubble" id="r-react"></p>
+    </div>
+
+    <p class="note">これは目安です。実際に戻してもらうには自分で確定申告が必要で、病院・薬局のレシートや領収書の保管も必要です。</p>
+
+    <p style="margin:18px 0 0"><a class="btn" href="./">月々の手取りも知る →</a></p>
+  </section>
+
+  <!-- ======== FAQ ======== -->
+  <article class="prose">
+    <h2 id="faq">❓ よくある質問</h2>
+    <details><summary>医療費が年20万円かかったら いくら戻る?</summary>
+      <p>年収400万円(引かれる前)・保険で戻ったお金0円なら、戻ってくる目安は<strong>約15,105円</strong>です。あなたの足切りラインは<strong>10万円</strong>で、それをこえた<strong>10万円</strong>が控除の対象になります(所得税5%+住民税10%ぶんが戻る目安)。</p>
+    </details>
+    <details><summary>医療費はいくらから戻る?</summary>
+      <p>多くの人は、1年で払った医療費(保険で戻ったぶんを引いた額)が<strong>10万円</strong>をこえた分が対象です。所得が<strong>200万円まで</strong>の人は、10万円ではなく<strong>「所得の5%」</strong>をこえた分が対象になるので、10万円に届かなくても戻ることがあります。この「こえないと戻らないライン」が足切りラインです。</p>
+    </details>
+    <details><summary>戻してもらうには何が必要?</summary>
+      <p>医療費控除は年末調整では受けられません。<strong>自分で確定申告</strong>をする必要があります。病院・歯医者・薬局の<strong>レシートや領収書</strong>は、申告のために保管しておいてください。</p>
+    </details>
+
+    <p style="margin:16px 0"><a class="btn" href="./">月々の手取りも知る →</a></p>
+    <p class="note">最終更新: 2026年7月 / 本ツールは情報提供を目的とした概算シミュレーターであり、税務の個別相談は税理士・税務署等の専門機関にご確認ください。</p>
+  </article>
+
+  <p style="margin:26px 0"><a class="btn ghost big" href="tools.html">🧰 ほかの道具も見る</a> <a class="btn ghost big" href="./">💰 手取り計算にもどる</a></p>
+
+  <footer class="site-footer">
+    <nav>
+      <a href="./">手取り計算</a>
+      <a href="tools.html">道具箱</a>
+      <a href="about.html">運営者情報</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+    </nav>
+    <p>© 2026 あなたの経理マン@綻流夢</p>
+  </footer>
+</main>
+
+<script src="data/rates2026.js"></script>
+<script src="js/calc.js"></script>
+<script src="js/kmlib.js"></script>
+<script src="js/iryohi.js"></script>
+</body>
+</html>

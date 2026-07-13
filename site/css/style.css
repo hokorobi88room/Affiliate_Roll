@@ -298,6 +298,28 @@ table.breakdown { width: 100%; border-collapse: collapse; font-size: 14px; }
 .dialog .privacy { font-size: 12px; color: var(--muted); margin: 14px 0 0; }
 .dialog .privacy::before { content: "🔒 "; }
 .yen-input.unit-nin::after { content: "人"; }
+.yen-input.unit-pct::after { content: "%"; }
+.yen-input.unit-year::after { content: "年"; }
+.yen-input.unit-month::after { content: "か月"; }
+.yen-input.unit-hour::after { content: "時間"; }
+.yen-input.unit-age::after { content: "歳"; }
+.yen-input.unit-times::after { content: "回"; }
+.yen-input.unit-man::after { content: "万円"; }
+
+/* 道具箱(ツール一覧)のグリッド */
+.tool-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin: 16px 0; }
+.tool-card {
+  display: flex; flex-direction: column; gap: 4px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+  padding: 16px 14px; text-decoration: none; color: var(--ink);
+  box-shadow: 0 1px 4px rgba(60,40,0,.04); transition: transform .12s ease, border-color .12s ease;
+}
+.tool-card:hover { transform: translateY(-2px); border-color: var(--accent); }
+.tool-card .ico { font-size: 26px; line-height: 1; }
+.tool-card .ttl { font-weight: 800; font-size: 14.5px; }
+.tool-card .sub { font-size: 11.5px; color: var(--muted); line-height: 1.5; }
+.tool-card.soon { opacity: .55; pointer-events: none; }
+.cat-head { font-size: 13px; font-weight: 800; color: var(--accent); letter-spacing: .04em; margin: 22px 0 2px; }
 .g-inputrow { margin: 4px 0 12px; }
 .g-back {
   background: none; border: none; font-family: inherit; cursor: pointer;

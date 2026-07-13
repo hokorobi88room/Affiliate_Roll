@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>つみたてシミュレーション|あなたの経理マン@綻流夢</title>
+<meta name="description" content="毎月コツコツ積み立てると、何年後にいくら?複利で増えるお金を、帯グラフでやさしく見せる無料シミュレーター。登録不要・入力データはどこにも送信されません。">
+<link rel="canonical" href="https://tedori-checker.hokorobi88room.workers.dev/chokin.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="つみたてシミュレーション|あなたの経理マン@綻流夢">
+<meta property="og:description" content="毎月コツコツ、何年後にいくら?複利で増えるお金をグラフのように見せます。登録不要・データ送信なし。">
+<meta property="og:url" content="https://tedori-checker.hokorobi88room.workers.dev/chokin.html">
+<meta property="og:image" content="https://tedori-checker.hokorobi88room.workers.dev/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FDF6EA">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='52' r='45' fill='%23FFF3DE'/%3E%3Cpath d='M12 40 Q50 26 88 40 L88 58 Q50 46 12 58 Z' fill='%2317734C'/%3E%3Ccircle cx='33' cy='47' r='6.5' fill='%23fff'/%3E%3Ccircle cx='33' cy='47' r='3' fill='%233A2E2A'/%3E%3Ccircle cx='67' cy='47' r='6.5' fill='%23fff'/%3E%3Ccircle cx='67' cy='47' r='3' fill='%233A2E2A'/%3E%3Cpath d='M36 74 Q50 84 64 74' stroke='%233A2E2A' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "毎月3万円を20年、利回り5%で積み立てるといくらになりますか?",
+      "acceptedAnswer": { "@type": "Answer", "text": "合計は約1,238万円(12,382,389円)です。自分で積み立てるお金(元本)は720万円で、運用で増えた分は約518万円(5,182,389円)。月に一度ずつ利息が元本に乗る「複利」で計算しています。利回り5%はあくまで想定で、保証されたものではありません。" }
+    },
+    {
+      "@type": "Question",
+      "name": "元本と増えた分は何が違いますか?",
+      "acceptedAnswer": { "@type": "Answer", "text": "元本は自分で積み立てたお金の合計、増えた分はそこに運用で上乗せされた利益です。毎月3万円を20年続けると、自分で出したお金は720万円。利回り5%ならそこに約518万円の増えた分が乗って、合計は約1,238万円になります。" }
+    },
+    {
+      "@type": "Question",
+      "name": "利回りは保証されますか?増えた分に税金はかかりますか?",
+      "acceptedAnswer": { "@type": "Answer", "text": "利回りは保証されず、あくまで想定の数字です。増えた分(利益)には通常およそ20%の税金がかかりますが、NISAという制度の中で積み立てれば、その税金がかかりません。" }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<main>
+  <header class="site-header">
+    <div class="hero-top">
+      <div class="mascot" aria-hidden="true" style="width:84px"><svg viewBox="0 0 200 210"><use href="#keiriman"/></svg></div>
+      <div>
+        <p class="site-name"><a href="./" style="text-decoration:none;color:inherit">あなたの経理マン@綻流夢</a></p>
+        <h1 style="font-size:clamp(22px,6vw,30px);margin:4px 0 0">つみたてシミュレーション</h1>
+      </div>
+    </div>
+    <p class="lede">毎月コツコツ、何年後にいくら?複利で増えるお金を、グラフのように見せます。</p>
+  </header>
+
+  <!-- ======== ツール本体 ======== -->
+  <section class="card" id="calc-card" aria-label="つみたてシミュレーションフォーム">
+    <form id="calc-form" onsubmit="return false">
+      <div class="field">
+        <label for="in-monthly">🐖 毎月つみたてる額<span class="hint">だいたいでOK</span></label>
+        <div class="yen-input big-input"><input type="text" id="in-monthly" inputmode="numeric" placeholder="30,000" autocomplete="off"></div>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label for="in-years">続ける年数<span class="hint">何年つづける?</span></label>
+          <div class="yen-input unit-year"><input type="text" id="in-years" inputmode="numeric" placeholder="20" autocomplete="off"></div>
+        </div>
+        <div class="field">
+          <label for="in-rate">想定の利回り<span class="hint">1年で増える目安</span></label>
+          <div class="yen-input unit-pct"><input type="text" id="in-rate" inputmode="decimal" value="3" autocomplete="off"></div>
+          <details class="mini-guide">
+            <summary>利回りって?</summary>
+            <p>預けたお金が1年でどれくらい増えるか、の目安です。銀行のふつう預金はいまおよそ0.1%、投資信託などでは3〜5%を想定することが多いです(あくまで想定で、保証ではありません)。</p>
+          </details>
+        </div>
+      </div>
+      <div class="field">
+        <label for="in-initial">最初にあるお金<span class="hint">なければ空欄でOK</span></label>
+        <div class="yen-input"><input type="text" id="in-initial" inputmode="numeric" placeholder="0" autocomplete="off"></div>
+      </div>
+    </form>
+    <p class="note" style="margin-top:16px">🔒 入力した内容は、どこにも送信・保存されません</p>
+  </section>
+
+  <!-- ======== 結果 ======== -->
+  <section class="card" id="result" hidden aria-live="polite">
+    <p class="hero-num-label" id="r-label">合計(概算)</p>
+    <p class="hero-num" id="r-total">—</p>
+    <p class="hero-sub" id="r-sub"></p>
+
+    <!-- グラフのように見せる帯(元本 と 増えた分) -->
+    <div class="bar" role="img" aria-label="元本と増えた分の割合">
+      <span class="net" id="bar-principal" style="width:100%"></span>
+      <span class="tax" id="bar-gain" style="width:0%"></span>
+    </div>
+    <ul class="legend">
+      <li><span class="sw net"></span>自分で積み立てるお金 <span class="v" id="leg-principal"></span></li>
+      <li><span class="sw tax"></span>増えた分 <span class="v" id="leg-gain"></span></li>
+    </ul>
+
+    <div class="tbl-wrap">
+      <table class="breakdown">
+        <thead><tr><th>内わけ</th><th>金額</th></tr></thead>
+        <tbody>
+          <tr><td>自分で積み立てるお金(元本)</td><td id="t-principal">—</td></tr>
+          <tr class="indent"><td>増えた分(運用でついた利益)</td><td id="t-gain">—</td></tr>
+          <tr class="sum"><td>合計</td><td id="t-total">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">利回りは保証されたものではありません(あくまで想定の数字です)。NISAという制度の中で積み立てれば、増えた分に税金がかかりません。</p>
+
+    <div class="km-say">
+      <span class="m" aria-hidden="true"><svg viewBox="0 0 200 210"><use href="#keiriman"/></svg></span>
+      <p class="bubble" id="r-react"></p>
+    </div>
+
+    <p style="margin:18px 0 0"><a class="btn" href="./">月々の手取りも知る →</a></p>
+  </section>
+
+  <!-- ======== 解説・FAQ ======== -->
+  <article class="prose">
+    <h2>📈 毎月3万円・利回り5%だと</h2>
+    <p class="note" style="margin-top:0">同じ毎月3万円でも、続ける年数でこれだけ変わります(複利で計算)。</p>
+    <table class="tight">
+      <thead><tr><th>続ける年数</th><th>合計</th><th>うち増えた分</th></tr></thead>
+      <tbody>
+        <tr><td>10年</td><td>4,677,879円</td><td>1,077,879円</td></tr>
+        <tr><td>20年</td><td>12,382,389円</td><td>5,182,389円</td></tr>
+        <tr><td>30年</td><td>25,071,791円</td><td>14,271,791円</td></tr>
+      </tbody>
+    </table>
+    <p class="note">元本(自分で積み立てるお金)は 10年で360万円、20年で720万円、30年で1,080万円。長く続けるほど「増えた分」がふくらみます。</p>
+
+    <h2 id="faq">❓ よくある質問</h2>
+    <details><summary>毎月3万円を20年、利回り5%だといくら?</summary>
+      <p>合計は<strong>約1,238万円(12,382,389円)</strong>です。自分で積み立てるお金(元本)は720万円で、運用で<strong>増えた分は約518万円(5,182,389円)</strong>。月に一度ずつ利息が元本に乗る「複利」で計算しています。利回り5%はあくまで想定で、保証されたものではありません。</p>
+    </details>
+    <details><summary>元本と増えた分は何が違う?</summary>
+      <p><strong>元本</strong>は自分で積み立てたお金の合計、<strong>増えた分</strong>はそこに運用で上乗せされた利益です。毎月3万円を20年続けると、自分で出したお金は720万円。利回り5%ならそこに約518万円が乗って、合計は約1,238万円になります。</p>
+    </details>
+    <details><summary>利回りは保証される?増えた分に税金は?</summary>
+      <p>利回りは保証されず、<strong>あくまで想定の数字</strong>です。増えた分(利益)には通常およそ20%の税金がかかりますが、<strong>NISA</strong>という制度の中で積み立てれば、その税金がかかりません。</p>
+    </details>
+
+    <p style="margin:16px 0"><a class="btn" href="./">月々の手取りも知る →</a></p>
+    <p class="note">最終更新: 2026年7月 / 本ツールは情報提供を目的とした概算シミュレーターです。実際の運用成績・税金は商品や制度によって異なり、将来の利回りを保証するものではありません。</p>
+  </article>
+
+  <p style="margin:26px 0"><a class="btn ghost big" href="tools.html">🧰 ほかの道具も見る</a> <a class="btn ghost big" href="./">💰 手取り計算にもどる</a></p>
+
+  <footer class="site-footer">
+    <nav>
+      <a href="./">手取り計算</a>
+      <a href="tools.html">道具箱</a>
+      <a href="about.html">運営者情報</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+    </nav>
+    <p>© 2026 あなたの経理マン@綻流夢</p>
+  </footer>
+</main>
+<script src="js/kmlib.js"></script>
+<script src="js/chokin.js"></script>
+</body>
+</html>

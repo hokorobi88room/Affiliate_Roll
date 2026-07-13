@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>家計バランス診断|あなたの経理マン@綻流夢(手取りから理想の生活費の目安)</title>
+<meta name="description" content="手取りの月収を入れるだけ。家賃・食費・貯金など、費目ごとに『いくらまでが目安』を金額でぜんぶ表示。ひとりぐらし/家族ぐらしで切替。登録不要・入力データはどこにも送信されません。">
+<link rel="canonical" href="https://tedori-checker.hokorobi88room.workers.dev/kakei.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="家計バランス診断|あなたの経理マン@綻流夢">
+<meta property="og:description" content="手取りの月収を入れるだけ。家賃や食費、いくらまでが目安?理想の配分をぜんぶ金額で出します。">
+<meta property="og:url" content="https://tedori-checker.hokorobi88room.workers.dev/kakei.html">
+<meta property="og:image" content="https://tedori-checker.hokorobi88room.workers.dev/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FDF6EA">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='52' r='45' fill='%23FFF3DE'/%3E%3Cpath d='M12 40 Q50 26 88 40 L88 58 Q50 46 12 58 Z' fill='%2317734C'/%3E%3Ccircle cx='33' cy='47' r='6.5' fill='%23fff'/%3E%3Ccircle cx='33' cy='47' r='3' fill='%233A2E2A'/%3E%3Ccircle cx='67' cy='47' r='6.5' fill='%23fff'/%3E%3Ccircle cx='67' cy='47' r='3' fill='%233A2E2A'/%3E%3Cpath d='M36 74 Q50 84 64 74' stroke='%233A2E2A' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "手取り25万円の理想の家賃はいくらですか?",
+      "acceptedAnswer": { "@type": "Answer", "text": "一般的な目安では、ひとりぐらしは手取りの28%までで70,000円、家族ぐらしは25%までで62,500円が家賃の目安です。あくまで目安なので、住む場所や家族構成によってちょうどいい金額は変わります。" }
+    },
+    {
+      "@type": "Question",
+      "name": "貯金は手取りの何割が目安ですか?",
+      "acceptedAnswer": { "@type": "Answer", "text": "貯金・投資は、ひとりぐらしで手取りの17%、家族ぐらしで15%が一つの目安です。手取り25万円なら、ひとりぐらしは月42,500円、家族ぐらしは月37,500円をねらう計算になります。" }
+    },
+    {
+      "@type": "Question",
+      "name": "この配分どおりにできないときは?",
+      "acceptedAnswer": { "@type": "Answer", "text": "全部そろえる必要はありません。まずは金額の大きい家賃と貯金の2つだけ目安に近づけると、家計はぐっと整います。これは一般的な目安であり、住む場所や家族構成、収入によってちょうどいい配分は変わります。" }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<main>
+  <header class="site-header">
+    <div class="hero-top">
+      <div class="mascot" aria-hidden="true" style="width:84px"><svg viewBox="0 0 200 210"><use href="#keiriman"/></svg></div>
+      <div>
+        <p class="site-name"><a href="./" style="text-decoration:none;color:inherit">あなたの経理マン@綻流夢</a></p>
+        <h1 style="font-size:clamp(22px,6vw,30px);margin:4px 0 0">家計バランス診断</h1>
+      </div>
+    </div>
+    <p class="lede">手取りを入れるだけ。家賃や食費、いくらまでが目安?理想の配分をぜんぶ金額で出します。</p>
+  </header>
+
+  <!-- ======== ツール本体 ======== -->
+  <section class="card" id="calc-card" aria-label="家計バランス診断フォーム">
+    <form id="calc-form" onsubmit="return false">
+      <div class="field">
+        <label for="in-take">🧾 手取りの月収<span class="hint">口座に入るお金でOK</span></label>
+        <div class="yen-input big-input"><input type="text" id="in-take" inputmode="numeric" placeholder="250,000" autocomplete="off"></div>
+        <p class="note" id="take-hint" hidden></p>
+      </div>
+      <div class="field">
+        <label>くらしの形<span class="hint">配分の目安が切り替わります</span></label>
+        <div class="seg untouched">
+          <label><input type="radio" name="household" value="single" checked><span>ひとりぐらし</span></label>
+          <label><input type="radio" name="household" value="family"><span>家族ぐらし</span></label>
+        </div>
+      </div>
+    </form>
+    <p class="note" style="margin-top:16px">🔒 入力した内容は、どこにも送信・保存されません</p>
+  </section>
+
+  <!-- ======== 結果 ======== -->
+  <section class="card" id="result" hidden aria-live="polite">
+    <p class="hero-num-label" id="r-label">家賃の目安</p>
+    <p class="hero-num" id="r-rent">—</p>
+    <p class="hero-sub" id="r-sub"></p>
+
+    <div class="prose" style="margin-top:18px">
+      <table class="tight">
+        <thead><tr><th>費目</th><th>ひと月の目安</th><th>わりあい</th></tr></thead>
+        <tbody id="r-rows"></tbody>
+      </table>
+    </div>
+    <p class="note">これは一般的な目安です。住む場所や家族構成、収入によって、ちょうどいい配分は変わります。</p>
+
+    <div class="km-say">
+      <span class="m" aria-hidden="true"><svg viewBox="0 0 200 210"><use href="#keiriman"/></svg></span>
+      <p class="bubble" id="r-react"></p>
+    </div>
+
+    <p style="margin:18px 0 0"><a class="btn" href="./">月々の手取りも計算する →</a></p>
+  </section>
+
+  <!-- ======== FAQ ======== -->
+  <article class="prose">
+    <h2 id="faq">❓ よくある質問</h2>
+    <details><summary>手取り25万円の理想の家賃は?</summary>
+      <p>一般的な目安では、ひとりぐらしは手取りの28%までで<strong>70,000円</strong>、家族ぐらしは25%までで<strong>62,500円</strong>です。あくまで目安なので、住む場所によって変わります。</p>
+    </details>
+    <details><summary>貯金は手取りの何割が目安?</summary>
+      <p>貯金・投資は、ひとりぐらしで<strong>17%</strong>、家族ぐらしで<strong>15%</strong>が一つの目安です。手取り25万円なら、ひとりぐらしは月<strong>42,500円</strong>、家族ぐらしは月<strong>37,500円</strong>をねらう計算になります。</p>
+    </details>
+    <details><summary>この配分どおりにできないときは?</summary>
+      <p>全部そろえる必要はありません。まずは金額の大きい<strong>家賃と貯金</strong>の2つだけ目安に近づけると、家計はぐっと整います。これは一般的な目安であり、住む場所や家族構成、収入によってちょうどいい配分は変わります。</p>
+    </details>
+
+    <p style="margin:16px 0"><a class="btn" href="./">月々の手取りも計算する →</a></p>
+    <p class="note">最終更新: 2026年7月 / 本ツールは情報提供を目的とした一般的な目安であり、個別の家計相談はファイナンシャルプランナー等の専門家にご確認ください。</p>
+  </article>
+
+  <p style="margin:26px 0"><a class="btn ghost big" href="tools.html">🧰 ほかの道具も見る</a> <a class="btn ghost big" href="./">💰 手取り計算にもどる</a></p>
+
+  <footer class="site-footer">
+    <nav>
+      <a href="./">手取り計算</a>
+      <a href="tools.html">道具箱</a>
+      <a href="about.html">運営者情報</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+    </nav>
+    <p>© 2026 あなたの経理マン@綻流夢</p>
+  </footer>
+</main>
+<script src="js/kmlib.js"></script>
+<script src="js/kakei.js"></script>
+</body>
+</html>

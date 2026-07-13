@@ -19,6 +19,19 @@
 - [手取り計算ツール](https://tedori-checker.hokorobi88room.workers.dev/): メインツール。月収・賞与・都道府県・年齢・扶養から手取りを即時計算
 - [ボーナスの手取り計算](https://tedori-checker.hokorobi88room.workers.dev/bonus.html): ボーナスから引かれる保険料・税金と手取り額を計算
 - [扶養の壁 診断](https://tedori-checker.hokorobi88room.workers.dev/kabe.html): 2026年の年収の壁(106万/130万/136万等)を質問に答えるだけで診断
+- [お金の計算ツール一覧(道具箱)](https://tedori-checker.hokorobi88room.workers.dev/tools.html): 全ツールの入口
+- [残業代の計算](https://tedori-checker.hokorobi88room.workers.dev/zangyo.html): 時給×割増率(25%/35%/50%)×時間
+- [時給・月給・年収の変換](https://tedori-checker.hokorobi88room.workers.dev/kansan.html): 時給・日給・月給・年収の相互変換
+- [失業保険の目安](https://tedori-checker.hokorobi88room.workers.dev/shitsugyo.html): 月給・年齢・加入年数・離職理由から基本手当のめやす
+- [副業の税金・20万円の壁](https://tedori-checker.hokorobi88room.workers.dev/fukugyo.html): 副業所得の確定申告要否と追加税額のめやす
+- [医療費控除でいくら戻る](https://tedori-checker.hokorobi88room.workers.dev/iryohi.html): 年間医療費から戻る税金のめやす
+- [退職金の手取り計算](https://tedori-checker.hokorobi88room.workers.dev/taishoku.html): 退職所得控除・1/2課税で手取りを計算
+- [家計バランス診断](https://tedori-checker.hokorobi88room.workers.dev/kakei.html): 手取りから理想の費目配分を提示
+- [つみたてシミュレーション](https://tedori-checker.hokorobi88room.workers.dev/chokin.html): 毎月積立×年数×利回りの複利計算
+- [ローン返済シミュレーション](https://tedori-checker.hokorobi88room.workers.dev/loan.html): 元利均等の毎月返済額・総利息
+- [買い物の計算](https://tedori-checker.hokorobi88room.workers.dev/kaimono.html): 消費税・割引・ポイント・割り勘
+- [出産・育児でもらえるお金](https://tedori-checker.hokorobi88room.workers.dev/kosodate.html): 出産育児一時金50万円・育児休業給付の目安
+- [もらえる年金の目安](https://tedori-checker.hokorobi88room.workers.dev/nenkin.html): 平均年収と加入年数からのざっくり目安
 - [運営者情報](https://tedori-checker.hokorobi88room.workers.dev/about.html)
 - [プライバシーポリシー](https://tedori-checker.hokorobi88room.workers.dev/privacy.html)
 

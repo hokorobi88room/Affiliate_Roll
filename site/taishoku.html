@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>退職金の手取り計算|あなたの経理マン@綻流夢(2026年・国税庁の方法対応)</title>
+<meta name="description" content="退職金の金額とはたらいた年数を入れるだけで、税金を引いた手取りがすぐわかる無料ツール。退職金は税金がやさしいしくみ。2026年・国税庁の方法対応、登録不要・入力データはどこにも送信されません。">
+<link rel="canonical" href="https://tedori-checker.hokorobi88room.workers.dev/taishoku.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="退職金の手取り計算|あなたの経理マン@綻流夢">
+<meta property="og:description" content="その退職金、税金はいくら?手取りでいくら残る?はたらいた年数を入れるだけで、退職金の手取りを計算します。登録不要・データ送信なし。">
+<meta property="og:url" content="https://tedori-checker.hokorobi88room.workers.dev/taishoku.html">
+<meta property="og:image" content="https://tedori-checker.hokorobi88room.workers.dev/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FDF6EA">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='52' r='45' fill='%23FFF3DE'/%3E%3Cpath d='M12 40 Q50 26 88 40 L88 58 Q50 46 12 58 Z' fill='%2317734C'/%3E%3Ccircle cx='33' cy='47' r='6.5' fill='%23fff'/%3E%3Ccircle cx='33' cy='47' r='3' fill='%233A2E2A'/%3E%3Ccircle cx='67' cy='47' r='6.5' fill='%23fff'/%3E%3Ccircle cx='67' cy='47' r='3' fill='%233A2E2A'/%3E%3Cpath d='M36 74 Q50 84 64 74' stroke='%233A2E2A' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "勤続30年で退職金2,000万円の手取りはいくらですか?",
+      "acceptedAnswer": { "@type": "Answer", "text": "2026年・国税庁の方法(ふつうの社員)で、引ける枠(退職所得控除)は1,500万円です。退職金2,000万円からこの枠を引いた残り500万円を、さらに半分にした250万円にだけ税金がかかります。所得税は155,700円、住民税は250,000円で、税金は合計405,700円だけ。手取りは19,594,300円(約1,959万円)です。" }
+    },
+    {
+      "@type": "Question",
+      "name": "退職金の税金はどうやって決まりますか?",
+      "acceptedAnswer": { "@type": "Answer", "text": "まず退職金から「引ける枠(退職所得控除)」を差し引き、残った金額をさらに半分にした金額にだけ税金がかかります。だから退職金は税金がとてもやさしいしくみです。引ける枠は、勤続20年までは1年あたり40万円(最低80万円)、20年をこえた分は1年あたり70万円で計算します。" }
+    },
+    {
+      "@type": "Question",
+      "name": "勤続年数に1年未満の端数があるとどうなりますか?",
+      "acceptedAnswer": { "@type": "Answer", "text": "1年未満の端数は切り上げて、1年として数えます。たとえば勤続30年3か月なら31年ぶんとして、引ける枠(退職所得控除)を計算します。半端な月があるほうが、枠が少し大きくなってお得です。" }
+    },
+    {
+      "@type": "Question",
+      "name": "役員で勤続5年以下だと何がちがいますか?",
+      "acceptedAnswer": { "@type": "Answer", "text": "「残りを半分にする」計算が使えず、税金が高めになります。たとえば役員として3年はたらいて退職金600万円なら、引ける枠は120万円、税金がかかる金額は480万円で、所得税543,600円、住民税480,000円、手取りは4,976,400円です。同じ条件でもふつうの社員なら手取り5,614,600円になります。" }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<main>
+  <header class="site-header">
+    <div class="hero-top">
+      <div class="mascot" aria-hidden="true" style="width:84px"><svg viewBox="0 0 200 210"><use href="#keiriman"/></svg></div>
+      <div>
+        <p class="site-name"><a href="./" style="text-decoration:none;color:inherit">あなたの経理マン@綻流夢</a></p>
+        <h1 style="font-size:clamp(22px,6vw,30px);margin:4px 0 0">退職金の手取り計算</h1>
+      </div>
+    </div>
+    <p class="lede">その退職金、税金はいくら?手取りでいくら残る?退職金は税金がやさしいんです。</p>
+  </header>
+
+  <!-- ======== ツール本体 ======== -->
+  <section class="card" id="calc-card" aria-label="退職金の手取り計算フォーム">
+    <form id="calc-form" onsubmit="return false">
+      <div class="field">
+        <label for="in-money">💼 退職金(受け取る金額)<span class="hint">だいたいでOK</span></label>
+        <div class="yen-input big-input"><input type="text" id="in-money" inputmode="numeric" placeholder="20,000,000" autocomplete="off"></div>
+        <p class="note" id="money-hint" hidden></p>
+      </div>
+
+      <div class="field">
+        <label for="in-years">📅 はたらいた年数<span class="hint">1年未満は切り上げ</span></label>
+        <div class="yen-input unit-year"><input type="text" id="in-years" inputmode="numeric" placeholder="30" autocomplete="off"></div>
+      </div>
+
+      <div class="field">
+        <label>どんな立場?<span class="hint">たいていは「ふつうの社員」</span></label>
+        <div class="seg untouched">
+          <label><input type="radio" name="kind" value="normal" checked><span>ふつうの社員</span></label>
+          <label><input type="radio" name="kind" value="exec5"><span>役員(はたらいた年数が5年以下)</span></label>
+        </div>
+      </div>
+    </form>
+    <p class="note" style="margin-top:16px">🔒 入力した内容は、どこにも送信・保存されません</p>
+  </section>
+
+  <!-- ======== 結果 ======== -->
+  <section class="card" id="result" hidden aria-live="polite">
+    <p class="hero-num-label">退職金の手取り(概算)</p>
+    <p class="hero-num" id="r-net">—</p>
+    <p class="hero-sub" id="r-sub"></p>
+
+    <div class="tbl-wrap">
+      <table class="breakdown">
+        <thead><tr><th>項目</th><th>金額</th></tr></thead>
+        <tbody id="r-rows"></tbody>
+      </table>
+    </div>
+    <p class="note" id="r-caption"></p>
+
+    <div class="km-say">
+      <span class="m" aria-hidden="true"><svg viewBox="0 0 200 210"><use href="#keiriman"/></svg></span>
+      <p class="bubble" id="r-react"></p>
+    </div>
+
+    <p style="margin:18px 0 0"><a class="btn" href="./">毎月の手取りも知る →</a></p>
+  </section>
+
+  <!-- ======== FAQ ======== -->
+  <article class="prose">
+    <h2 id="faq">❓ よくある質問</h2>
+    <details><summary>勤続30年で退職金2,000万円の手取りは?</summary>
+      <p>ふつうの社員なら、引ける枠(退職所得控除)は<strong>1,500万円</strong>。退職金2,000万円から枠を引いた残り500万円を、さらに半分にした<strong>250万円</strong>にだけ税金がかかります。所得税<strong>155,700円</strong>、住民税<strong>250,000円</strong>で、税金は合計405,700円だけ。手取りは<strong>19,594,300円(約1,959万円)</strong>です(2026年)。</p>
+    </details>
+    <details><summary>退職金の税金はどうやって決まる?</summary>
+      <p>まず退職金から<strong>引ける枠(退職所得控除)</strong>を差し引き、残った金額を<strong>さらに半分</strong>にした金額にだけ税金がかかります。だから退職金は税金がとてもやさしいしくみ。引ける枠は、勤続<strong>20年まで</strong>は1年あたり40万円(最低80万円)、<strong>20年をこえた分</strong>は1年あたり70万円で計算します。</p>
+    </details>
+    <details><summary>勤続年数の1年未満はどうなる?</summary>
+      <p>1年未満は<strong>切り上げ</strong>て、1年として数えます。たとえば勤続30年3か月なら<strong>31年ぶん</strong>として引ける枠を計算します。半端な月があるほうが枠が少し大きくなって、ちょっとお得です。</p>
+    </details>
+    <details><summary>役員で勤続5年以下だと何がちがう?</summary>
+      <p>「残りを半分にする」計算が<strong>使えず</strong>、税金が高めになります。たとえば役員として3年はたらいて退職金600万円なら、引ける枠120万円、税金がかかる金額480万円で、所得税<strong>543,600円</strong>・住民税<strong>480,000円</strong>、手取りは<strong>4,976,400円</strong>。同じ条件でもふつうの社員なら手取り5,614,600円です。</p>
+    </details>
+
+    <p class="note">最終更新: 2026年7月 / 本ツールは情報提供を目的とした概算シミュレーターであり、退職金の税金・手続きの個別相談は税務署・税理士等の専門家にご確認ください。</p>
+  </article>
+
+  <p style="margin:26px 0"><a class="btn ghost big" href="tools.html">🧰 ほかの道具も見る</a> <a class="btn ghost big" href="./">💰 手取り計算にもどる</a></p>
+
+  <footer class="site-footer">
+    <nav>
+      <a href="./">手取り計算</a>
+      <a href="tools.html">道具箱</a>
+      <a href="about.html">運営者情報</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+    </nav>
+    <p>© 2026 あなたの経理マン@綻流夢</p>
+  </footer>
+</main>
+<script src="data/rates2026.js"></script>
+<script src="js/calc.js"></script>
+<script src="js/kmlib.js"></script>
+<script src="js/taishoku.js"></script>
+</body>
+</html>

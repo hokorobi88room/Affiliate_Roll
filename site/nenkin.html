@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>もらえる年金の目安|あなたの経理マン@綻流夢(2026年・令和8年度対応)</title>
+<meta name="description" content="平均年収と年金に入る年数を入れるだけで、65歳からもらえる年金の月額をざっくり計算する無料ツール。会社員(厚生年金)・自営業(国民年金)対応、登録不要・入力データはどこにも送信されません。">
+<link rel="canonical" href="https://tedori-checker.hokorobi88room.workers.dev/nenkin.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="もらえる年金の目安|あなたの経理マン@綻流夢">
+<meta property="og:description" content="将来、年金は月いくら?年収と働く年数を入れるだけの、ざっくり目安です。会社員・自営業に対応、登録不要・データ送信なし。">
+<meta property="og:url" content="https://tedori-checker.hokorobi88room.workers.dev/nenkin.html">
+<meta property="og:image" content="https://tedori-checker.hokorobi88room.workers.dev/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#FDF6EA">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='52' r='45' fill='%23FFF3DE'/%3E%3Cpath d='M12 40 Q50 26 88 40 L88 58 Q50 46 12 58 Z' fill='%2317734C'/%3E%3Ccircle cx='33' cy='47' r='6.5' fill='%23fff'/%3E%3Ccircle cx='33' cy='47' r='3' fill='%233A2E2A'/%3E%3Ccircle cx='67' cy='47' r='6.5' fill='%23fff'/%3E%3Ccircle cx='67' cy='47' r='3' fill='%233A2E2A'/%3E%3Cpath d='M36 74 Q50 84 64 74' stroke='%233A2E2A' stroke-width='5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "平均年収400万で40年はたらくと年金は月いくらですか?",
+      "acceptedAnswer": { "@type": "Answer", "text": "会社員(厚生年金)なら、65歳から月143,605円(年1,723,260円)がざっくりの目安です。内訳は基礎年金70,525円+厚生年金73,080円(いずれも月あたり)。あくまで概算で、実際の額はこれまでの加入記録によって変わります。正確な見込み額はねんきん定期便・ねんきんネットで確認してください。" }
+    },
+    {
+      "@type": "Question",
+      "name": "自営業(国民年金だけ)だと年金はいくらもらえますか?",
+      "acceptedAnswer": { "@type": "Answer", "text": "厚生年金がないぶん、基礎年金だけになります。20歳から60歳まで40年ずっと保険料を納めた満額で、65歳から月70,525円(年846,300円・2026年度=令和8年度の満額)が目安です。納めた年数が短いと、その分だけ減ります。" }
+    },
+    {
+      "@type": "Question",
+      "name": "平均年収300万で40年はたらくと年金は月いくらですか?",
+      "acceptedAnswer": { "@type": "Answer", "text": "会社員なら、65歳から月125,335円(年1,504,020円)が目安です。内訳は基礎年金70,525円+厚生年金54,810円(月あたり)。平均年収が上がるほど、厚生年金の分は増えていきます。" }
+    },
+    {
+      "@type": "Question",
+      "name": "この金額どおりに年金はもらえますか?",
+      "acceptedAnswer": { "@type": "Answer", "text": "いいえ、これはあくまで「ざっくり目安」です。実際の年金額は、これまでの加入記録・給料の実績・将来の制度改正によって変わります。正確な見込み額は、毎年届くねんきん定期便や「ねんきんネット」で確認してください。" }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<main>
+  <header class="site-header">
+    <div class="hero-top">
+      <div class="mascot" aria-hidden="true" style="width:84px"><svg viewBox="0 0 200 210"><use href="#keiriman"/></svg></div>
+      <div>
+        <p class="site-name"><a href="./" style="text-decoration:none;color:inherit">あなたの経理マン@綻流夢</a></p>
+        <h1 style="font-size:clamp(22px,6vw,30px);margin:4px 0 0">もらえる年金の目安</h1>
+      </div>
+    </div>
+    <p class="lede">将来、年金は月いくら?年収と働く年数を入れるだけの、ざっくり目安です。</p>
+  </header>
+
+  <!-- ======== ツール本体 ======== -->
+  <section class="card" id="calc-card" aria-label="もらえる年金の目安フォーム">
+    <form id="calc-form" onsubmit="return false">
+      <div class="field">
+        <label>はたらき方<span class="hint">厚生年金があるかないか</span></label>
+        <div class="seg untouched">
+          <label><input type="radio" name="job" value="emp" checked><span>会社員(厚生年金)</span></label>
+          <label><input type="radio" name="job" value="self"><span>自営業など(国民年金だけ)</span></label>
+        </div>
+      </div>
+
+      <div class="field" id="income-field">
+        <label for="in-income">💰 はたらいている間の平均年収<span class="hint">引かれる前の金額。だいたいでOK</span></label>
+        <div class="yen-input big-input"><input type="text" id="in-income" inputmode="numeric" placeholder="4,000,000" autocomplete="off"></div>
+        <p class="note" id="income-hint" hidden></p>
+        <p class="note" id="self-note" hidden>自営業(国民年金だけ)のときは、年金は年収に関係なく「年数」で決まります。</p>
+      </div>
+
+      <div class="field">
+        <label for="in-years">⏳ 年金に入る年数<span class="hint">20歳〜60歳で最長40年ぶん</span></label>
+        <div class="yen-input unit-year"><input type="text" id="in-years" inputmode="numeric" value="40" autocomplete="off"></div>
+        <p class="note" id="years-hint" hidden></p>
+      </div>
+    </form>
+    <p class="note" style="margin-top:16px">🔒 入力した内容は、どこにも送信・保存されません</p>
+    <p class="note" style="margin-top:10px">📮 これは「ざっくり目安」です。正確な額はねんきん定期便・ねんきんネットで確認してください。</p>
+  </section>
+
+  <!-- ======== 結果 ======== -->
+  <section class="card" id="result" hidden aria-live="polite">
+    <p class="hero-num-label">65歳から 毎月(目安)</p>
+    <p class="hero-num" id="r-month">—</p>
+    <p class="hero-sub" id="r-sub"></p>
+
+    <div class="tbl-wrap" id="r-tbl" hidden>
+      <table class="breakdown">
+        <thead><tr><th>年金の種類</th><th>ひと月</th><th>1年</th></tr></thead>
+        <tbody id="r-rows"></tbody>
+      </table>
+    </div>
+
+    <div class="km-say">
+      <span class="m" aria-hidden="true"><svg viewBox="0 0 200 210"><use href="#keiriman"/></svg></span>
+      <p class="bubble" id="r-react"></p>
+    </div>
+
+    <p class="note" id="r-caption"></p>
+  </section>
+
+  <!-- ======== 解説・FAQ ======== -->
+  <article class="prose">
+    <h2 id="how">🧮 どうやって出しているの?</h2>
+    <p>年金は大きく2階建てです。<strong>1階=基礎年金(国民年金)</strong>はみんな共通、<strong>2階=厚生年金</strong>は会社員だけ上乗せされます。このツールは、この2つをざっくり足して月額の目安を出しています。</p>
+    <details>
+      <summary>計算に使っている数字(2026年度・令和8年度)</summary>
+      <table>
+        <thead><tr><th>項目</th><th>使っている値</th><th>備考</th></tr></thead>
+        <tbody>
+          <tr><td>基礎年金の満額</td><td>年846,300円(月70,608円)</td><td>2026年度の公表値。20〜60歳の40年で満額。年数に比例して増減します</td></tr>
+          <tr><td>厚生年金(会社員のみ)</td><td>平均年収 × 0.005481 × 年数</td><td>報酬比例部分のざっくり概算。自営業は上乗せなし</td></tr>
+          <tr><td>受け取り開始</td><td>65歳から</td><td>くり上げ・くり下げは考えていません</td></tr>
+        </tbody>
+      </table>
+      <p class="note">月額は「1年ぶんを12で割った目安」です。国が発表する満額の月額(70,608円)とは、端数処理の関係で数百円ずれることがあります。</p>
+    </details>
+
+    <h2 id="faq">❓ よくある質問</h2>
+    <details><summary>平均年収400万で40年はたらくと月いくら?</summary>
+      <p>会社員(厚生年金)なら、65歳から<strong>月143,605円</strong>(年1,723,260円)がざっくりの目安です。内訳は<strong>基礎年金70,525円+厚生年金73,080円</strong>(いずれも月あたり)。あくまで概算で、実際の額は加入記録で変わります。</p>
+    </details>
+    <details><summary>自営業(国民年金だけ)だといくら?</summary>
+      <p>厚生年金がないぶん、<strong>基礎年金だけ</strong>になります。40年ずっと保険料を納めた満額で、65歳から<strong>月70,525円</strong>(年846,300円・2026年度の満額)が目安です。納めた年数が短いと、その分だけ減ります。</p>
+    </details>
+    <details><summary>平均年収300万で40年はたらくと月いくら?</summary>
+      <p>会社員なら、65歳から<strong>月125,335円</strong>(年1,504,020円)が目安です。内訳は<strong>基礎年金70,525円+厚生年金54,810円</strong>(月あたり)。平均年収が上がるほど、厚生年金の分は増えます。</p>
+    </details>
+    <details><summary>この金額どおりにもらえる?</summary>
+      <p>いいえ、あくまで<strong>「ざっくり目安」</strong>です。実際の年金額は、これまでの加入記録・給料の実績・将来の制度改正で変わります。正確な見込み額は、毎年届く<strong>ねんきん定期便</strong>や<strong>ねんきんネット</strong>で確認してください。</p>
+    </details>
+
+    <p class="note">最終更新: 2026年7月 / 本ツールは情報提供を目的とした概算シミュレーターであり、年金額の個別相談は日本年金機構・年金事務所・社会保険労務士等の専門家にご確認ください。将来の制度改正で受け取れる額は変わることがあります。</p>
+  </article>
+
+  <p style="margin:26px 0"><a class="btn ghost big" href="tools.html">🧰 ほかの道具も見る</a> <a class="btn ghost big" href="./">💰 手取り計算にもどる</a></p>
+
+  <footer class="site-footer">
+    <nav>
+      <a href="./">手取り計算</a>
+      <a href="tools.html">道具箱</a>
+      <a href="about.html">運営者情報</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+    </nav>
+    <p>© 2026 あなたの経理マン@綻流夢</p>
+  </footer>
+</main>
+<script src="js/kmlib.js"></script>
+<script src="js/nenkin.js"></script>
+</body>
+</html>
