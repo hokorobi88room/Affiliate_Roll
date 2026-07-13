@@ -1,7 +1,7 @@
 /* あなたの経理マン — オフラインでも計算できるように。
    方針: ネットワーク優先(常に最新を取りに行き、成功したらキャッシュ更新。
    オフライン時だけキャッシュから返す)。デプロイ後に古い画面が残らない。 */
-const CACHE = "keiriman-v4";
+const CACHE = "keiriman-v5";
 const CORE = [
   "./", "index.html", "tools.html", "bonus.html", "kabe.html",
   "kansan.html", "zangyo.html", "kaimono.html", "chokin.html", "loan.html",
