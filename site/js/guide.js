@@ -322,10 +322,7 @@
     else if (!$("welcome").hidden) close($("welcome"));
   });
 
-  /* ---------- 初回のご挨拶(共有リンクで来た人には出さない) ---------- */
-  const hasParams = new URLSearchParams(location.search).has("m");
-  if (!hasParams && !sessionStorage.getItem("km_greeted")) {
-    sessionStorage.setItem("km_greeted", "1");
-    open($("welcome"));
-  }
+  /* ご挨拶ポップアップは自動表示しない(第一印象=多機能のトップ画面を隠さないため)。
+     ヒーローの「🦸 経理マンにおまかせで出す」ボタンから おまかせモードに入れる。
+     #welcome のマークアップは、扶養ガイド等からの再利用のため残置。 */
 })();

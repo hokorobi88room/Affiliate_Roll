@@ -112,19 +112,34 @@
       <h1 class="brand">あなたの<br>経理マン<span class="at">@綻流夢</span></h1>
     </div>
     <p class="tagline">その月収、手取りで<em>いくら?</em></p>
-    <p class="lede">保険料と税金を引いた「実際に使えるお金」を30秒で計算します(2026年・令和8年度対応)。</p>
+    <p class="lede">保険料と税金を引いた「実際に使えるお金」を30秒で計算(2026年対応)。</p>
     <ul class="badges">
+      <li>🧰 計算ツール15コ</li>
       <li>🆓 無料・登録なし</li>
       <li>🔒 データ送信なし</li>
-      <li>✅ 協会けんぽ・国税庁の公表値</li>
+      <li>✅ 公表値で計算</li>
     </ul>
-    <div class="hero-cta">
-      <button class="btn ghost big" type="button" id="cta-guide">🦸 経理マンにおまかせで出す(おすすめ)</button>
-      <a class="btn ghost big" href="#calc-card">✍️ 自分で入力して出す</a>
-    </div>
   </header>
 
-  <!-- ======== ツール本体 ======== -->
+  <!-- ======== 道具箱の入口(多機能をひと目で) ======== -->
+  <section aria-label="お金の計算ツール">
+    <p class="discover-head">🧰 お金の計算、これひとつで。</p>
+    <div class="tool-cloud">
+      <a class="tool-chip" href="bonus.html">🎁 ボーナス手取り</a>
+      <a class="tool-chip" href="zangyo.html">⏰ 残業代</a>
+      <a class="tool-chip" href="kabe.html">🧱 扶養の壁</a>
+      <a class="tool-chip" href="taishoku.html">🎓 退職金</a>
+      <a class="tool-chip" href="kansan.html">🔄 時給→年収</a>
+      <a class="tool-chip more" href="tools.html">➕ ぜんぶ見る(15コ)</a>
+    </div>
+  </section>
+
+  <!-- ======== ツール本体(手取り計算=看板) ======== -->
+  <p class="discover-head" style="margin-top:22px">💰 手取りの計算<span class="sub">月収を入れるだけ・30秒</span></p>
+  <div class="hero-cta">
+    <button class="btn ghost big" type="button" id="cta-guide">🦸 経理マンにおまかせで出す(おすすめ)</button>
+    <a class="btn ghost big" href="#calc-card">✍️ 自分で入力して出す</a>
+  </div>
   <section class="card" id="calc-card" aria-label="手取り計算フォーム">
     <form id="calc-form" onsubmit="return false">
       <div class="field">
@@ -247,17 +262,17 @@
     <p class="note">シェアされるのは入力条件のみです(計算はリンクを開いた人の端末内で再実行されます)。</p>
   </section>
 
-  <!-- ======== 経理マンの道具箱(入口) ======== -->
+  <!-- ======== 経理マンの道具箱(結果のあと・暮らし/将来の道具) ======== -->
   <section aria-label="ほかの計算ツール" style="margin-top:8px">
-    <p class="cat-head">🧰 経理マンの道具箱 — お金の計算、これひとつで</p>
+    <p class="cat-head">🧰 つづけて、暮らしとお金の計算も</p>
     <div class="tool-grid">
-      <a class="tool-card" href="bonus.html"><span class="ico">🎁</span><span class="ttl">ボーナス手取り</span><span class="sub">賞与から引かれる額</span></a>
-      <a class="tool-card" href="zangyo.html"><span class="ico">⏰</span><span class="ttl">残業代の計算</span><span class="sub">割増をぜんぶ反映</span></a>
-      <a class="tool-card" href="kabe.html"><span class="ico">🧱</span><span class="ttl">扶養の壁 診断</span><span class="sub">106・130・136万</span></a>
-      <a class="tool-card" href="kansan.html"><span class="ico">🔄</span><span class="ttl">時給・月給・年収</span><span class="sub">まとめて変換</span></a>
-      <a class="tool-card" href="taishoku.html"><span class="ico">🎓</span><span class="ttl">退職金の手取り</span><span class="sub">税金は意外と安い</span></a>
       <a class="tool-card" href="chokin.html"><span class="ico">🐷</span><span class="ttl">つみたて</span><span class="sub">複利で増やす</span></a>
       <a class="tool-card" href="loan.html"><span class="ico">🏠</span><span class="ttl">ローン返済</span><span class="sub">毎月・利息の合計</span></a>
+      <a class="tool-card" href="nenkin.html"><span class="ico">👵</span><span class="ttl">年金の目安</span><span class="sub">将来いくら</span></a>
+      <a class="tool-card" href="fukugyo.html"><span class="ico">💼</span><span class="ttl">副業の税金</span><span class="sub">20万円の壁</span></a>
+      <a class="tool-card" href="iryohi.html"><span class="ico">🏥</span><span class="ttl">医療費控除</span><span class="sub">いくら戻る?</span></a>
+      <a class="tool-card" href="kakei.html"><span class="ico">⚖️</span><span class="ttl">家計バランス</span><span class="sub">理想の生活費</span></a>
+      <a class="tool-card" href="kaimono.html"><span class="ico">🛒</span><span class="ttl">買い物の計算</span><span class="sub">税・割引・割り勘</span></a>
       <a class="tool-card" href="tools.html"><span class="ico">➕</span><span class="ttl">ぜんぶ見る</span><span class="sub">道具箱を開く</span></a>
     </div>
   </section>
@@ -385,6 +400,7 @@
       <button class="choice" type="button" id="w-self">✍️ 自分で入力して出す</button>
     </div>
     <p class="privacy">入力した内容は、どこにも送信・保存されません</p>
+    <p style="margin:12px 0 0"><a href="tools.html" class="linklike">手取り以外の計算をさがす方は 🧰 道具箱へ</a></p>
   </div>
 </div>
 
