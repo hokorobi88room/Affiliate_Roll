@@ -114,31 +114,31 @@
     <p class="tagline">その月収、手取りで<em>いくら?</em></p>
     <p class="lede">保険料と税金を引いた「実際に使えるお金」を30秒で計算(2026年対応)。</p>
     <ul class="badges">
-      <li>🧰 計算ツール15コ</li>
+      <li class="feature"><a href="tools.html">🧰 計算ツール15コ →</a></li>
       <li>🆓 無料・登録なし</li>
       <li>🔒 データ送信なし</li>
       <li>✅ 公表値で計算</li>
     </ul>
   </header>
 
-  <!-- ======== 道具箱の入口(多機能をひと目で) ======== -->
+  <!-- ======== 道具箱の入口(多機能をひと目で・看板より控えめに) ======== -->
   <section aria-label="お金の計算ツール">
-    <p class="discover-head">🧰 お金の計算、これひとつで。</p>
+    <p class="discover-lead">🧰 お金の計算、これひとつで。</p>
     <div class="tool-cloud">
       <a class="tool-chip" href="bonus.html">🎁 ボーナス手取り</a>
       <a class="tool-chip" href="zangyo.html">⏰ 残業代</a>
       <a class="tool-chip" href="kabe.html">🧱 扶養の壁</a>
       <a class="tool-chip" href="taishoku.html">🎓 退職金</a>
       <a class="tool-chip" href="kansan.html">🔄 時給→年収</a>
-      <a class="tool-chip more" href="tools.html">➕ ぜんぶ見る(15コ)</a>
     </div>
+    <a class="btn ghost big block" href="tools.html" style="margin-top:8px">🧰 道具箱をぜんぶ見る(15コ)</a>
   </section>
 
-  <!-- ======== ツール本体(手取り計算=看板) ======== -->
-  <p class="discover-head" style="margin-top:22px">💰 手取りの計算<span class="sub">月収を入れるだけ・30秒</span></p>
+  <!-- ======== ツール本体(手取り計算=看板・一等地) ======== -->
+  <p class="discover-head" style="margin-top:24px">💰 手取りの計算<span class="sub">月収を入れるだけ・30秒</span></p>
   <div class="hero-cta">
-    <button class="btn ghost big" type="button" id="cta-guide">🦸 経理マンにおまかせで出す(おすすめ)</button>
-    <a class="btn ghost big" href="#calc-card">✍️ 自分で入力して出す</a>
+    <button class="btn ghost big" type="button" id="cta-guide">🦸 経理マンにおまかせ</button>
+    <a class="btn ghost big" href="#calc-card">✍️ 自分で入力</a>
   </div>
   <section class="card" id="calc-card" aria-label="手取り計算フォーム">
     <form id="calc-form" onsubmit="return false">
@@ -195,7 +195,8 @@
         </div>
       </div>
     </form>
-    <p class="note" style="margin-top:16px">🏢 会社の保険で働いている方向けです(パート扶養内・自営業・年金のみの方は目安)</p>
+    <p class="note" style="margin-top:16px">🔒 入力した内容は、どこにも送信・保存されません</p>
+    <p class="note" style="margin-top:10px">🏢 会社の保険で働いている方向けです(パート扶養内・自営業・年金のみの方は目安)</p>
     <p class="note" style="margin-top:10px">😵‍💫 むずかしい? → <button type="button" class="linklike" data-guide-start="salary">🦸 経理マンにおまかせ(質問に答えるだけ)</button></p>
   </section>
 
@@ -276,6 +277,11 @@
       <a class="tool-card" href="tools.html"><span class="ico">➕</span><span class="ttl">ぜんぶ見る</span><span class="sub">道具箱を開く</span></a>
     </div>
   </section>
+
+  <div class="km-say" style="margin-top:16px">
+    <span class="m" aria-hidden="true"><svg viewBox="0 0 200 210"><use href="#keiriman"/></svg></span>
+    <p class="bubble">お金の「これいくら?」は、ぜんぶこの経理マンにおまかせを。使うときすぐ開けるよう、ブックマークしておいてください。</p>
+  </div>
 
   <!-- ======== 解説(SEO/AI引用の受け皿) ======== -->
   <article class="prose">
