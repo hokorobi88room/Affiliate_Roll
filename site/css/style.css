@@ -331,7 +331,9 @@ table.breakdown { width: 100%; border-collapse: collapse; font-size: 14px; }
   white-space: nowrap; transition: transform .12s ease, border-color .12s ease, background .12s ease;
 }
 .tool-chip:hover { transform: translateY(-1px); border-color: var(--accent); background: var(--accent-weak); }
-.tool-chip.more { background: var(--accent); color: #fff; border-color: var(--accent); }
+/* 「ぜんぶ見る」等のハブ導線チップ: 緑で差別化しつつ、看板CTAより色を弱める
+   (画面内で最も強い塗り強調は看板の手取りに残す) */
+.tool-chip.more { background: var(--accent-weak); color: var(--accent); border-color: var(--accent); }
 .discover-head {
   display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap;
   font-size: 17px; font-weight: 800; color: var(--ink); margin: 22px 0 10px;
