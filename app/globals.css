@@ -115,7 +115,11 @@ blockquote {
 
 .heroArtwork {
   z-index: 0;
-  object-position: center center;
+  inset: 0 0 0 auto;
+  width: min(72vw, 980px);
+  object-position: center bottom;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.5) 18%, #000 35%);
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.5) 18%, #000 35%);
 }
 
 .heroAura {
@@ -1070,7 +1074,14 @@ footer {
 
   .heroArtwork,
   .finalArtwork {
-    object-position: 58% center;
+    object-position: 58% bottom;
+  }
+
+  .heroArtwork {
+    inset: 0;
+    width: 100%;
+    -webkit-mask-image: none;
+    mask-image: none;
   }
 
   .heroInner {
