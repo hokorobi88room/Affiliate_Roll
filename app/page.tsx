@@ -466,7 +466,7 @@ export default function Home() {
               あなたの色にする。
             </strong>
           </div>
-          <PurchaseButton label="『この世界はあなたの色になる』を手に入れる" tone="dark" />
+          <PurchaseButton label="『この世界はあなたの色になる』を手に入れる" />
         </div>
       </section>
 

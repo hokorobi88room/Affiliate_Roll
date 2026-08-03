@@ -109,7 +109,7 @@ blockquote {
   position: absolute;
   z-index: 1;
   inset: 0;
-  background: linear-gradient(90deg, rgba(12, 11, 14, 0.88) 0%, rgba(12, 11, 14, 0.58) 47%, rgba(12, 11, 14, 0.08) 78%);
+  background: linear-gradient(90deg, rgba(12, 11, 14, 0.82) 0%, rgba(12, 11, 14, 0.44) 45%, rgba(12, 11, 14, 0.03) 74%);
   content: "";
 }
 
@@ -194,8 +194,7 @@ blockquote {
   width: min(590px, 100%);
   padding: 26px 30px;
   border: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(255, 255, 255, 0.045);
-  backdrop-filter: blur(8px);
+  background: rgba(20, 17, 22, 0.82);
 }
 
 .heroQuestion span {
@@ -340,18 +339,26 @@ blockquote {
   position: absolute;
   z-index: 1;
   inset: 0;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.91) 55%, rgba(255, 255, 255, 0.42) 100%);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.98) 0 38%, rgba(255, 255, 255, 0.7) 51%, rgba(255, 255, 255, 0.08) 70%, transparent 100%);
   content: "";
 }
 
 .confession > .narrow {
   position: relative;
   z-index: 2;
+  width: min(1080px, 100%);
 }
 
 .anxietyArtwork {
   z-index: 0;
-  object-position: center center;
+  object-position: right center;
+}
+
+.confession h2,
+.confession .introText,
+.confession .worryList,
+.confession .quietCopy {
+  width: 58%;
 }
 
 .confession h2 {
@@ -392,7 +399,7 @@ blockquote {
 
 .quietCopy {
   margin-top: 70px;
-  text-align: center;
+  text-align: left;
 }
 
 .quietCopy p {
@@ -412,7 +419,7 @@ blockquote {
   position: absolute;
   z-index: 1;
   inset: 0;
-  background: linear-gradient(90deg, rgba(245, 242, 238, 0.98) 0%, rgba(245, 242, 238, 0.9) 49%, rgba(245, 242, 238, 0.18) 78%);
+  background: linear-gradient(90deg, rgba(245, 242, 238, 0.98) 0 36%, rgba(245, 242, 238, 0.68) 51%, rgba(245, 242, 238, 0.06) 70%, transparent 100%);
   content: "";
 }
 
@@ -867,13 +874,16 @@ blockquote {
   position: absolute;
   z-index: 1;
   inset: 0;
-  background: linear-gradient(90deg, rgba(248, 246, 242, 0.97) 0%, rgba(248, 246, 242, 0.88) 52%, rgba(248, 246, 242, 0.2) 100%);
+  background: linear-gradient(90deg, rgba(248, 246, 242, 0.97) 0 34%, rgba(248, 246, 242, 0.56) 50%, rgba(248, 246, 242, 0.04) 68%, transparent 100%);
   content: "";
 }
 
 .faqArtwork {
   z-index: 0;
-  object-position: right center;
+  inset: 0 0 auto auto;
+  width: min(72%, 760px);
+  height: 620px;
+  object-position: center bottom;
 }
 
 .faq > .narrow {
@@ -882,15 +892,15 @@ blockquote {
 }
 
 .faq h2 {
-  max-width: 62%;
+  max-width: 54%;
   margin-bottom: 55px;
 }
 
 .faqList {
-  margin-top: 100px;
+  margin-top: 320px;
   padding-inline: 24px;
   border-top: 1px solid var(--line);
-  background: rgba(248, 246, 242, 0.94);
+  background: rgba(248, 246, 242, 0.98);
   box-shadow: 0 22px 70px rgba(80, 62, 75, 0.06);
 }
 
@@ -937,8 +947,8 @@ blockquote {
   min-height: 960px;
   display: flex;
   align-items: center;
-  background: #121114;
-  color: white;
+  background: #fbf8f3;
+  color: var(--ink);
   text-align: center;
 }
 
@@ -946,7 +956,7 @@ blockquote {
   position: absolute;
   z-index: 1;
   inset: 0;
-  background: linear-gradient(90deg, rgba(10, 9, 12, 0.82) 0%, rgba(10, 9, 12, 0.55) 48%, rgba(10, 9, 12, 0.12) 78%);
+  background: linear-gradient(90deg, rgba(255, 252, 247, 0.82) 0%, rgba(255, 252, 247, 0.38) 46%, rgba(255, 252, 247, 0.02) 72%);
   content: "";
 }
 
@@ -966,7 +976,7 @@ blockquote {
     radial-gradient(circle at 82% 30%, rgba(94, 231, 223, 0.55), transparent 25%);
   z-index: 1;
   filter: blur(62px);
-  opacity: 0.12;
+  opacity: 0.06;
 }
 
 .finalInner {
@@ -975,7 +985,7 @@ blockquote {
 }
 
 .finalOffer .sectionLabel {
-  color: var(--gold);
+  color: #9d7130;
 }
 
 .finalOffer h2 {
@@ -983,7 +993,7 @@ blockquote {
 }
 
 .finalInner > p:not(.sectionLabel):not(.finalTruth) {
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(23, 21, 25, 0.68);
   font-size: 15px;
   line-height: 2;
 }
@@ -1069,7 +1079,7 @@ footer {
   }
 
   .hero::after {
-    background: linear-gradient(180deg, rgba(12, 11, 14, 0.8) 0%, rgba(12, 11, 14, 0.56) 56%, rgba(12, 11, 14, 0.12) 100%);
+    background: linear-gradient(90deg, rgba(12, 11, 14, 0.78) 0%, rgba(12, 11, 14, 0.38) 52%, rgba(12, 11, 14, 0.02) 100%);
   }
 
   .heroArtwork,
@@ -1108,6 +1118,7 @@ footer {
 
   .heroQuestion {
     padding: 22px;
+    background: rgba(20, 17, 22, 0.88);
   }
 
   .heroQuestion p {
@@ -1149,11 +1160,27 @@ footer {
   }
 
   .reframe::after {
-    background: linear-gradient(180deg, rgba(245, 242, 238, 0.96) 0%, rgba(245, 242, 238, 0.82) 64%, rgba(245, 242, 238, 0.42) 100%);
+    background: linear-gradient(90deg, rgba(245, 242, 238, 0.97) 0%, rgba(245, 242, 238, 0.6) 56%, rgba(245, 242, 238, 0.02) 100%);
   }
 
   .reframeArtwork {
-    object-position: 60% center;
+    object-position: 68% center;
+  }
+
+  .confession::after {
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.64) 58%, rgba(255, 255, 255, 0.02) 100%);
+  }
+
+  .confession h2,
+  .confession .introText,
+  .confession .worryList,
+  .confession .quietCopy {
+    width: 62%;
+  }
+
+  .worryItem {
+    grid-template-columns: 34px 1fr;
+    gap: 10px;
   }
 
   .reframeCopy blockquote {
@@ -1252,19 +1279,21 @@ footer {
   }
 
   .faq::after {
-    background: linear-gradient(180deg, rgba(248, 246, 242, 0.94) 0%, rgba(248, 246, 242, 0.76) 36%, rgba(248, 246, 242, 0.94) 68%);
+    background: linear-gradient(90deg, rgba(248, 246, 242, 0.97) 0%, rgba(248, 246, 242, 0.5) 52%, rgba(248, 246, 242, 0.01) 100%);
   }
 
   .faqArtwork {
-    object-position: 62% top;
+    width: 82%;
+    height: 500px;
+    object-position: 58% top;
   }
 
   .faq h2 {
-    max-width: 72%;
+    max-width: 58%;
   }
 
   .faqList {
-    margin-top: 240px;
+    margin-top: 310px;
     padding-inline: 16px;
   }
 
@@ -1273,7 +1302,7 @@ footer {
   }
 
   .finalOffer::after {
-    background: linear-gradient(180deg, rgba(10, 9, 12, 0.74) 0%, rgba(10, 9, 12, 0.5) 58%, rgba(10, 9, 12, 0.16) 100%);
+    background: linear-gradient(180deg, rgba(255, 252, 247, 0.7) 0%, rgba(255, 252, 247, 0.28) 56%, rgba(255, 252, 247, 0.02) 100%);
   }
 
   .finalTruth {
