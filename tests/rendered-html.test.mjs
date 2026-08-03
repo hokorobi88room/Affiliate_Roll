@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { stat } from "node:fs/promises";
 import test from "node:test";
 
 async function render() {
@@ -54,4 +55,23 @@ test("places purchase links in the hero, middle, and final close", async () => {
   assert.match(html, /答えを知る/);
   assert.match(html, /ここで終わらせる/);
   assert.match(html, /この世界はあなたの色になる<!-- -->』を手に入れる|この世界はあなたの色になる』を手に入れる/);
+});
+
+test("ships the five-stage character artwork without baked-in copy", async () => {
+  const response = await render();
+  const html = await response.text();
+  const assets = [
+    "hero-woman.webp",
+    "anxiety-woman.webp",
+    "reframe-woman.webp",
+    "faq-woman.webp",
+    "final-woman.webp",
+  ];
+
+  for (const asset of assets) {
+    assert.match(html, new RegExp(`/lp/${asset.replace(".", "\\.")}`));
+    const info = await stat(new URL(`../public/lp/${asset}`, import.meta.url));
+    assert.ok(info.size > 20_000, `${asset} should contain finished artwork`);
+    assert.ok(info.size < 250_000, `${asset} should remain web-optimized`);
+  }
 });

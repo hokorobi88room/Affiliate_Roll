@@ -82,6 +82,14 @@ export default function Home() {
   return (
     <main>
       <section className="hero" id="top">
+        <img
+          className="sceneArtwork heroArtwork"
+          src="/lp/hero-woman.webp"
+          alt=""
+          aria-hidden="true"
+          fetchPriority="high"
+          decoding="async"
+        />
         <div className="heroAura" aria-hidden="true" />
         <div className="heroGrain" aria-hidden="true" />
         <div className="heroInner">
@@ -127,6 +135,14 @@ export default function Home() {
       </section>
 
       <section className="confession section">
+        <img
+          className="sceneArtwork anxietyArtwork"
+          src="/lp/anxiety-woman.webp"
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+        />
         <div className="narrow">
           <p className="sectionLabel">DO YOU REMEMBER?</p>
           <h2>
@@ -158,6 +174,14 @@ export default function Home() {
       </section>
 
       <section className="reframe section">
+        <img
+          className="sceneArtwork reframeArtwork"
+          src="/lp/reframe-woman.webp"
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+        />
         <div className="wide split">
           <div className="reframeIndex" aria-hidden="true">
             01
@@ -382,6 +406,14 @@ export default function Home() {
       </section>
 
       <section className="faq section">
+        <img
+          className="sceneArtwork faqArtwork"
+          src="/lp/faq-woman.webp"
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+        />
         <div className="narrow">
           <p className="sectionLabel">QUESTIONS</p>
           <h2>購入前に、気になること。</h2>
@@ -400,6 +432,14 @@ export default function Home() {
       </section>
 
       <section className="finalOffer section">
+        <img
+          className="sceneArtwork finalArtwork"
+          src="/lp/final-woman.webp"
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+        />
         <div className="finalCanvas" aria-hidden="true" />
         <div className="narrow finalInner">
           <p className="sectionLabel">THE REST IS YOURS</p>
